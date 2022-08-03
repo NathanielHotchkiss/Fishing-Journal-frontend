@@ -12,14 +12,12 @@ import {
 import { SearchIcon } from "@heroicons/react/solid";
 
 const navigation = [
-  { name: "Dashboard", href: "/", icon: HomeIcon, current: true },
+  { name: "Dashboard", href: "/", icon: HomeIcon },
   {
     name: "Log a catch",
     href: "/logs/new",
     icon: PlusCircleIcon,
-    current: false,
   },
-  { name: "Species", href: "#", icon: ArchiveIcon, current: false },
 ];
 const userNavigation = [
   { name: "Your Profile", href: "#" },

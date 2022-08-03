@@ -60,11 +60,6 @@ export async function listLogs(signal) {
   return await fetchJson(url, { headers, signal, method: "GET" }, []);
 }
 
-export async function listSpecies(signal) {
-  const url = `${API_BASE_URL}/species`;
-  return await fetchJson(url, { headers, signal, method: "GET" }, []);
-}
-
 export async function createLog(log, signal) {
   const url = `${API_BASE_URL}/logs`;
   const body = JSON.stringify({ data: log });
