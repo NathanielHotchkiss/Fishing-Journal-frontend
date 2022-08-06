@@ -4,10 +4,10 @@ module.exports = {
   theme: {
     extend: {
       width: {
-        "144": '36rem',
-        "192": '48rem',
-      }
+        144: "36rem",
+        192: "48rem",
+      },
     },
   },
-  plugins: [require("@tailwindcss/typography")],
+  plugins: [require("@tailwindcss/typography"), require("@tailwindcss/forms")],
 };

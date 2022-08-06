@@ -1,13 +1,14 @@
-import React, { useState, useEffect } from "react";
-import { listLogs, deleteLog } from "../utils/api";
-import { Link, useNavigate, useParams } from "react-router-dom";
+import React, { Fragment, useState, useEffect } from "react";
+import { Link } from "react-router-dom";
 
-import { Fragment } from "react";
 import { Menu, Transition } from "@headlessui/react";
 import { DotsVerticalIcon } from "@heroicons/react/solid";
 
-export default function Card(logsData, edit, loadDashboard) {
-  const navigate = useNavigate();
+import { listLogs, deleteLog } from "../utils/api";
+
+import { TrashIcon, PencilAltIcon } from "@heroicons/react/outline";
+
+export default function Card(loadDashboard) {
   const [fetchedData, setFetchedData] = useState([]);
   const [apiError, setApiError] = useState(null);
 
@@ -63,7 +64,7 @@ export default function Card(logsData, edit, loadDashboard) {
                     className="relative inline-block text-left mt-2"
                   >
                     <div>
-                      <Menu.Button className="bg-gray-100 rounded-full flex items-center text-gray-400 hover:text-gray-600 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-offset-gray-100 focus:ring-indigo-500">
+                      <Menu.Button className="bg-gray-100 rounded-full flex items-center text-gray-400 hover:text-gray-600 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-offset-gray-100 focus:ring-gray-500">
                         <span className="sr-only">Open options</span>
                         <DotsVerticalIcon
                           className="h-5 w-5"
@@ -81,7 +82,7 @@ export default function Card(logsData, edit, loadDashboard) {
                       leaveFrom="transform opacity-100 scale-100"
                       leaveTo="transform opacity-0 scale-95"
                     >
-                      <Menu.Items className="origin-top-right absolute right-0 mt-2 w-56 rounded-md shadow-lg bg-white ring-1 ring-black ring-opacity-5 focus:outline-none">
+                      <Menu.Items className="origin-top-right absolute right-0 mt-2 w-48 rounded-md shadow-lg bg-white ring-1 ring-black ring-opacity-5 focus:outline-none">
                         <div className="py-1">
                           <Menu.Item>
                             {({ active }) => (
@@ -91,26 +92,35 @@ export default function Card(logsData, edit, loadDashboard) {
                                   active
                                     ? "bg-gray-100 text-gray-900"
                                     : "text-gray-700",
-                                  "block px-4 py-2 text-sm"
+                                  "group flex items-center px-4 py-2 text-sm"
                                 )}
                               >
+                                <PencilAltIcon
+                                  className="mr-3 h-5 w-5 text-gray-400 group-hover:text-gray-500"
+                                  aria-hidden="true"
+                                />
                                 Edit
                               </Link>
                             )}
                           </Menu.Item>
                           <Menu.Item>
                             {({ active }) => (
-                              <button
+                              <Link
+                                to="#"
                                 onClick={() => handleDelete(log_id)}
                                 className={classNames(
                                   active
-                                    ? "bg-gray-100 text-gray-900"
+                                    ? "w-full bg-gray-100 text-gray-900"
                                     : "text-gray-700",
-                                  "block px-4 py-2 text-sm"
+                                  "group flex items-center px-4 py-2 text-sm"
                                 )}
                               >
+                                <TrashIcon
+                                  className="mr-3 h-5 w-5 text-gray-400 group-hover:text-gray-500"
+                                  aria-hidden="true"
+                                />
                                 Delete
-                              </button>
+                              </Link>
                             )}
                           </Menu.Item>
                         </div>

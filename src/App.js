@@ -1,5 +1,5 @@
-import Header from "./components/Header.js";
+import Layout from "./layout/Layout.js";
 
 export default function App() {
-  return <Header />;
+  return <Layout />;
 }

@@ -1,9 +1,11 @@
-import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
 import React, { useState, useEffect } from "react";
+import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
+
 import { listLogs } from "../utils/api";
-import Dashboard from "../components/Dashboard";
-import Header from "../components/Header";
-import NewLog from "../components/NewLog";
+
+import Dashboard from "../pages/Dashboard";
+import NewLog from "../pages/NewLog";
+import NotFound from "../components/NotFound";
 
 export default function AppRoutes() {
   const [logsData, setLogsData] = useState([]);
@@ -32,11 +34,15 @@ export default function AppRoutes() {
             />
           }
         />
-        <Route path="/logs/new" element={<NewLog />} />
+        <Route 
+          path="/logs/new"
+          element={<NewLog />} />
         <Route
           path="/logs/:log_id/edit"
           element={<NewLog edit={true} loadDashboard={loadDashboard} />}
         />
+
+        <Route path="*" element={<NotFound />} />
       </Routes>
     </Router>
   );
