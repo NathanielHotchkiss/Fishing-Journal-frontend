@@ -39,7 +39,7 @@ async function fetchJson(url, options, onCancel) {
     if (payload.error) {
       return Promise.reject({ message: payload.error });
     }
-    return payload.data;
+    return payload;
   } catch (error) {
     if (error.name !== "AbortError") {
       console.error(error.stack);
@@ -49,19 +49,18 @@ async function fetchJson(url, options, onCancel) {
   }
 }
 
-/**
- * Retrieves all existing reservation.
- * @returns {Promise<[reservation]>}
- *  a promise that resolves to a possibly empty array of reservation saved in the database.
- */
-
-export async function listLogs(signal) {
-  const url = `${API_BASE_URL}/logs`;
+export async function listFishingLogs(params, signal) {
+  const url = new URL(`${API_BASE_URL}/fishing_logs`);
+  if (params) {
+    Object.entries(params).forEach(([key, value]) =>
+      url.searchParams.append(key, value.toString())
+    );
+  }
   return await fetchJson(url, { headers, signal, method: "GET" }, []);
 }
 
 export async function createLog(log, signal) {
-  const url = `${API_BASE_URL}/logs`;
+  const url = `${API_BASE_URL}/fishing_logs/new`;
   const body = JSON.stringify({ data: log });
   return await fetchJson(url, { headers, signal, method: "POST", body }, []);
 }

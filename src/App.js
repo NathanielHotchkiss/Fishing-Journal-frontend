@@ -1,5 +1,5 @@
-import Layout from "./layout/Layout.js";
+import AppRoutes from "./routes/AppRoutes";
 
 export default function App() {
-  return <Layout />;
+  return <AppRoutes />;
 }
