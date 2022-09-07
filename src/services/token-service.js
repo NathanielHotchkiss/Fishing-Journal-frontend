@@ -10,14 +10,14 @@ const TokenService = {
   getHasVisited() {
     return window.localStorage.getItem("hasVisited");
   },
-  saveUserName(user_name) {
-    window.localStorage.setItem("user_name", user_name);
+  saveEmail(email) {
+    window.localStorage.setItem("email", email);
   },
-  getUserName() {
-    return window.localStorage.getItem("user_name");
+  getEmail() {
+    return window.localStorage.getItem("email");
   },
-  saveUserId(userId) {
-    window.localStorage.setItem("userId", userId);
+  saveUserId(user_id) {
+    window.localStorage.setItem("user_id", user_id);
   },
   getUserId() {
     return window.localStorage.getItem("userId");

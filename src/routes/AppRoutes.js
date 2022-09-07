@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useContext } from "react";
+import React, { useState, useEffect } from "react";
 import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
 
 import Dashboard from "../pages/Dashboard";
@@ -6,11 +6,10 @@ import NewLog from "../pages/NewLog";
 import NotFound from "../components/NotFound";
 import Register from "../pages/Register";
 import SignIn from "../pages/SignIn";
-import Stats from "../pages/Stats";
-import Context from "../contexts/UserContext";
 import config from "../config";
 import TokenService from "../services/token-service";
-import Home from "../pages/Home";
+
+export const UserContext = React.createContext({});
 
 export default function AppRoutes() {
   const [fishingLogsData, setFishingLogsData] = useState([]);
@@ -18,92 +17,77 @@ export default function AppRoutes() {
   const [loggedIn, setLoggedIn] = useState(false);
   const [userId, setUserId] = useState(null);
 
-  const UserContext = React.createContext();
+  async function handleUpdateUserThings(user_id) {
+    await Promise.all([
+      fetch(`${config.API_ENDPOINT}/fishing_logs/:user_id`, {
+        headers: {
+          Authorization: `bearer ${TokenService.getAuthToken()}`,
+        },
+      }),
+    ])
 
-  // const handleUpdateUserThings = async (userId) => {
-  //   await Promise.all([
-  //     fetch(`${config.API_ENDPOINT}/dinner/fishing_logs`, {
-  //       headers: {
-  //         Authorization: `bearer ${TokenService.getAuthToken()}`,
-  //       },
-  //     }),
-  //   ])
-
-  //     .then(([userLogsRes]) => {
-  //       if (!userLogsRes.ok) {
-  //         return userLogsRes.json().then((e) => Promise.reject(e));
-  //       }
-
-  //       return Promise.all([userLogsRes.json()]);
-  //     })
-
-  //     .then(([userLogsRes]) => {
-  //       setFishingLogsData(userLogsRes);
-  //     })
-
-  //     .catch((error) => {
-  //       this.setState({ error });
-  //     });
-  // };
-
-  useEffect(
-    () =>
-      async function handleApiCalls() {
-        if (TokenService.hasAuthToken()) {
-          setLoggedIn(true);
-
-          const userId = TokenService.getUserId();
-
-          setUserId(userId);
-
-          await Promise.all([fetch(`${config.API_ENDPOINT}/fishing_logs`)])
-            .then(([userLogsRes]) => {
-              if (!userLogsRes.ok) {
-                return userLogsRes.json().then((e) => Promise.reject(e));
-              }
-
-              return Promise.all([userLogsRes.json()]);
-            })
-
-            .then(([logs]) => {
-              const userLogs = logs.filter((log) => log.user_id === null);
-
-              setFishingLogsData(userLogs);
-            })
-
-            .catch((error) => {
-              setApiError(error);
-            });
+      .then(([userLogsRes]) => {
+        if (!userLogsRes.ok) {
+          return userLogsRes.json().then((e) => Promise.reject(e));
         }
+        return Promise.all([userLogsRes.json()]);
+      })
 
-        const handleToken = async () => {
-          TokenService.hasAuthToken()
-            ? this.setState({ loggedIn: true })
-            : this.setState({
-                loggedIn: false,
-                userRecipes: [],
-                userRestaurants: [],
-                userId: 0,
-                wheelOptions: [],
-              });
+      .then(([userLogsRes]) => {
+        setFishingLogsData(userLogsRes);
+      })
 
-          const userId = TokenService.getUserId();
+      .catch((error) => {
+        setApiError(error);
+      });
+  }
 
-          this.setState({ userId });
-        };
-      }
-  );
+  async function handleApiCalls() {
+    if (TokenService.hasAuthToken()) {
+      setLoggedIn(true);
+
+      const user_id = TokenService.getUserId();
+
+      setUserId(user_id);
+      console.log(user_id);
+
+      await Promise.all([
+        fetch(`${config.API_ENDPOINT}/fishing_logs/${user_id}`, {
+          headers: {
+            Authorization: `bearer ${TokenService.getAuthToken()}`,
+          },
+        }),
+      ])
+        .then(([userLogsRes]) => {
+          if (!userLogsRes.ok) {
+            return userLogsRes.json().then((e) => Promise.reject(e));
+          }
+          return Promise.all([userLogsRes.json()]);
+        })
+
+        .then(([logs]) => {
+          setFishingLogsData(logs);
+        })
+
+        .catch((error) => {
+          setApiError(error);
+        });
+    }
+  }
+
+  const app_user = {
+    loggedIn: loggedIn,
+    setLoggedIn: setLoggedIn,
+    userId: userId,
+    setUserId: setUserId,
+    fishingLogsData: fishingLogsData,
+    setFishingLogsData: setFishingLogsData,
+    handleUpdateUserThings: handleUpdateUserThings,
+    handleApiCalls: handleApiCalls,
+  };
 
   return (
-    <UserContext.Provider
-      value={{
-        fishingLogsData,
-        userId,
-        findFishingLog: () => {},
-        handleToken: () => {},
-        handleUpdateUserThings: () => {},
-      }}
-    >
+    <UserContext.Provider value={app_user}>
       <Router>
         <Routes>
           <Route
@@ -122,8 +106,6 @@ export default function AppRoutes() {
           />
           <Route path="/register" element={<Register />} />
           <Route path="/signin" element={<SignIn />} />
-          <Route path="/home" element={<Home />} />
-          <Route path="/stats" element={<Stats />} logsData={fishingLogsData} />
           <Route path="*" element={<NotFound />} />
         </Routes>
       </Router>

@@ -1,4 +1,4 @@
-import React, { Fragment, useState, useEffect } from "react";
+import React, { Fragment, useState, useEffect, useContext } from "react";
 import { Link } from "react-router-dom";
 
 import { Menu, Transition } from "@headlessui/react";
@@ -7,45 +7,47 @@ import { DotsVerticalIcon } from "@heroicons/react/solid";
 
 import ErrorAlert from "../components/ErrorAlert";
 import Layout from "../layout/Layout";
-import { deleteLog, listFishingLogs } from "../utils/api";
+import { UserContext } from "../routes/AppRoutes";
+// import { deleteLog, listFishingLogs } from "../utils/api";
 
 export default function Dashboard() {
-  const [fetchedData, setFetchedData] = useState([]);
   const [apiError, setApiError] = useState(null);
+  const context = useContext(UserContext);
 
-  useEffect(fetchData, []);
+  const userLogs = context.fishingLogsData;
+  // useEffect(fetchData, []);
 
-  function fetchData() {
-    const abortController = new AbortController();
-    setApiError(null);
+  // function fetchData() {
+  //   const abortController = new AbortController();
+  //   setApiError(null);
 
-    listFishingLogs(abortController.signal)
-      .then((data) => {
-        setFetchedData(data);
-      })
-      .catch(setApiError);
-    return () => abortController.abort();
-  }
+  //   listFishingLogs(abortController.signal)
+  //     .then((data) => {
+  //       setFetchedData(data);
+  //     })
+  //     .catch(setApiError);
+  //   return () => abortController.abort();
+  // }
 
   function classNames(...classes) {
     return classes.filter(Boolean).join(" ");
   }
 
-  function handleDelete(log_id) {
-    if (
-      window.confirm("Do you want to delete this log? This cannot be undone.")
-    ) {
-      const abortController = new AbortController();
+  // function handleDelete(log_id) {
+  //   if (
+  //     window.confirm("Do you want to delete this log? This cannot be undone.")
+  //   ) {
+  //     const abortController = new AbortController();
 
-      deleteLog(log_id, abortController.status)
-        .then()
-        .catch(setApiError);
+  //     deleteLog(log_id, abortController.status)
+  //       .then()
+  //       .catch(setApiError);
 
-      return () => abortController.abort();
-    }
-  }
+  //     return () => abortController.abort();
+  //   }
+  // }
 
-  if (!fetchedData) {
+  if (!context.fishingLogsData) {
     return (
       <Layout>
         <div className="flex flex-col items-center justify-center h-screen">
@@ -61,7 +63,7 @@ export default function Dashboard() {
       <Layout>
         <div className="grid grid-col-1 lg:grid-cols-2 my-6">
           <>
-            {fetchedData.map((info, id) => {
+            {context.fishingLogsData.map((info, id) => {
               const {
                 fish_id,
                 species,
@@ -132,7 +134,7 @@ export default function Dashboard() {
                                   {({ active }) => (
                                     <Link
                                       to="#"
-                                      onClick={() => handleDelete(fish_id)}
+                                      // onClick={() => handleDelete(fish_id)}
                                       className={classNames(
                                         active
                                           ? "w-full bg-gray-100 text-gray-900"
