@@ -2,6 +2,7 @@ import React, { useState, useEffect } from "react";
 import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
 
 import Dashboard from "../pages/Dashboard";
+import Home from "../pages/Home";
 import NewLog from "../pages/NewLog";
 import NotFound from "../components/NotFound";
 import Register from "../pages/Register";
@@ -47,9 +48,7 @@ export default function AppRoutes() {
       setLoggedIn(true);
 
       const user_id = TokenService.getUserId();
-
       setUserId(user_id);
-      console.log(user_id);
 
       await Promise.all([
         fetch(`${config.API_ENDPOINT}/fishing_logs/${user_id}`, {
@@ -90,15 +89,8 @@ export default function AppRoutes() {
     <UserContext.Provider value={app_user}>
       <Router>
         <Routes>
-          <Route
-            path="/"
-            element={
-              <Dashboard
-                fishingLogsData={fishingLogsData}
-                apiError={apiError}
-              />
-            }
-          />
+          <Route path="/" element={<Home />} />
+          <Route path="/dashboard" element={<Dashboard />} />
           <Route path="/new" element={<NewLog />} />
           <Route
             path="/fishing_logs/:fish_id/edit"

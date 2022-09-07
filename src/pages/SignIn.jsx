@@ -27,7 +27,7 @@ export default function LoginForm() {
         TokenService.saveUserId(user_id);
         context.handleApiCalls(user_id);
       })
-      .then(navigate("/"))
+      .then(navigate("/dashboard"))
       .catch((error) => {
         console.log(error);
       });

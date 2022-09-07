@@ -3,14 +3,13 @@ import { Link } from "react-router-dom";
 
 import { Dialog, Transition } from "@headlessui/react";
 import {
-  HomeIcon,
-  MenuIcon,
-  XIcon,
-  PlusCircleIcon,
+  Bars3Icon,
   ChartBarIcon,
-  LoginIcon,
-  UserAddIcon,
-} from "@heroicons/react/outline";
+  HomeIcon,
+  XMarkIcon,
+  UserPlusIcon,
+  PlusCircleIcon,
+} from "@heroicons/react/24/outline";
 
 const navigation = [
   { name: "Dashboard", href: "/", icon: HomeIcon },
@@ -25,14 +24,9 @@ const navigation = [
     icon: ChartBarIcon,
   },
   {
-    name: "Sign In",
-    href: "/signin",
-    icon: LoginIcon,
-  },
-  {
     name: "Register",
     href: "/register",
-    icon: UserAddIcon,
+    icon: UserPlusIcon,
   },
 ];
 
@@ -91,7 +85,7 @@ const Layout = ({ children }) => {
                         onClick={() => setSidebarOpen(false)}
                       >
                         <span className="sr-only">Close sidebar</span>
-                        <XIcon
+                        <XMarkIcon
                           className="h-6 w-6 text-white"
                           aria-hidden="true"
                         />
@@ -219,7 +213,7 @@ const Layout = ({ children }) => {
               onClick={() => setSidebarOpen(true)}
             >
               <span className="sr-only">Open sidebar</span>
-              <MenuIcon className="h-6 w-6" aria-hidden="true" />
+              <Bars3Icon className="h-6 w-6" aria-hidden="true" />
             </button>
           </div>
           <main className="flex-1">

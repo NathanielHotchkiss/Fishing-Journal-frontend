@@ -1,53 +1,25 @@
-import React, { Fragment, useState, useEffect, useContext } from "react";
+import React, { Fragment, useState, useContext } from "react";
 import { Link } from "react-router-dom";
 
 import { Menu, Transition } from "@headlessui/react";
-import { TrashIcon, PencilAltIcon } from "@heroicons/react/outline";
-import { DotsVerticalIcon } from "@heroicons/react/solid";
+import { TrashIcon, PencilSquareIcon } from "@heroicons/react/24/outline";
+import { EllipsisVerticalIcon } from "@heroicons/react/24/solid";
 
 import ErrorAlert from "../components/ErrorAlert";
 import Layout from "../layout/Layout";
 import { UserContext } from "../routes/AppRoutes";
-// import { deleteLog, listFishingLogs } from "../utils/api";
 
 export default function Dashboard() {
   const [apiError, setApiError] = useState(null);
   const context = useContext(UserContext);
 
   const userLogs = context.fishingLogsData;
-  // useEffect(fetchData, []);
-
-  // function fetchData() {
-  //   const abortController = new AbortController();
-  //   setApiError(null);
-
-  //   listFishingLogs(abortController.signal)
-  //     .then((data) => {
-  //       setFetchedData(data);
-  //     })
-  //     .catch(setApiError);
-  //   return () => abortController.abort();
-  // }
 
   function classNames(...classes) {
     return classes.filter(Boolean).join(" ");
   }
 
-  // function handleDelete(log_id) {
-  //   if (
-  //     window.confirm("Do you want to delete this log? This cannot be undone.")
-  //   ) {
-  //     const abortController = new AbortController();
-
-  //     deleteLog(log_id, abortController.status)
-  //       .then()
-  //       .catch(setApiError);
-
-  //     return () => abortController.abort();
-  //   }
-  // }
-
-  if (!context.fishingLogsData) {
+  if (!userLogs) {
     return (
       <Layout>
         <div className="flex flex-col items-center justify-center h-screen">
@@ -63,7 +35,7 @@ export default function Dashboard() {
       <Layout>
         <div className="grid grid-col-1 lg:grid-cols-2 my-6">
           <>
-            {context.fishingLogsData.map((info, id) => {
+            {userLogs.map((info, id) => {
               const {
                 fish_id,
                 species,
@@ -93,7 +65,7 @@ export default function Dashboard() {
                           <div>
                             <Menu.Button className="bg-gray-100 rounded-full flex items-center text-gray-400 hover:text-gray-600 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-offset-gray-100 focus:ring-gray-500">
                               <span className="sr-only">Open options</span>
-                              <DotsVerticalIcon
+                              <EllipsisVerticalIcon
                                 className="h-5 w-5"
                                 aria-hidden="true"
                               />
@@ -122,7 +94,7 @@ export default function Dashboard() {
                                         "group flex items-center px-4 py-2 text-sm"
                                       )}
                                     >
-                                      <PencilAltIcon
+                                      <PencilSquareIcon
                                         className="mr-3 h-5 w-5 text-gray-400 group-hover:text-gray-500"
                                         aria-hidden="true"
                                       />
