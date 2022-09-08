@@ -34,13 +34,11 @@ export default function LoginForm() {
   }
 
   return (
-    <div className="min-h-full flex">
-      <div className="hidden lg:block relative w-0 flex-1">
-        <div className="h-screen w-full bg-gradient-to-tl from-blue-400 to-blue-50"></div>
-      </div>
 
-      <div className="mt-8 sm:mx-auto sm:w-full sm:max-w-lg place-self-center">
-        <div className="bg-white py-8 px-4 sm:px-10">
+
+    <div className="mt-16 sm:mt-24 lg:col-span-6 lg:mt-0">
+    <div className="bg-white sm:mx-auto sm:w-full sm:max-w-md sm:overflow-hidden sm:rounded-lg">
+      <div className="px-4 py-8 sm:px-10">
           <form className="space-y-6" onSubmit={handleSubmitJWTAuth}>
             <fieldset>
               <div>
@@ -85,7 +83,7 @@ export default function LoginForm() {
                 <div className="text-sm">Forgot your password?</div>
               </div>
 
-              <div>
+              <div className='mt-4'>
                 <button
                   type="submit"
                   className="w-full flex justify-center py-2 px-4 border border-transparent rounded-md shadow-sm text-sm font-medium text-white bg-gray-700 hover:bg-gray-600 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-gray-500"
@@ -96,7 +94,7 @@ export default function LoginForm() {
             </fieldset>
           </form>
         </div>
-      </div>
+</div>
     </div>
   );
 }
