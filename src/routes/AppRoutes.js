@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState } from "react";
 import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
 
 import Dashboard from "../pages/Dashboard";
@@ -27,22 +27,16 @@ export default function AppRoutes() {
       }),
     ])
 
-      .then(([userRestaurantsRes, userRecipesRes]) => {
-        if (!userRestaurantsRes.ok) {
-          return userRestaurantsRes.json().then((e) => Promise.reject(e));
+      .then(([response]) => {
+        if (!response.ok) {
+          return response.json().then((e) => Promise.reject(e));
         }
 
-        if (!userRecipesRes.ok) {
-          return userRecipesRes.json().then((e) => Promise.reject(e));
-        }
-
-        return Promise.all([userRestaurantsRes.json(), userRecipesRes.json()]);
+        return Promise.all([response.json()]);
       })
 
-      .then(([userRestaurants, userRecipes]) => {
-        this.setState({ userRecipes, userRestaurants });
-
-        this.getFavorites();
+      .then(([response]) => {
+        setFishingLogsData(response);
       })
 
       .catch((error) => {

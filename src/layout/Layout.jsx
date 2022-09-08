@@ -7,12 +7,11 @@ import {
   ChartBarIcon,
   HomeIcon,
   XMarkIcon,
-  UserPlusIcon,
   PlusCircleIcon,
 } from "@heroicons/react/24/outline";
 
 const navigation = [
-  { name: "Dashboard", href: "/", icon: HomeIcon },
+  { name: "Dashboard", href: "/dashboard", icon: HomeIcon },
   {
     name: "Log a catch",
     href: "/new",

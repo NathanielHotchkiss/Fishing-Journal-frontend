@@ -1,10 +1,8 @@
-import React, { useContext } from "react";
+import React from "react";
 import AuthApiService from "../services/auth-api-service";
-import { UserContext } from "../routes/AppRoutes";
-import { useNavigate, Link } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 
 export default function Register() {
-  const context = useContext(UserContext);
   const navigate = useNavigate();
 
   const handleRegisterUser = (event) => {

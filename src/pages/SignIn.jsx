@@ -1,6 +1,6 @@
 /* eslint-disable jsx-a11y/label-has-associated-control */
-import React, { useState, useContext } from "react";
-import { useNavigate, Link } from "react-router-dom";
+import React, { useContext } from "react";
+import { useNavigate } from "react-router-dom";
 
 import TokenService from "../services/token-service";
 import AuthApiService from "../services/auth-api-service";
@@ -9,8 +9,6 @@ import { UserContext } from "../routes/AppRoutes";
 export default function LoginForm() {
   const navigate = useNavigate();
   const context = useContext(UserContext);
-
-  const [error, setError] = useState(null);
 
   async function handleSubmitJWTAuth(event) {
     event.preventDefault();

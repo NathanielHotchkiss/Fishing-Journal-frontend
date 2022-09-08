@@ -19,7 +19,7 @@ export default function Dashboard() {
     return classes.filter(Boolean).join(" ");
   }
 
-  if (!userLogs) {
+  if (userLogs.length === 0) {
     return (
       <Layout>
         <div className="flex flex-col items-center justify-center h-screen">
