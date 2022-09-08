@@ -18,30 +18,37 @@ export default function AppRoutes() {
   const [loggedIn, setLoggedIn] = useState(false);
   const [userId, setUserId] = useState(null);
 
-  async function handleUpdateUserThings(user_id) {
+  const handleUpdateUserThings = async (user_id) => {
     await Promise.all([
-      fetch(`${config.API_ENDPOINT}/fishing_logs/:user_id`, {
+      fetch(`${config.API_ENDPOINT}/fishing_logs/${user_id}`, {
         headers: {
           Authorization: `bearer ${TokenService.getAuthToken()}`,
         },
       }),
     ])
 
-      .then(([userLogsRes]) => {
-        if (!userLogsRes.ok) {
-          return userLogsRes.json().then((e) => Promise.reject(e));
+      .then(([userRestaurantsRes, userRecipesRes]) => {
+        if (!userRestaurantsRes.ok) {
+          return userRestaurantsRes.json().then((e) => Promise.reject(e));
         }
-        return Promise.all([userLogsRes.json()]);
+
+        if (!userRecipesRes.ok) {
+          return userRecipesRes.json().then((e) => Promise.reject(e));
+        }
+
+        return Promise.all([userRestaurantsRes.json(), userRecipesRes.json()]);
       })
 
-      .then(([userLogsRes]) => {
-        setFishingLogsData(userLogsRes);
+      .then(([userRestaurants, userRecipes]) => {
+        this.setState({ userRecipes, userRestaurants });
+
+        this.getFavorites();
       })
 
       .catch((error) => {
-        setApiError(error);
+        this.setState({ error });
       });
-  }
+  };
 
   async function handleApiCalls() {
     if (TokenService.hasAuthToken()) {

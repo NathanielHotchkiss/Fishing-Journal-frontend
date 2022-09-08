@@ -23,11 +23,6 @@ const navigation = [
     href: "/stats",
     icon: ChartBarIcon,
   },
-  {
-    name: "Register",
-    href: "/register",
-    icon: UserPlusIcon,
-  },
 ];
 
 function classNames(...classes) {

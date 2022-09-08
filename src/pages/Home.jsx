@@ -1,9 +1,10 @@
-import React, { Fragment } from "react";
+import React, { Fragment, useState } from "react";
 import { Popover, Transition } from "@headlessui/react";
 import { Bars3Icon, XMarkIcon } from "@heroicons/react/24/outline";
 import { ChevronRightIcon } from "@heroicons/react/20/solid";
 
 import SignIn from "./SignIn.jsx";
+import Register from "./Register.jsx";
 
 const navigation = [
   { name: "Product", href: "#" },
@@ -13,6 +14,12 @@ const navigation = [
 ];
 
 export default function Home() {
+  const [formToggle, setFormToggle] = useState(true);
+
+  const handleFormToggle = () => {
+    setFormToggle((current) => !current);
+  };
+
   return (
     <div className="relative overflow-hidden bg-gray-800 min-h-screen">
       <div
@@ -146,6 +153,11 @@ export default function Home() {
                     qui lorem cupidatat commodo. Elit sunt amet fugiat veniam
                     occaecat fugiat aliqua ad ad non deserunt sunt.
                   </p>
+                  <p className="mt-3 text-base text-gray-300 sm:mt-5 sm:text-xl lg:text-lg xl:text-xl">
+                    Anim aute id magna aliqua ad ad non deserunt sunt. Qui irure
+                    qui lorem cupidatat commodo. Elit sunt amet fugiat veniam
+                    occaecat fugiat aliqua ad ad non deserunt sunt.
+                  </p>
                   <p className="mt-8 text-base font-semibold text-white sm:mt-10">
                     Used by
                   </p>
@@ -176,7 +188,45 @@ export default function Home() {
                   </div>
                 </div>
               </div>
-              <SignIn />
+              <div className="mt-16 sm:mt-24 lg:col-span-6 lg:mt-0">
+                <div className="bg-white sm:mx-auto sm:w-full sm:max-w-md sm:overflow-hidden sm:rounded-lg">
+                  <div className="px-4 py-8 sm:px-10">
+                    {formToggle ? (
+                      <div className="sm:mx-auto sm:w-full sm:max-w-md">
+                        <h2 className="mt-6 text-center text-3xl font-bold tracking-tight text-gray-900">
+                          Sign in to your account
+                        </h2>
+                        <p className="mt-2 text-center text-sm text-gray-600">
+                          Or{" "}
+                          <button
+                            onClick={handleFormToggle}
+                            className="font-medium text-indigo-600 hover:text-indigo-500"
+                          >
+                            register a new account.
+                          </button>
+                        </p>
+                      </div>
+                    ) : (
+                      <div className="sm:mx-auto sm:w-full sm:max-w-md">
+                        <h2 className="mt-6 text-center text-3xl font-bold tracking-tight text-gray-900">
+                          Create a new account
+                        </h2>
+                        <p className="mt-2 text-center text-sm text-gray-600">
+                          Already have an account?{" "}
+                          <button
+                            onClick={handleFormToggle}
+                            className="font-medium text-indigo-600 hover:text-indigo-500"
+                          >
+                            Sign in
+                          </button>
+                        </p>
+                      </div>
+                    )}
+
+                    {formToggle ? <SignIn /> : <Register />}
+                  </div>
+                </div>
+              </div>
             </div>
           </div>
         </main>

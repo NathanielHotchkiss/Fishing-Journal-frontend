@@ -1,97 +1,113 @@
-import React, { useEffect, useState } from "react";
+import React, { useContext } from "react";
+import AuthApiService from "../services/auth-api-service";
+import { UserContext } from "../routes/AppRoutes";
+import { useNavigate, Link } from "react-router-dom";
 
-export default function Register({ edit, loadDashboard }) {
+export default function Register() {
+  const context = useContext(UserContext);
+  const navigate = useNavigate();
+
+  const handleRegisterUser = (event) => {
+    event.preventDefault();
+
+    const { first_name, last_name, email, password } = event.target;
+
+    let newUser = {
+      first_name: first_name.value,
+      last_name: last_name.value,
+      email: email.value,
+      password: password.value,
+    };
+
+    AuthApiService.postUser(newUser)
+      .then(navigate("/dashboard"))
+      .catch((error) => {
+        console.log(error);
+      });
+  };
+
   return (
-    <div className="min-h-full flex">
-      <div className="hidden lg:block relative w-0 flex-1">
-        <div className="h-screen w-full bg-gradient-to-tl from-blue-400 to-blue-50"></div>
+    <form className="space-y-6" onSubmit={handleRegisterUser}>
+      <div className="mt-6">
+        <label
+          htmlFor="first_name"
+          className="block text-sm font-medium text-gray-700"
+        >
+          First Name:
+        </label>
+        <div className="mt-1">
+          <input
+            id="first_name"
+            name="first_name"
+            type="text"
+            required
+            className="appearance-none block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm placeholder-gray-400 focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
+          />
+        </div>
       </div>
 
-      <div className="flex-1 flex flex-col justify-center py-12 px-4 sm:px-6 lg:flex-none lg:px-36 xl:px-24">
-        <form className="space-y-8 divide-y divide-gray-200 my-12 mx-24 w-full sm:w-144 mx-auto">
-          <h3 className="text-xl leading-6 font-medium text-gray-900">
-            Create a new account.
-          </h3>
-
-          <div className="grid sm:grid-cols-2 gap-4 items-start border-t border-gray-200 pt-3 sm:pt-5">
-            <label className="block text-sm font-medium text-gray-700 sm:mt-px sm:pt-2">
-              First Name:
-            </label>
-            <input
-              autoComplete="on"
-              className="mt-1 block w-full pl-3 pr-10 py-2 text-base border-gray-300 focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm rounded-md"
-              name="first_name"
-              id="frist_name"
-              type="text"
-              //   value={formData.species}
-              //   onChange={handleChange}
-              required
-            />
-          </div>
-
-          <div className="grid sm:grid-cols-2 gap-4 items-start border-t border-gray-200 pt-3 sm:pt-5">
-            <label className="block text-sm font-medium text-gray-700 sm:mt-px sm:pt-2">
-              Last Name:
-            </label>
-            <input
-              autoComplete="on"
-              className="border border-slate-200 rounded h-8 focus:ring-blue-500 focus:border-blue-500"
-              name="last_name"
-              id="last_name"
-              type="text"
-              //   onChange={handleChange}
-              //   value={formData.size}
-              required
-            />
-          </div>
-
-          <div className="grid sm:grid-cols-2 gap-4 items-start border-t border-gray-200 pt-3 sm:pt-5">
-            <label className="block text-sm font-medium text-gray-700 sm:mt-px sm:pt-2">
-              Email:
-            </label>
-            <input
-              autoComplete="on"
-              className="border border-slate-200 rounded h-8 focus:ring-blue-500 focus:border-blue-500"
-              name="email"
-              id="email"
-              type="email"
-              //   onChange={handleChange}
-              //   value={formData.size}
-              required
-            />
-          </div>
-
-          <div className="grid sm:grid-cols-2 gap-4 items-start border-t border-gray-200 pt-3 sm:pt-5">
-            <label className="block text-sm font-medium text-gray-700 sm:mt-px sm:pt-2">
-              Password:
-            </label>
-            <input
-              className="border border-slate-200 rounded h-8 focus:ring-blue-500 focus:border-blue-500"
-              name="password"
-              id="password"
-              type="password"
-              //   onChange={handleChange}
-              //   value={formData.size}
-              required
-            />
-          </div>
-
-          <div className="grid sm:grid-cols-2 gap-4 items-start border-t border-gray-200 pt-3 sm:pt-5">
-            <label className="block text-sm font-medium text-gray-700 sm:mt-px sm:pt-2">
-              Re-enter Password:
-            </label>
-            <input
-              className="border border-slate-200 rounded h-8 focus:ring-blue-500 focus:border-blue-500"
-              name="password"
-              id="password"
-              type="password"
-              //   onChange={handleChange}
-              //   value={formData.size}
-              required
-            />
-          </div>
-        </form>
+      <div>
+        <label
+          htmlFor="last_name"
+          className="block text-sm font-medium text-gray-700"
+        >
+          Last Name:
+        </label>
+        <div className="mt-1">
+          <input
+            id="last_name"
+            name="last_name"
+            type="text"
+            required
+            className="appearance-none block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm placeholder-gray-400 focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
+          />
+        </div>
       </div>
-    </div>
+
+      <div>
+        <label
+          htmlFor="email"
+          className="block text-sm font-medium text-gray-700"
+        >
+          Email:
+        </label>
+        <div className="mt-1">
+          <input
+            id="email"
+            name="email"
+            type="text"
+            required
+            className="appearance-none block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm placeholder-gray-400 focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
+          />
+        </div>
+      </div>
+
+      <div>
+        <label
+          htmlFor="password"
+          className="block text-sm font-medium text-gray-700"
+        >
+          Password:
+        </label>
+        <div className="mt-1">
+          <input
+            id="password"
+            name="password"
+            type="text"
+            required
+            className="appearance-none block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm placeholder-gray-400 focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
+          />
+        </div>
+      </div>
+
+      <div className="mt-4">
+        <button
+          type="submit"
+          className="w-full flex justify-center py-2 px-4 border border-transparent rounded-md shadow-sm text-sm font-medium text-white bg-gray-700 hover:bg-gray-600 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-gray-500"
+        >
+          Register
+        </button>
+      </div>
+    </form>
   );
 }
