@@ -1,38 +1,55 @@
 /* eslint-disable jsx-a11y/label-has-associated-control */
-import React, { useContext } from "react";
+import React, { useContext, useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 
-import TokenService from "../services/token-service";
 import AuthApiService from "../services/auth-api-service";
+import TokenService from "../services/token-service";
 import { UserContext } from "../routes/AppRoutes";
+import ErrorAlert from "../components/ErrorAlert";
 
 export default function LoginForm() {
   const navigate = useNavigate();
   const context = useContext(UserContext);
 
-  async function handleSubmitJWTAuth(event) {
+  const [errorMessages, setErrorMessages] = useState(null);
+  const [isSubmitted, setIsSubmitted] = useState(false);
+
+  function handleSubmitJWTAuth(event) {
     event.preventDefault();
+
     const email = event.target.email.value;
     const password = event.target.password.value;
 
-    return await AuthApiService.postLogin({
+    AuthApiService.postLogin({
       email: email,
       password: password,
     })
+
       .then((res) => {
-        TokenService.saveAuthToken(res.authToken);
-        const user_id = TokenService.getUserId();
-        TokenService.saveUserId(user_id);
-        context.handleApiCalls(user_id);
+        if (!res) throw new Error(res);
+        else {
+          TokenService.saveAuthToken(res.authToken);
+          const user_id = TokenService.getUserId();
+          TokenService.saveUserId(user_id);
+          context.handleApiCalls(user_id).then(setIsSubmitted(true));
+        }
       })
-      .then(navigate("/dashboard"))
-      .catch((error) => {
-        console.log(error);
+
+      .catch((res) => {
+        setErrorMessages(res.error);
       });
   }
 
+  async function handleSuccess(event) {
+    await handleSubmitJWTAuth(event);
+    if (isSubmitted) {
+      navigate("/dashboard");
+    }
+  }
+
   return (
-    <form className="space-y-6" onSubmit={handleSubmitJWTAuth}>
+    <form className="space-y-6" onSubmit={handleSuccess}>
+      <ErrorAlert error={errorMessages} />
       <div className="mt-6">
         <label
           htmlFor="email"

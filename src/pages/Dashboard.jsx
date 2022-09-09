@@ -1,18 +1,15 @@
-import React, { Fragment, useState, useContext } from "react";
+import React, { Fragment, useContext } from "react";
 import { Link } from "react-router-dom";
 
 import { Menu, Transition } from "@headlessui/react";
 import { TrashIcon, PencilSquareIcon } from "@heroicons/react/24/outline";
 import { EllipsisVerticalIcon } from "@heroicons/react/24/solid";
 
-import ErrorAlert from "../components/ErrorAlert";
 import Layout from "../layout/Layout";
 import { UserContext } from "../routes/AppRoutes";
 
 export default function Dashboard() {
-  const [apiError, setApiError] = useState(null);
   const context = useContext(UserContext);
-
   const userLogs = context.fishingLogsData;
 
   function classNames(...classes) {
@@ -45,7 +42,6 @@ export default function Dashboard() {
                 bait,
                 fishing_method,
               } = info;
-              <ErrorAlert error={apiError} />;
 
               return (
                 <div key={id} className="block">

@@ -124,7 +124,6 @@ export default function Home() {
                         </p>
                       </div>
                     )}
-
                     {formToggle ? <SignIn /> : <Register />}
                   </div>
                 </div>
