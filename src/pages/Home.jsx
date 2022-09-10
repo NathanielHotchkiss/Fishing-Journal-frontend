@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 
-import SignIn from "./SignIn.jsx";
-import Register from "./Register.jsx";
+import SignIn from "../components/SignIn";
+import Register from "../components/Register";
 
 export default function Home() {
   const [formToggle, setFormToggle] = useState(true);
@@ -11,13 +11,13 @@ export default function Home() {
   };
 
   return (
-    <div className="relative overflow-hidden bg-gray-800 min-h-screen">
+    <div className="relative overflow-hidden bg-zinc-800 min-h-screen">
       <div
         className="hidden sm:absolute sm:inset-0 sm:block"
         aria-hidden="true"
       >
         <svg
-          className="absolute bottom-0 right-0 mb-48 translate-x-1/2 transform text-gray-700 lg:top-0 lg:mt-28 lg:mb-0 xl:translate-x-0 xl:transform-none"
+          className="absolute bottom-0 right-0 mb-48 translate-x-1/2 transform text-zinc-700 lg:top-0 lg:mt-28 lg:mb-0 xl:translate-x-0 xl:transform-none"
           width={364}
           height={384}
           viewBox="0 0 364 384"
@@ -51,11 +51,11 @@ export default function Home() {
                   <h1 className="mt-4 text-4xl font-bold tracking-tight text-white sm:text-5xl md:text-6xl">
                     Fishing Journal
                   </h1>
-                  <p className="mt-3 text-base text-gray-300 sm:mt-5 sm:text-xl lg:text-lg xl:text-xl">
+                  <p className="mt-3 text-base text-zinc-300 sm:mt-5 sm:text-xl lg:text-lg xl:text-xl">
                     Capture valuable fishing data right on your phone. Show off
                     your best catches where ever you go.
                   </p>
-                  <p className="mt-3 text-base text-gray-300 sm:mt-5 sm:text-xl lg:text-lg xl:text-xl">
+                  <p className="mt-3 text-base text-zinc-300 sm:mt-5 sm:text-xl lg:text-lg xl:text-xl">
                     Anim aute id magna aliqua ad ad non deserunt sunt. Qui irure
                     qui lorem cupidatat commodo. Elit sunt amet fugiat veniam
                     occaecat fugiat aliqua ad ad non deserunt sunt.
@@ -95,10 +95,10 @@ export default function Home() {
                   <div className="px-4 py-8 sm:px-10">
                     {formToggle ? (
                       <div className="sm:mx-auto sm:w-full sm:max-w-md">
-                        <h2 className="mt-6 text-center text-3xl font-bold tracking-tight text-gray-900">
+                        <h2 className="mt-6 text-center text-3xl font-bold tracking-tight text-zinc-900">
                           Sign in to your account
                         </h2>
-                        <p className="mt-2 text-center text-sm text-gray-600">
+                        <p className="mt-2 text-center text-sm text-zinc-600">
                           Or{" "}
                           <button
                             onClick={handleFormToggle}
@@ -110,10 +110,10 @@ export default function Home() {
                       </div>
                     ) : (
                       <div className="sm:mx-auto sm:w-full sm:max-w-md">
-                        <h2 className="mt-6 text-center text-3xl font-bold tracking-tight text-gray-900">
+                        <h2 className="mt-6 text-center text-3xl font-bold tracking-tight text-zinc-900">
                           Create a new account
                         </h2>
-                        <p className="mt-2 text-center text-sm text-gray-600">
+                        <p className="mt-2 text-center text-sm text-zinc-600">
                           Already have an account?{" "}
                           <button
                             onClick={handleFormToggle}
