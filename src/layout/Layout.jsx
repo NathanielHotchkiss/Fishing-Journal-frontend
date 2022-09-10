@@ -9,6 +9,7 @@ import {
   HomeIcon,
   XMarkIcon,
   PlusCircleIcon,
+  Cog8ToothIcon,
 } from "@heroicons/react/24/outline";
 
 const navigation = [
@@ -22,6 +23,11 @@ const navigation = [
     name: "Fishing Stats",
     href: "/stats",
     icon: ChartBarIcon,
+  },
+  {
+    name: "Settings",
+    href: "/settings",
+    icon: Cog8ToothIcon,
   },
 ];
 
@@ -136,9 +142,6 @@ const Layout = ({ children }) => {
                         <p className="text-base font-medium text-white">
                           Tom Cook
                         </p>
-                        <p className="text-sm font-medium text-zinc-400 group-hover:text-zinc-300">
-                          View profile
-                        </p>
                       </div>
                     </div>
                   </div>
@@ -196,9 +199,6 @@ const Layout = ({ children }) => {
                 </div>
                 <div className="ml-3">
                   <p className="text-sm font-medium text-white">{user}</p>
-                  <p className="text-xs font-medium text-zinc-300 group-hover:text-zinc-200">
-                    View profile
-                  </p>
                 </div>
               </div>
             </div>

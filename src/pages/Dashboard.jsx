@@ -45,7 +45,7 @@ export default function Dashboard() {
 
               return (
                 <div key={id} className="block">
-                  <div className="relative h-72 w-96 bg-slate-100 shadow-md mx-auto "></div>
+                  <div className="relative h-72 w-96 bg-zinc-300 shadow-md mx-auto "></div>
 
                   <div className="relative p-2 h-40 w-72 shadow-md -top-12 mx-auto bg-white rounded-lg">
                     <div className="flex justify-between">

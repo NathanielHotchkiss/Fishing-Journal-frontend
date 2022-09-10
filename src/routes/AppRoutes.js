@@ -7,6 +7,8 @@ import NewLog from "../pages/NewLog";
 import NotFound from "../components/NotFound";
 import Register from "../components/Register";
 import SignIn from "../components/SignIn";
+import UserSettings from "../pages/UserSettings";
+import Stats from "../pages/Stats";
 import config from "../config";
 import TokenService from "../services/token-service";
 
@@ -15,7 +17,6 @@ export const UserContext = React.createContext({});
 export default function AppRoutes() {
   const [fishingLogsData, setFishingLogsData] = useState([]);
   const [apiError, setApiError] = useState(null);
-  const [loggedIn, setLoggedIn] = useState(false);
   const [userId, setUserId] = useState(null);
 
   const handleUpdateUserThings = async (user_id) => {
@@ -46,8 +47,6 @@ export default function AppRoutes() {
 
   async function handleApiCalls() {
     if (TokenService.hasAuthToken()) {
-      setLoggedIn(true);
-
       const user_id = TokenService.getUserId();
       setUserId(user_id);
 
@@ -76,11 +75,11 @@ export default function AppRoutes() {
   }
 
   const app_user = {
-    loggedIn: loggedIn,
-    setLoggedIn: setLoggedIn,
     userId: userId,
     setUserId: setUserId,
     fishingLogsData: fishingLogsData,
+    setApiError: setApiError,
+    apiError: apiError,
     setFishingLogsData: setFishingLogsData,
     handleUpdateUserThings: handleUpdateUserThings,
     handleApiCalls: handleApiCalls,
@@ -98,6 +97,8 @@ export default function AppRoutes() {
             element={<NewLog edit={true} />}
           />
           <Route path="/register" element={<Register />} />
+          <Route path="/settings" element={<UserSettings />} />
+          <Route path="/stats" element={<Stats />} />
           <Route path="/signin" element={<SignIn />} />
           <Route path="*" element={<NotFound />} />
         </Routes>
