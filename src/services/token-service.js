@@ -16,11 +16,23 @@ const TokenService = {
   getEmail() {
     return window.localStorage.getItem("email");
   },
+  saveFirstName(first_name) {
+    window.localStorage.setItem("first_name", first_name);
+  },
+  getFirstName() {
+    return window.localStorage.getItem("first_name");
+  },
+  saveLastName(last_name) {
+    window.localStorage.setItem("last_name", last_name);
+  },
+  getLastName() {
+    return window.localStorage.getItem("last_name");
+  },
   saveUserId(user_id) {
     window.localStorage.setItem("user_id", user_id);
   },
   getUserId() {
-    return window.localStorage.getItem("userId");
+    return window.localStorage.getItem("user_id");
   },
   clearAll() {
     const items = ["user_name", "userId", config.TOKEN_KEY];
