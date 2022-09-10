@@ -1,9 +1,12 @@
-import React from "react";
+import React, { useState } from "react";
 import AuthApiService from "../services/auth-api-service";
 import { useNavigate } from "react-router-dom";
+import ErrorAlert from "../components/ErrorAlert";
 
 export default function Register() {
   const navigate = useNavigate();
+
+  const [errorMessages, setErrorMessages] = useState(null);
 
   const handleRegisterUser = (event) => {
     event.preventDefault();
@@ -18,14 +21,21 @@ export default function Register() {
     };
 
     AuthApiService.postUser(newUser)
-      .then(navigate("/dashboard"))
-      .catch((error) => {
-        console.log(error);
+      .then((res) => {
+        if (!res) throw new Error(res);
+        else {
+          navigate("/dashboard");
+        }
+      })
+
+      .catch((res) => {
+        setErrorMessages(res.error);
       });
   };
 
   return (
     <form className="space-y-6" onSubmit={handleRegisterUser}>
+      <ErrorAlert error={errorMessages} />
       <div className="mt-6">
         <label
           htmlFor="first_name"
@@ -91,7 +101,7 @@ export default function Register() {
           <input
             id="password"
             name="password"
-            type="text"
+            type="password"
             required
             className="appearance-none block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm placeholder-gray-400 focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
           />

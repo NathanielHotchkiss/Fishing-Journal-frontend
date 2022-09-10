@@ -1,5 +1,5 @@
 /* eslint-disable jsx-a11y/label-has-associated-control */
-import React, { useContext, useState, useEffect } from "react";
+import React, { useContext, useState } from "react";
 import { useNavigate } from "react-router-dom";
 
 import AuthApiService from "../services/auth-api-service";
@@ -12,7 +12,6 @@ export default function LoginForm() {
   const context = useContext(UserContext);
 
   const [errorMessages, setErrorMessages] = useState(null);
-  const [isSubmitted, setIsSubmitted] = useState(false);
 
   function handleSubmitJWTAuth(event) {
     event.preventDefault();
@@ -29,9 +28,9 @@ export default function LoginForm() {
         if (!res) throw new Error(res);
         else {
           TokenService.saveAuthToken(res.authToken);
-          const user_id = TokenService.getUserId();
-          TokenService.saveUserId(user_id);
-          context.handleApiCalls(user_id).then(setIsSubmitted(true));
+          TokenService.saveUserId(res.user_id);
+          console.log(res)
+          context.handleApiCalls(res.user_id).then(navigate("/dashboard"));
         }
       })
 
@@ -40,15 +39,8 @@ export default function LoginForm() {
       });
   }
 
-  async function handleSuccess(event) {
-    await handleSubmitJWTAuth(event);
-    if (isSubmitted) {
-      navigate("/dashboard");
-    }
-  }
-
   return (
-    <form className="space-y-6" onSubmit={handleSuccess}>
+    <form className="space-y-6" onSubmit={handleSubmitJWTAuth}>
       <ErrorAlert error={errorMessages} />
       <div className="mt-6">
         <label
