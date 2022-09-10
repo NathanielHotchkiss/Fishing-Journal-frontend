@@ -5,8 +5,8 @@ import Dashboard from "../pages/Dashboard";
 import Home from "../pages/Home";
 import NewLog from "../pages/NewLog";
 import NotFound from "../components/NotFound";
-import Register from "../pages/Register";
-import SignIn from "../pages/SignIn";
+import Register from "../components/Register";
+import SignIn from "../components/SignIn";
 import config from "../config";
 import TokenService from "../services/token-service";
 
