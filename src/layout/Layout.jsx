@@ -1,5 +1,6 @@
 import { Fragment, useState } from "react";
 import { Link } from "react-router-dom";
+import TokenService from "../services/token-service";
 
 import { Dialog, Transition } from "@headlessui/react";
 import {
@@ -30,6 +31,10 @@ function classNames(...classes) {
 
 const Layout = ({ children }) => {
   const [sidebarOpen, setSidebarOpen] = useState(false);
+
+  const first_name = TokenService.getFirstName();
+  const last_name = TokenService.getLastName();
+  const user = `${first_name} ${last_name}`;
 
   return (
     <>
@@ -190,7 +195,7 @@ const Layout = ({ children }) => {
                   />
                 </div>
                 <div className="ml-3">
-                  <p className="text-sm font-medium text-white">Tom Cook</p>
+                  <p className="text-sm font-medium text-white">{user}</p>
                   <p className="text-xs font-medium text-gray-300 group-hover:text-gray-200">
                     View profile
                   </p>
