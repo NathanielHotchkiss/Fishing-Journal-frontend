@@ -29,7 +29,8 @@ export default function LoginForm() {
         else {
           TokenService.saveAuthToken(res.authToken);
           TokenService.saveUserId(res.user_id);
-          console.log(res)
+          TokenService.saveFirstName(res.first_name);
+          TokenService.saveLastName(res.last_name);
           context.handleApiCalls(res.user_id).then(navigate("/dashboard"));
         }
       })
