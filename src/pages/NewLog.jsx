@@ -8,120 +8,124 @@ import ErrorAlert from "../components/ErrorAlert";
 import AuthApiService from "../services/auth-api-service";
 import TokenService from "../services/token-service";
 
+import config from "../config";
 export default function NewLog(edit) {
   const navigate = useNavigate();
   const { fish_id } = useParams();
   const user_id = TokenService.getUserId();
   const context = useContext(UserContext);
 
+  const [apiError, setApiError] = useState(null);
+  const [formError, setFormError] = useState([]);
+  const [formData, setFormData] = useState({
+    user_id: "",
+    species: "",
+    fish_length: "",
+    pounds: "",
+    ounces: "",
+    bait: "",
+    fishing_method: "",
+  });
+
   const handleLog = (event) => {
     event.preventDefault();
 
-    const { species, fish_length, pounds, ounces, bait, fishing_method } =
-      event.target;
-
-    let newLog = {
-      user_id: user_id,
-      species: species.value,
-      fish_length: fish_length.value,
-      pounds: pounds.value,
-      ounces: ounces.value,
-      bait: bait.value,
-      fishing_method: fishing_method.value,
-    };
-
-    AuthApiService.postNewLog(newLog)
-      .then(context.handleApiCalls(user_id))
+    AuthApiService.postNewLog(formData)
+      .then(context.handleApiCalls())
       .then(navigate("/dashboard"))
       .catch((error) => {
         console.log(error);
       });
   };
 
-  const [apiError, setApiError] = useState(null);
-  const [formError, setFormError] = useState([]);
+  useEffect(() => {
+    if (edit) {
+      if (!fish_id) return null;
 
-  //   useEffect(() => {
+      return fetch(`${config.API_ENDPOINT}/fishing_logs/get/${fish_id}`, {
+        method: "GET",
+        headers: {
+          Authorization: `bearer ${TokenService.getAuthToken()}`,
+        },
+      })
+        .then((res) =>
+          !res.ok ? res.json().then((e) => Promise.reject(e)) : res.json()
+        )
+
+        .then(fillFields)
+
+        .catch((error) => {
+          console.log("error: ", error);
+        });
+    }
+
+    function foundLog(res, fish_id) {
+      const found = res.find((userLog) => userLog.fish_id === fish_id);
+      return found;
+    }
+
+    function fillFields(response) {
+      const res = foundLog(response, fish_id);
+      if (!res) {
+        return null;
+      }
+      setFormData({
+        user_id: user_id,
+        species: res.species,
+        fish_length: res.fish_length,
+        pounds: res.pounds,
+        ounces: res.ounces,
+        bait: res.bait,
+        fishing_method: res.fishing_method,
+      });
+    }
+  }, [fish_id, user_id]);
+
+  function handleChange(event) {
+    const { name, value } = event.target;
+    setFormData((prevState) => {
+      return {
+        ...prevState,
+        [name]: value,
+      };
+    });
+  }
+
+  // function handleSubmit(event) {
+  //   event.preventDefault();
+  //   const abortController = new AbortController();
+
+  //   const foundErrors = [];
+
+  //   if (validateFields(foundErrors)) {
   //     if (edit) {
-  //       if (!fish_id) return null;
-
-  //       loadFishingLogs()
-  //         .then((response) =>
-  //           response.find(
-  //             (fishing_log) => fishing_log.fish_id === Number(fish_id)
-  //           )
-  //         )
-  //         .then(fillFields);
-  //     }
-
-  //     function fillFields(foundFishingLog) {
-  //       if (!foundFishingLog) {
-  //         return null;
-  //       }
-
-  //       setFormData({
-  //         species: foundFishingLog.species,
-  //         fish_length: foundFishingLog.fish_length,
-  //         pounds: foundFishingLog.pounds,
-  //         ounces: foundFishingLog.ounces,
-  //         bait: foundFishingLog.bait,
-  //         fishing_method: foundFishingLog.fishing_method,
-  //       });
-  //     }
-
-  //     async function loadFishingLogs() {
-  //       const abortController = new AbortController();
-  //       return await listFishingLogs(null, abortController.signal).catch(
-  //         setApiError
-  //       );
-  //     }
-  //   }, [edit, fish_id]);
-
-  //   function handleChange(event) {
-  //     const { name, value } = event.target;
-  //     setFormData((prevState) => {
-  //       return {
-  //         ...prevState,
-  //         [name]: value,
-  //       };
-  //     });
-  //   }
-
-  //   function handleSubmit(event) {
-  //     event.preventDefault();
-  //     const abortController = new AbortController();
-
-  //     const foundErrors = [];
-
-  //     if (validateFields(foundErrors)) {
-  //       if (edit) {
-  //         editLog(fish_id, formData, abortController.signal)
-  //           .then(loadDashboard)
-  //           .then(() => navigate(-1))
-  //           .catch(setApiError);
-  //       } else {
-  //         createLog(formData, abortController.signal)
-  //           .then(loadDashboard)
-  //           .then(() => navigate(-1))
-  //           .catch(setApiError);
-  //       }
-  //     }
-  //     setFormError(foundErrors);
-
-  //     return () => abortController.abort();
-  //   }
-
-  // function validateFields(foundErrors) {
-  //   for (const field in formData) {
-  //     if (formData[field] === "") {
-  //       foundErrors.push({
-  //         message: `${field.split("_").join(" ")} cannot be left blank.`,
-  //       });
+  //       editLog(fish_id, formData, abortController.signal)
+  //         .then(loadDashboard)
+  //         .then(() => navigate(-1))
+  //         .catch(setApiError);
+  //     } else {
+  //       createLog(formData, abortController.signal)
+  //         .then(loadDashboard)
+  //         .then(() => navigate(-1))
+  //         .catch(setApiError);
   //     }
   //   }
+  //   setFormError(foundErrors);
 
-  //   return foundErrors.length === 0;
+  //   return () => abortController.abort();
   // }
+
+  function validateFields(foundErrors) {
+    for (const field in formData) {
+      if (formData[field] === "") {
+        foundErrors.push({
+          message: `${field.split("_").join(" ")} cannot be left blank.`,
+        });
+      }
+    }
+
+    return foundErrors.length === 0;
+  }
 
   const errorsJSX = () => {
     return formError.map((error, idx) => (
@@ -154,6 +158,8 @@ export default function NewLog(edit) {
                 name="species"
                 id="species"
                 autoComplete="off"
+                onChange={handleChange}
+                value={formData.species}
                 required
               >
                 <option>Select a species</option>
@@ -181,8 +187,8 @@ export default function NewLog(edit) {
                 name="fish_length"
                 id="fish_length"
                 type="number"
-                // onChange={handleChange}
-                // value={formData.fish_length}
+                onChange={handleChange}
+                value={formData.fish_length}
                 required
               />
             </div>
@@ -198,8 +204,8 @@ export default function NewLog(edit) {
                   name="pounds"
                   id="pounds"
                   type="number"
-                  //   onChange={handleChange}
-                  //   value={formData.pounds}
+                  onChange={handleChange}
+                  value={formData.pounds}
                 />
 
                 <input
@@ -208,8 +214,8 @@ export default function NewLog(edit) {
                   name="ounces"
                   id="ounces"
                   type="number"
-                  //   onChange={handleChange}
-                  //   value={formData.ounces}
+                  onChange={handleChange}
+                  value={formData.ounces}
                 />
               </div>
             </div>
@@ -223,8 +229,8 @@ export default function NewLog(edit) {
                 name="bait"
                 id="bait"
                 autoComplete="off"
-                // value={formData.bait}
-                // onChange={handleChange}
+                value={formData.bait}
+                onChange={handleChange}
               >
                 <option>Select a bait</option>
                 <option value="Crank Bait">Crank Bait</option>
@@ -248,8 +254,8 @@ export default function NewLog(edit) {
                 name="fishing_method"
                 id="fishing_method"
                 autoComplete="off"
-                // value={formData.fishing_method}
-                // onChange={handleChange}
+                value={formData.fishing_method}
+                onChange={handleChange}
               >
                 <option>Select a method</option>
                 <option value="Boat">Boat</option>
@@ -263,7 +269,7 @@ export default function NewLog(edit) {
             <div className="pt-5">
               <div className="flex justify-end">
                 <button
-                  className="bg-white py-2 px-4 border border-gray-300 rounded-md shadow-sm text-sm font-medium text-gray-700 hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500 mr-2"
+                  className="bg-white py-2 px-4 border border-gray-300 rounded-md shadow-sm text-sm font-medium text-gray-700 hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-zinc-500 mr-2"
                   type="button"
                   onClick={() => navigate(-1)}
                 >
@@ -271,7 +277,7 @@ export default function NewLog(edit) {
                 </button>
 
                 <button
-                  className="ml-3 inline-flex justify-center py-2 px-4 border border-transparent shadow-sm text-sm font-medium rounded-md text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
+                  className="ml-3 inline-flex justify-center py-2 px-4 border border-transparent shadow-sm text-sm font-medium rounded-md text-white bg-zinc-600 hover:bg-zinc-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-zinc-500"
                   type="submit"
                 >
                   Submit
