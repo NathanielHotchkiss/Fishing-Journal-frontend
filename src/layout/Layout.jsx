@@ -136,7 +136,6 @@ const Layout = ({ children }) => {
                           {item.name}
                         </Link>
                       ))}
-
                       <div>
                         <button
                           type="submit"
@@ -235,9 +234,7 @@ const Layout = ({ children }) => {
             <button
               type="button"
               className="-ml-0.5 -mt-0.5 h-12 w-12 inline-flex items-center justify-center rounded-md text-zinc-500 hover:text-zinc-900 focus:outline-none focus:ring-2 focus:ring-inset focus:ring-indigo-500"
-              onClick={() => {
-                handleSignOut();
-              }}
+              onClick={() => setSidebarOpen(true)}
             >
               <span className="sr-only">Open sidebar</span>
               <Bars3Icon className="h-6 w-6" aria-hidden="true" />
