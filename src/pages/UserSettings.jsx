@@ -1,7 +1,9 @@
 import React from "react";
 import Layout from "../layout/Layout";
+import { useNavigate } from "react-router-dom";
 
 export default function UserSettings() {
+  const navigate = useNavigate();
   return (
     <Layout>
       <div className="flex-1 xl:overflow-y-auto m-2">
@@ -16,7 +18,6 @@ export default function UserSettings() {
                 <h2 className="text-xl font-medium text-blue-gray-900">
                   Profile
                 </h2>
-       
               </div>
 
               <div className="sm:col-span-3">
@@ -32,7 +33,7 @@ export default function UserSettings() {
                   id="first-name"
                   autoComplete="given-name"
                   className="appearance-none block w-full px-3 py-2 border border-zinc-300 rounded-md shadow-sm placeholder-zinc-400 focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
-                  />
+                />
               </div>
 
               <div className="sm:col-span-3">
@@ -48,10 +49,8 @@ export default function UserSettings() {
                   id="last-name"
                   autoComplete="family-name"
                   className="appearance-none block w-full px-3 py-2 border border-zinc-300 rounded-md shadow-sm placeholder-zinc-400 focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
-                  />
+                />
               </div>
-
-              
 
               <div className="sm:col-span-6">
                 <label
@@ -98,7 +97,6 @@ export default function UserSettings() {
                 <h2 className="text-xl font-medium text-blue-gray-900">
                   Personal Information
                 </h2>
-
               </div>
 
               <div className="sm:col-span-3">
@@ -114,7 +112,7 @@ export default function UserSettings() {
                   id="email-address"
                   autoComplete="email"
                   className="appearance-none block w-full px-3 py-2 border border-zinc-300 rounded-md shadow-sm placeholder-zinc-400 focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
-                  />
+                />
               </div>
 
               <div className="sm:col-span-3">
@@ -130,7 +128,7 @@ export default function UserSettings() {
                   id="phone-number"
                   autoComplete="tel"
                   className="appearance-none block w-full px-3 py-2 border border-zinc-300 rounded-md shadow-sm placeholder-zinc-400 focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
-                  />
+                />
               </div>
 
               <div className="sm:col-span-3">
@@ -145,7 +143,7 @@ export default function UserSettings() {
                   name="country"
                   autoComplete="country-name"
                   className="appearance-none block w-full px-3 py-2 border border-zinc-300 rounded-md shadow-sm placeholder-zinc-400 focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
-                  >
+                >
                   <option />
                   <option>United States</option>
                   <option>Canada</option>
@@ -165,7 +163,7 @@ export default function UserSettings() {
                   name="language"
                   id="language"
                   className="appearance-none block w-full px-3 py-2 border border-zinc-300 rounded-md shadow-sm placeholder-zinc-400 focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
-                  />
+                />
               </div>
 
               <p className="text-sm text-blue-gray-500 sm:col-span-6">
@@ -181,6 +179,7 @@ export default function UserSettings() {
               <button
                 type="button"
                 className="rounded-md border border-gray-300 bg-white py-2 px-4 text-sm font-medium text-blue-gray-900 shadow-sm hover:bg-blue-gray-50 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2"
+                onClick={() => navigate(-1)}
               >
                 Cancel
               </button>
