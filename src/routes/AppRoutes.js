@@ -15,35 +15,15 @@ import TokenService from "../services/token-service";
 export const UserContext = React.createContext({});
 
 export default function AppRoutes() {
-  const [fishingLogsData, setFishingLogsData] = useState([]);
-  const [apiError, setApiError] = useState(null);
+  const [firstName, setFirstName] = useState(null);
+  const [lastName, setLastName] = useState(null);
   const [userId, setUserId] = useState(null);
+  const [apiError, setApiError] = useState(null);
+  const [isLoggedIn, setIsLoggedIn] = useState(false);
 
-  const handleUpdateUserThings = async (user_id) => {
-    await Promise.all([
-      fetch(`${config.API_ENDPOINT}/fishing_logs/${user_id}`, {
-        headers: {
-          Authorization: `bearer ${TokenService.getAuthToken()}`,
-        },
-      }),
-    ])
+  const [fishingLogsData, setFishingLogsData] = useState([]);
 
-      .then(([response]) => {
-        if (!response.ok) {
-          return response.json().then((e) => Promise.reject(e));
-        }
-
-        return Promise.all([response.json()]);
-      })
-
-      .then(([response]) => {
-        setFishingLogsData(response);
-      })
-
-      .catch((error) => {
-        this.setState({ error });
-      });
-  };
+  console.log(isLoggedIn);
 
   async function handleApiCalls() {
     if (TokenService.hasAuthToken()) {
@@ -77,11 +57,14 @@ export default function AppRoutes() {
   const app_user = {
     userId: userId,
     setUserId: setUserId,
+    firstName: firstName,
+    lastName: lastName,
+    isLoggedIn: isLoggedIn,
+    setIsLoggedIn: setIsLoggedIn,
     fishingLogsData: fishingLogsData,
     setApiError: setApiError,
     apiError: apiError,
     setFishingLogsData: setFishingLogsData,
-    handleUpdateUserThings: handleUpdateUserThings,
     handleApiCalls: handleApiCalls,
   };
 
@@ -99,7 +82,12 @@ export default function AppRoutes() {
           <Route path="/register" element={<Register />} />
           <Route path="/settings" element={<UserSettings />} />
           <Route path="/stats" element={<Stats />} />
-          <Route path="/signin" element={<SignIn />} />
+          <Route
+            path="/signin"
+            element={<SignIn />}
+            setFirstName={setFirstName}
+            setLastName={setLastName}
+          />
           <Route path="*" element={<NotFound />} />
         </Routes>
       </Router>
