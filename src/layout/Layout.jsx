@@ -10,6 +10,7 @@ import {
   XMarkIcon,
   PlusCircleIcon,
   Cog8ToothIcon,
+  MagnifyingGlassIcon,
 } from "@heroicons/react/24/outline";
 
 const navigation = [
@@ -127,6 +128,15 @@ const Layout = ({ children }) => {
                           {item.name}
                         </Link>
                       ))}
+
+                      <div>
+                        <button
+                          type="submit"
+                          className="w-full flex justify-center py-2 px-4 border border-transparent rounded-md shadow-sm text-sm font-medium text-white bg-zinc-700 hover:bg-zinc-600 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-zinc-500"
+                        >
+                          Sign in
+                        </button>
+                      </div>
                     </nav>
                   </div>
                   <div className="flex-shrink-0 flex bg-zinc-700 p-4">
@@ -215,8 +225,9 @@ const Layout = ({ children }) => {
               <Bars3Icon className="h-6 w-6" aria-hidden="true" />
             </button>
           </div>
+
           <main className="flex-1">
-            <div className="py-6">
+            <div className="py-4">
               <div className="max-w-7xl mx-auto px-4 sm:px-6 md:px-8">
                 <main>{children}</main>
               </div>
