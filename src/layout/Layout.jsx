@@ -1,5 +1,5 @@
 import { Fragment, useState } from "react";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import TokenService from "../services/token-service";
 
 import { Dialog, Transition } from "@headlessui/react";
@@ -10,7 +10,6 @@ import {
   XMarkIcon,
   PlusCircleIcon,
   Cog8ToothIcon,
-  MagnifyingGlassIcon,
 } from "@heroicons/react/24/outline";
 
 const navigation = [
@@ -42,6 +41,15 @@ const Layout = ({ children }) => {
   const first_name = TokenService.getFirstName();
   const last_name = TokenService.getLastName();
   const user = `${first_name} ${last_name}`;
+
+  const navigate = useNavigate();
+
+  function handleSignOut(event) {
+    event.preventDefault();
+
+    TokenService.clearEverything();
+    navigate("/");
+  }
 
   return (
     <>
@@ -133,8 +141,9 @@ const Layout = ({ children }) => {
                         <button
                           type="submit"
                           className="w-full flex justify-center py-2 px-4 border border-transparent rounded-md shadow-sm text-sm font-medium text-white bg-zinc-700 hover:bg-zinc-600 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-zinc-500"
+                          onClick={handleSignOut}
                         >
-                          Sign in
+                          Sign out
                         </button>
                       </div>
                     </nav>
@@ -149,9 +158,7 @@ const Layout = ({ children }) => {
                         />
                       </div>
                       <div className="ml-3">
-                        <p className="text-base font-medium text-white">
-                          Tom Cook
-                        </p>
+                        <p className="text-sm font-medium text-white">{user}</p>
                       </div>
                     </div>
                   </div>
@@ -196,6 +203,15 @@ const Layout = ({ children }) => {
                     {item.name}
                   </Link>
                 ))}
+                <div>
+                  <button
+                    type="submit"
+                    className="w-full flex justify-center py-2 px-4 border border-transparent rounded-md shadow-sm text-sm font-medium text-white bg-zinc-700 hover:bg-zinc-600 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-zinc-500"
+                    onClick={handleSignOut}
+                  >
+                    Sign out
+                  </button>
+                </div>
               </nav>
             </div>
             <div className="flex-shrink-0 flex bg-zinc-700 p-4">
@@ -219,7 +235,9 @@ const Layout = ({ children }) => {
             <button
               type="button"
               className="-ml-0.5 -mt-0.5 h-12 w-12 inline-flex items-center justify-center rounded-md text-zinc-500 hover:text-zinc-900 focus:outline-none focus:ring-2 focus:ring-inset focus:ring-indigo-500"
-              onClick={() => setSidebarOpen(true)}
+              onClick={() => {
+                handleSignOut();
+              }}
             >
               <span className="sr-only">Open sidebar</span>
               <Bars3Icon className="h-6 w-6" aria-hidden="true" />

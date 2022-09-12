@@ -16,10 +16,7 @@ import Protected from "../components/Protected";
 export const UserContext = React.createContext({});
 
 export default function AppRoutes() {
-  const [firstName, setFirstName] = useState(null);
-  const [lastName, setLastName] = useState(null);
   const [apiError, setApiError] = useState(null);
-
   const [fishingLogsData, setFishingLogsData] = useState([]);
 
   async function handleApiCalls() {
@@ -51,8 +48,6 @@ export default function AppRoutes() {
   }
 
   const app_user = {
-    firstName: firstName,
-    lastName: lastName,
     fishingLogsData: fishingLogsData,
     setApiError: setApiError,
     apiError: apiError,

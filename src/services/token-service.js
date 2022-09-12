@@ -35,8 +35,17 @@ const TokenService = {
     return window.localStorage.getItem("user_id");
   },
   clearAll() {
-    const items = ["user_name", "userId", config.TOKEN_KEY];
+    const items = [
+      "email",
+      "first_name",
+      "last_name",
+      "user_id",
+      config.TOKEN_KEY,
+    ];
     items.forEach((item) => window.localStorage.removeItem(item));
+  },
+  clearEverything() {
+    window.localStorage.clear();
   },
   getAuthToken() {
     return window.localStorage.getItem(config.TOKEN_KEY);
