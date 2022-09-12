@@ -38,6 +38,7 @@ export default function NewLog(edit) {
       });
   };
 
+
   useEffect(() => {
     if (edit) {
       if (!fish_id) return null;
@@ -59,15 +60,18 @@ export default function NewLog(edit) {
         });
     }
 
-    function foundLog(res, fish_id) {
-      const found = res.find((userLog) => userLog.fish_id === fish_id);
-      return found;
-    }
+    // function foundLog(res, fish_id) {
+    //   const found = res.find((userLog) => userLog.fish_id === fish_id);
+    //   return found;
+    // }
 
-    function fillFields(response) {
-      const res = foundLog(response, fish_id);
+    function fillFields(res) {
+      // const res = foundLog(response, fish_id);
+      console.log(res)
+      
       if (!res) {
         return null;
+
       }
       setFormData({
         user_id: user_id,
@@ -79,7 +83,7 @@ export default function NewLog(edit) {
         fishing_method: res.fishing_method,
       });
     }
-  }, [fish_id, user_id]);
+  }, [fish_id, user_id, edit]);
 
   function handleChange(event) {
     const { name, value } = event.target;

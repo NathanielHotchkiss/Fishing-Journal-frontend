@@ -11,24 +11,20 @@ import UserSettings from "../pages/UserSettings";
 import Stats from "../pages/Stats";
 import config from "../config";
 import TokenService from "../services/token-service";
+import Protected from "../components/Protected";
 
 export const UserContext = React.createContext({});
 
 export default function AppRoutes() {
   const [firstName, setFirstName] = useState(null);
   const [lastName, setLastName] = useState(null);
-  const [userId, setUserId] = useState(null);
   const [apiError, setApiError] = useState(null);
-  const [isLoggedIn, setIsLoggedIn] = useState(false);
 
   const [fishingLogsData, setFishingLogsData] = useState([]);
-
-  console.log(isLoggedIn);
 
   async function handleApiCalls() {
     if (TokenService.hasAuthToken()) {
       const user_id = TokenService.getUserId();
-      setUserId(user_id);
 
       await Promise.all([
         fetch(`${config.API_ENDPOINT}/fishing_logs/${user_id}`, {
@@ -55,12 +51,8 @@ export default function AppRoutes() {
   }
 
   const app_user = {
-    userId: userId,
-    setUserId: setUserId,
     firstName: firstName,
     lastName: lastName,
-    isLoggedIn: isLoggedIn,
-    setIsLoggedIn: setIsLoggedIn,
     fishingLogsData: fishingLogsData,
     setApiError: setApiError,
     apiError: apiError,
@@ -73,21 +65,41 @@ export default function AppRoutes() {
       <Router>
         <Routes>
           <Route path="/" element={<Home />} />
-          <Route path="/dashboard" element={<Dashboard />} />
-          <Route path="/new" element={<NewLog />} />
+          <Route
+            path="/dashboard"
+            element={
+              <Protected>
+                <Dashboard />
+              </Protected>
+            }
+          />
+          <Route
+            path="/new"
+            element={
+              <Protected>
+                <NewLog />
+              </Protected>
+            }
+          />
           <Route
             path="/fishing_logs/:fish_id/edit"
-            element={<NewLog edit={true} />}
+            element={
+              <Protected>
+                <NewLog edit={true} />
+              </Protected>
+            }
           />
           <Route path="/register" element={<Register />} />
           <Route path="/settings" element={<UserSettings />} />
-          <Route path="/stats" element={<Stats />} />
           <Route
-            path="/signin"
-            element={<SignIn />}
-            setFirstName={setFirstName}
-            setLastName={setLastName}
+            path="/stats"
+            element={
+              <Protected>
+                <Stats />
+              </Protected>
+            }
           />
+          <Route path="/signin" element={<SignIn />} />
           <Route path="*" element={<NotFound />} />
         </Routes>
       </Router>
