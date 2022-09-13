@@ -30,20 +30,28 @@ export default function NewLog(edit) {
   const handleLog = (event) => {
     event.preventDefault();
 
-    AuthApiService.postNewLog(formData)
-      .then(context.handleApiCalls())
-      .then(navigate("/dashboard"))
-      .catch((error) => {
-        console.log(error);
-      });
+    if (edit) {
+      AuthApiService.updateLog(formData)
+        .then(context.handleApiCalls())
+        .then(navigate("/dashboard"))
+        .catch((error) => {
+          setApiError(error)
+        });
+    } else {
+      AuthApiService.postNewLog(formData)
+        .then(context.handleApiCalls())
+        .then(navigate("/dashboard"))
+        .catch((error) => {
+          setApiError(error)
+        });
+    }
   };
-
 
   useEffect(() => {
     if (edit) {
       if (!fish_id) return null;
 
-      return fetch(`${config.API_ENDPOINT}/fishing_logs/get/${fish_id}`, {
+      return fetch(`${config.API_ENDPOINT}/fishing_logs/${fish_id}`, {
         method: "GET",
         headers: {
           Authorization: `bearer ${TokenService.getAuthToken()}`,
@@ -60,18 +68,9 @@ export default function NewLog(edit) {
         });
     }
 
-    // function foundLog(res, fish_id) {
-    //   const found = res.find((userLog) => userLog.fish_id === fish_id);
-    //   return found;
-    // }
-
     function fillFields(res) {
-      // const res = foundLog(response, fish_id);
-      console.log(res)
-      
       if (!res) {
         return null;
-
       }
       setFormData({
         user_id: user_id,

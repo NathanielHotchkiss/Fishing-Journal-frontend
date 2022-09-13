@@ -24,7 +24,7 @@ export default function AppRoutes() {
       const user_id = TokenService.getUserId();
 
       await Promise.all([
-        fetch(`${config.API_ENDPOINT}/fishing_logs/${user_id}`, {
+        fetch(`${config.API_ENDPOINT}/fishing_logs/user/${user_id}`, {
           headers: {
             Authorization: `bearer ${TokenService.getAuthToken()}`,
           },
@@ -51,7 +51,6 @@ export default function AppRoutes() {
     fishingLogsData: fishingLogsData,
     setApiError: setApiError,
     apiError: apiError,
-    setFishingLogsData: setFishingLogsData,
     handleApiCalls: handleApiCalls,
   };
 

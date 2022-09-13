@@ -1,4 +1,4 @@
-import React, { Fragment, useContext } from "react";
+import React, { Fragment, useContext, useEffect } from "react";
 import { Link } from "react-router-dom";
 
 import { Menu, Transition } from "@headlessui/react";
@@ -7,6 +7,7 @@ import { EllipsisVerticalIcon } from "@heroicons/react/24/solid";
 
 import Layout from "../layout/Layout";
 import { UserContext } from "../routes/AppRoutes";
+import AuthApiService from "../services/auth-api-service";
 
 export default function Dashboard() {
   const context = useContext(UserContext);
@@ -14,6 +15,16 @@ export default function Dashboard() {
 
   function classNames(...classes) {
     return classes.filter(Boolean).join(" ");
+  }
+
+  useEffect(() => {
+    return context.handleApiCalls();
+  });
+
+  async function handleDelete(fish_id) {
+    return await AuthApiService.deleteLog(fish_id)
+      .then(context.handleApiCalls())
+      .then(window.location.reload());
   }
 
   if (userLogs.length === 0) {
@@ -102,7 +113,7 @@ export default function Dashboard() {
                                   {({ active }) => (
                                     <Link
                                       to="#"
-                                      // onClick={() => handleDelete(fish_id)}
+                                      onClick={() => handleDelete(fish_id)}
                                       className={classNames(
                                         active
                                           ? "w-full bg-gray-100 text-gray-900"
@@ -124,6 +135,11 @@ export default function Dashboard() {
                         </Menu>
                       </div>
                     </div>
+                    <p className="block text-base font-medium text-gray-500 pointer-events-none">
+                      <span>Id: </span>
+                      {fish_id}
+                      <span className="text-xs"></span>
+                    </p>
                     <p className="block text-base font-medium text-gray-500 pointer-events-none">
                       <span>Length: </span>
                       {fish_length}

@@ -35,7 +35,7 @@ const AuthApiService = {
     );
   },
   postNewLog(user) {
-    return fetch(`${config.API_ENDPOINT}/fishing_logs/new`, {
+    return fetch(`${config.API_ENDPOINT}/fishing_logs`, {
       method: "POST",
       headers: {
         "content-type": "application/json",
@@ -44,6 +44,32 @@ const AuthApiService = {
     }).then((res) =>
       !res.ok ? res.json().then((e) => Promise.reject(e)) : res.json()
     );
+  },
+  updateLog(fish) {
+    return fetch(`${config.API_ENDPOINT}/fishing_logs/:fish_id`, {
+      method: "PUT",
+      headers: {
+        "content-type": "application/json",
+      },
+      body: JSON.stringify(fish),
+    }).then((res) =>
+      !res.ok ? res.json().then((e) => Promise.reject(e)) : res.json()
+    );
+  },
+  deleteLog(fish_id) {
+    return fetch(`${config.API_ENDPOINT}/fishing_logs/${fish_id}`, {
+      method: "DELETE",
+      headers: {
+        fish_id,
+        Authorization: `bearer ${TokenService.getAuthToken()}`,
+        "Content-Type": "application/json",
+      },
+    }).then((res) => {
+      if (!res.ok) {
+        return res.json().then((e) => Promise.reject(e));
+      }
+      return res;
+    });
   },
 };
 
