@@ -1,17 +1,16 @@
 import React, { useState } from "react";
 import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
 
+import AuthApiService from "../services/auth-api-service";
 import Dashboard from "../pages/Dashboard";
 import Home from "../pages/Home";
 import NewLog from "../pages/NewLog";
 import NotFound from "../components/NotFound";
+import Protected from "../components/Protected";
 import Register from "../components/Register";
 import SignIn from "../components/SignIn";
-import UserSettings from "../pages/UserSettings";
 import Stats from "../pages/Stats";
-import config from "../config";
-import TokenService from "../services/token-service";
-import Protected from "../components/Protected";
+import UserSettings from "../pages/UserSettings";
 
 export const UserContext = React.createContext({});
 
@@ -20,31 +19,15 @@ export default function AppRoutes() {
   const [fishingLogsData, setFishingLogsData] = useState([]);
 
   async function handleApiCalls() {
-    if (TokenService.hasAuthToken()) {
-      const user_id = TokenService.getUserId();
+    return AuthApiService.getLogs()
 
-      await Promise.all([
-        fetch(`${config.API_ENDPOINT}/fishing_logs/user/${user_id}`, {
-          headers: {
-            Authorization: `bearer ${TokenService.getAuthToken()}`,
-          },
-        }),
-      ])
-        .then(([userLogsRes]) => {
-          if (!userLogsRes.ok) {
-            return userLogsRes.json().then((e) => Promise.reject(e));
-          }
-          return Promise.all([userLogsRes.json()]);
-        })
+      .then(([logs]) => {
+        setFishingLogsData(logs);
+      })
 
-        .then(([logs]) => {
-          setFishingLogsData(logs);
-        })
-
-        .catch((error) => {
-          setApiError(error);
-        });
-    }
+      .catch((error) => {
+        setApiError(error);
+      });
   }
 
   const app_user = {

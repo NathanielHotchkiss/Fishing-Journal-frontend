@@ -19,7 +19,7 @@ export default function Dashboard() {
 
   useEffect(() => {
     return context.handleApiCalls();
-  });
+  }, []);
 
   async function handleDelete(fish_id) {
     return await AuthApiService.deleteLog(fish_id)

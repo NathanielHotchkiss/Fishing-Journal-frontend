@@ -32,9 +32,7 @@ export default function LoginForm() {
           TokenService.saveEmail(res.email);
           TokenService.saveFirstName(res.first_name);
           TokenService.saveLastName(res.last_name);
-          context
-            .handleApiCalls(res.user_id)
-            .then((navigate('/dashboard')));
+          context.then(navigate("/dashboard"));
         }
       })
 

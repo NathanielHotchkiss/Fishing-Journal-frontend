@@ -71,6 +71,22 @@ const AuthApiService = {
       return res;
     });
   },
+  getLogs() {
+    if (TokenService.hasAuthToken()) {
+      const user_id = TokenService.getUserId();
+
+      return fetch(`${config.API_ENDPOINT}/fishing_logs/user/${user_id}`, {
+        headers: {
+          Authorization: `bearer ${TokenService.getAuthToken()}`,
+        },
+      }).then(([userLogsRes]) => {
+        if (!userLogsRes.ok) {
+          return userLogsRes.json().then((e) => Promise.reject(e));
+        }
+        return Promise.all([userLogsRes.json()]);
+      });
+    }
+  },
 };
 
 export default AuthApiService;
