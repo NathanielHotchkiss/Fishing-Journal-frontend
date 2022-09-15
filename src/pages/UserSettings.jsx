@@ -1,55 +1,70 @@
-import React from "react";
-import Layout from "../layout/Layout";
+import React, { useContext, useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
+import AuthApiService from "../services/auth-api-service";
+import Layout from "../layout/Layout";
+import { UserContext } from "../routes/AppRoutes";
+import ErrorAlert from "../components/ErrorAlert";
 
 export default function UserSettings() {
   const navigate = useNavigate();
+  const context = useContext(UserContext);
+  const user = context.userInfo;
+
+  const [apiError, setApiError] = useState(null);
+  const [formData, setFormData] = useState({
+    email: "",
+    first_name: "",
+    last_name: "",
+    created: "",
+  });
+
+  const handleLog = (event) => {
+    event.preventDefault();
+
+    AuthApiService.updateUser(formData)
+      .then(navigate("/dashboard"))
+      .catch(setApiError);
+  };
+
+  useEffect(() => {
+    setFormData({
+      email: user.email,
+      first_name: user.first_name,
+      last_name: user.last_name,
+      created: user.created,
+    });
+  }, [user]);
+
+  function handleChange(event) {
+    const { name, value } = event.target;
+    setFormData((prevState) => {
+      return {
+        ...prevState,
+        [name]: value,
+      };
+    });
+  }
+
   return (
     <Layout>
       <div className="flex-1 xl:overflow-y-auto m-2">
+        <div className="my-12 mx-24 w-full sm:w-144 mx-auto">
+          <ErrorAlert error={apiError} />
+        </div>
         <div className="mx-auto max-w-3xl py-10 px-4 sm:px-6 lg:py-12 lg:px-8">
           <h1 className="text-3xl font-bold tracking-tight text-blue-gray-900">
             Account
           </h1>
 
-          <form className="divide-y-blue-gray-200 mt-6 space-y-8 divide-y">
+          <form
+            className="divide-y-blue-gray-200 mt-6 space-y-8 divide-y"
+            onSubmit={handleLog}
+          >
             <div className="grid grid-cols-1 gap-y-6 sm:grid-cols-6 sm:gap-x-6">
               <div className="sm:col-span-6">
                 <h2 className="text-xl font-medium text-blue-gray-900">
                   Profile
                 </h2>
-              </div>
-
-              <div className="sm:col-span-3">
-                <label
-                  htmlFor="first-name"
-                  className="block text-sm font-medium text-blue-gray-900"
-                >
-                  First name
-                </label>
-                <input
-                  type="text"
-                  name="first-name"
-                  id="first-name"
-                  autoComplete="given-name"
-                  className="appearance-none block w-full px-3 py-2 border border-zinc-300 rounded-md shadow-sm placeholder-zinc-400 focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
-                />
-              </div>
-
-              <div className="sm:col-span-3">
-                <label
-                  htmlFor="last-name"
-                  className="block text-sm font-medium text-blue-gray-900"
-                >
-                  Last name
-                </label>
-                <input
-                  type="text"
-                  name="last-name"
-                  id="last-name"
-                  autoComplete="family-name"
-                  className="appearance-none block w-full px-3 py-2 border border-zinc-300 rounded-md shadow-sm placeholder-zinc-400 focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
-                />
               </div>
 
               <div className="sm:col-span-6">
@@ -90,13 +105,40 @@ export default function UserSettings() {
                   </div>
                 </div>
               </div>
-            </div>
+              <div className="sm:col-span-3">
+                <label
+                  htmlFor="first-name"
+                  className="block text-sm font-medium text-blue-gray-900"
+                >
+                  First name
+                </label>
+                <input
+                  type="text"
+                  name="first-name"
+                  id="first-name"
+                  autoComplete="given-name"
+                  className="appearance-none block w-full px-3 py-2 border border-zinc-300 rounded-md shadow-sm placeholder-zinc-400 focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
+                  onChange={handleChange}
+                  value={formData.first_name}
+                />
+              </div>
 
-            <div className="grid grid-cols-1 gap-y-6 pt-8 sm:grid-cols-6 sm:gap-x-6">
-              <div className="sm:col-span-6">
-                <h2 className="text-xl font-medium text-blue-gray-900">
-                  Personal Information
-                </h2>
+              <div className="sm:col-span-3">
+                <label
+                  htmlFor="last-name"
+                  className="block text-sm font-medium text-blue-gray-900"
+                >
+                  Last name
+                </label>
+                <input
+                  type="text"
+                  name="last-name"
+                  id="last-name"
+                  autoComplete="family-name"
+                  className="appearance-none block w-full px-3 py-2 border border-zinc-300 rounded-md shadow-sm placeholder-zinc-400 focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
+                  onChange={handleChange}
+                  value={formData.last_name}
+                />
               </div>
 
               <div className="sm:col-span-3">
@@ -112,66 +154,14 @@ export default function UserSettings() {
                   id="email-address"
                   autoComplete="email"
                   className="appearance-none block w-full px-3 py-2 border border-zinc-300 rounded-md shadow-sm placeholder-zinc-400 focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
-                />
-              </div>
-
-              <div className="sm:col-span-3">
-                <label
-                  htmlFor="phone-number"
-                  className="block text-sm font-medium text-blue-gray-900"
-                >
-                  Phone number
-                </label>
-                <input
-                  type="text"
-                  name="phone-number"
-                  id="phone-number"
-                  autoComplete="tel"
-                  className="appearance-none block w-full px-3 py-2 border border-zinc-300 rounded-md shadow-sm placeholder-zinc-400 focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
-                />
-              </div>
-
-              <div className="sm:col-span-3">
-                <label
-                  htmlFor="country"
-                  className="block text-sm font-medium text-blue-gray-900"
-                >
-                  Country
-                </label>
-                <select
-                  id="country"
-                  name="country"
-                  autoComplete="country-name"
-                  className="appearance-none block w-full px-3 py-2 border border-zinc-300 rounded-md shadow-sm placeholder-zinc-400 focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
-                >
-                  <option />
-                  <option>United States</option>
-                  <option>Canada</option>
-                  <option>Mexico</option>
-                </select>
-              </div>
-
-              <div className="sm:col-span-3">
-                <label
-                  htmlFor="language"
-                  className="block text-sm font-medium text-blue-gray-900"
-                >
-                  Language
-                </label>
-                <input
-                  type="text"
-                  name="language"
-                  id="language"
-                  className="appearance-none block w-full px-3 py-2 border border-zinc-300 rounded-md shadow-sm placeholder-zinc-400 focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
+                  onChange={handleChange}
+                  value={formData.email}
                 />
               </div>
 
               <p className="text-sm text-blue-gray-500 sm:col-span-6">
                 This account was created on{" "}
-                <time dateTime="2017-01-05T20:35:40">
-                  January 5, 2017, 8:35:40 PM
-                </time>
-                .
+                {/* {getFormattedDate(formData.created)} */}.
               </p>
             </div>
 
