@@ -1,24 +1,23 @@
 import React, { useEffect, useContext, useState } from "react";
 import { useNavigate, useParams } from "react-router-dom";
-import Layout from "../layout/Layout";
-import { UserContext } from "../routes/AppRoutes";
-
-import ErrorAlert from "../components/ErrorAlert";
-
 import AuthApiService from "../services/auth-api-service";
 import TokenService from "../services/token-service";
-
+import { UserContext } from "../routes/AppRoutes";
+import ErrorAlert from "../components/ErrorAlert";
+import Layout from "../layout/Layout";
 import config from "../config";
-export default function NewLog(edit) {
+
+export default function NewLog({ edit }) {
   const navigate = useNavigate();
-  const { fish_id } = useParams();
-  const user_id = TokenService.getUserId();
+  const { fish_id } = useParams() || null;
+
   const context = useContext(UserContext);
+  const { user_id } = context.userInfo;
 
   const [apiError, setApiError] = useState(null);
   const [formError, setFormError] = useState([]);
   const [formData, setFormData] = useState({
-    user_id: "",
+    user_id: user_id,
     species: "",
     fish_length: "",
     pounds: "",
@@ -27,25 +26,19 @@ export default function NewLog(edit) {
     fishing_method: "",
   });
 
-  const handleLog = (event) => {
+  async function handleSubmit(event) {
     event.preventDefault();
 
     if (edit) {
       AuthApiService.updateLog(formData)
-        .then(context.handleApiCalls())
         .then(navigate("/dashboard"))
-        .catch((error) => {
-          setApiError(error)
-        });
+        .catch(setApiError);
     } else {
       AuthApiService.postNewLog(formData)
-        .then(context.handleApiCalls())
         .then(navigate("/dashboard"))
-        .catch((error) => {
-          setApiError(error)
-        });
+        .catch(setApiError);
     }
-  };
+  }
 
   useEffect(() => {
     if (edit) {
@@ -63,9 +56,7 @@ export default function NewLog(edit) {
 
         .then(fillFields)
 
-        .catch((error) => {
-          console.log("error: ", error);
-        });
+        .catch(setFormError);
     }
 
     function fillFields(res) {
@@ -73,6 +64,7 @@ export default function NewLog(edit) {
         return null;
       }
       setFormData({
+        fish_id: fish_id,
         user_id: user_id,
         species: res.species,
         fish_length: res.fish_length,
@@ -94,42 +86,6 @@ export default function NewLog(edit) {
     });
   }
 
-  // function handleSubmit(event) {
-  //   event.preventDefault();
-  //   const abortController = new AbortController();
-
-  //   const foundErrors = [];
-
-  //   if (validateFields(foundErrors)) {
-  //     if (edit) {
-  //       editLog(fish_id, formData, abortController.signal)
-  //         .then(loadDashboard)
-  //         .then(() => navigate(-1))
-  //         .catch(setApiError);
-  //     } else {
-  //       createLog(formData, abortController.signal)
-  //         .then(loadDashboard)
-  //         .then(() => navigate(-1))
-  //         .catch(setApiError);
-  //     }
-  //   }
-  //   setFormError(foundErrors);
-
-  //   return () => abortController.abort();
-  // }
-
-  function validateFields(foundErrors) {
-    for (const field in formData) {
-      if (formData[field] === "") {
-        foundErrors.push({
-          message: `${field.split("_").join(" ")} cannot be left blank.`,
-        });
-      }
-    }
-
-    return foundErrors.length === 0;
-  }
-
   const errorsJSX = () => {
     return formError.map((error, idx) => (
       <ErrorAlert key={idx} error={error} />
@@ -145,7 +101,7 @@ export default function NewLog(edit) {
         </div>
         <form
           className="space-y-8 divide-y divide-gray-200 my-12 mx-24 w-full sm:w-144 mx-auto"
-          onSubmit={handleLog}
+          onSubmit={handleSubmit}
         >
           <div className="space-y-6 sm:space-y-5 mx-8">
             <h3 className="text-lg leading-6 font-medium text-gray-900">
@@ -154,7 +110,7 @@ export default function NewLog(edit) {
 
             <div className="grid sm:grid-cols-2 gap-4 items-start border-t border-gray-200 pt-3 sm:pt-5">
               <label className="block text-sm font-medium text-gray-700 sm:mt-px sm:pt-2">
-                Species:
+                Species
               </label>
               <select
                 className="mt-1 block w-full pl-3 pr-10 py-2 text-base border-gray-300 focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm rounded-md"
@@ -182,7 +138,7 @@ export default function NewLog(edit) {
 
             <div className="grid sm:grid-cols-2 gap-4 items-start border-t border-gray-200 pt-3 sm:pt-5">
               <label className="block text-sm font-medium text-gray-700 sm:mt-px sm:pt-2">
-                Length:
+                Length
               </label>
               <input
                 className="border border-slate-200 rounded h-8 focus:ring-blue-500 focus:border-blue-500"
@@ -198,7 +154,7 @@ export default function NewLog(edit) {
 
             <div className="grid sm:grid-cols-2 gap-4 items-start border-t border-gray-200 pt-3 sm:pt-5">
               <label className="block text-sm font-medium text-gray-700 sm:mt-px sm:pt-2">
-                Weight:
+                Weight
               </label>
               <div className="flex justify-between">
                 <input
@@ -225,7 +181,7 @@ export default function NewLog(edit) {
 
             <div className="grid sm:grid-cols-2 gap-4 items-start border-t border-gray-200 pt-3 sm:pt-5">
               <label className="block text-sm font-medium text-gray-700 sm:mt-px sm:pt-2">
-                Bait used:
+                Bait used
               </label>
               <select
                 className="mt-1 block w-full pl-3 pr-10 py-2 text-base border-gray-300 focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm rounded-md"
@@ -250,7 +206,7 @@ export default function NewLog(edit) {
 
             <div className="grid sm:grid-cols-2 gap-4 items-start border-t border-gray-200 pt-3 sm:pt-5">
               <label className="block text-sm font-medium text-gray-700 sm:mt-px sm:pt-2">
-                Fishing Method:
+                Fishing Method
               </label>
               <select
                 className="mt-1 block w-full pl-3 pr-10 py-2 text-base border-gray-300 focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm rounded-md"
