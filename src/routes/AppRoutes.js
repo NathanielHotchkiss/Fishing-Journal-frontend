@@ -18,6 +18,7 @@ export const UserContext = React.createContext({});
 export default function AppRoutes() {
   const [apiError, setApiError] = useState(null);
   const [fishingLogsData, setFishingLogsData] = useState([]);
+  const [userInfo, setUserInfo] = useState([]);
 
   async function handleApiCalls() {
     if (TokenService.hasAuthToken()) {
@@ -29,21 +30,32 @@ export default function AppRoutes() {
             Authorization: `bearer ${TokenService.getAuthToken()}`,
           },
         }),
+
+        fetch(`${config.API_ENDPOINT}/app_users/${user_id}`, {
+          headers: {
+            Authorization: `bearer ${TokenService.getAuthToken()}`,
+          },
+        }),
       ])
-        .then(([userLogsRes]) => {
+
+        .then(([userLogsRes, userInfoRes]) => {
           if (!userLogsRes.ok) {
             return userLogsRes.json().then((e) => Promise.reject(e));
           }
-          return Promise.all([userLogsRes.json()]);
+
+          if (!userInfoRes.ok) {
+            return userInfoRes.json().then((e) => Promise.reject(e));
+          }
+
+          return Promise.all([userLogsRes.json(), userInfoRes.json()]);
         })
 
-        .then(([logs]) => {
+        .then(([logs, user]) => {
           setFishingLogsData(logs);
+          setUserInfo(user);
         })
 
-        .catch((error) => {
-          setApiError(error);
-        });
+        .catch(setApiError);
     }
   }
 
@@ -52,6 +64,7 @@ export default function AppRoutes() {
     setApiError: setApiError,
     apiError: apiError,
     handleApiCalls: handleApiCalls,
+    userInfo: userInfo,
   };
 
   return (

@@ -1,6 +1,7 @@
-import { Fragment, useState } from "react";
+import { Fragment, useState, useContext } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import TokenService from "../services/token-service";
+import { UserContext } from "../routes/AppRoutes";
 
 import { Dialog, Transition } from "@headlessui/react";
 import {
@@ -36,13 +37,15 @@ function classNames(...classes) {
 }
 
 const Layout = ({ children }) => {
+  const context = useContext(UserContext);
+  const navigate = useNavigate();
+
   const [sidebarOpen, setSidebarOpen] = useState(false);
 
-  const first_name = TokenService.getFirstName();
-  const last_name = TokenService.getLastName();
-  const user = `${first_name} ${last_name}`;
+  const { first_name } = context.userInfo;
+  const { last_name } = context.userInfo;
 
-  const navigate = useNavigate();
+  const user = `${first_name} ${last_name}`;
 
   function handleSignOut(event) {
     event.preventDefault();

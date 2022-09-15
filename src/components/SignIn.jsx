@@ -1,15 +1,13 @@
 /* eslint-disable jsx-a11y/label-has-associated-control */
-import React, { useContext, useState } from "react";
+import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
 
 import AuthApiService from "../services/auth-api-service";
 import TokenService from "../services/token-service";
-import { UserContext } from "../routes/AppRoutes";
 import ErrorAlert from "../components/ErrorAlert";
 
 export default function LoginForm() {
   const navigate = useNavigate();
-  const context = useContext(UserContext);
 
   const [errorMessages, setErrorMessages] = useState(null);
 
@@ -29,10 +27,7 @@ export default function LoginForm() {
         else {
           TokenService.saveAuthToken(res.authToken);
           TokenService.saveUserId(res.user_id);
-          TokenService.saveEmail(res.email);
-          TokenService.saveFirstName(res.first_name);
-          TokenService.saveLastName(res.last_name);
-          context.then(navigate("/dashboard"));
+          navigate("/dashboard");
         }
       })
 
