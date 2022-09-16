@@ -8,7 +8,7 @@ export default function Footer() {
         <h2 className="inline text-3xl font-bold tracking-tight text-zinc-900 sm:block sm:text-4xl">
           We want to hear about your experience!
         </h2>
-        <p className="inline text-3xl font-bold tracking-tight text-zinc-600 sm:block sm:text-4xl">
+        <p className="text-3xl font-bold tracking-tight text-zinc-600 sm:block sm:text-4xl">
           Submit feedback.
         </p>
         <form className="mt-8 sm:flex">
@@ -35,7 +35,7 @@ export default function Footer() {
         </form>
 
         <div className="mt-12 border-t border-gray-200 pt-8">
-          <p className="text-base text-gray-400 xl:text-center">
+          <p className="text-base text-gray-400 text-center">
             &copy; 2022 Fishing Logs. All rights reserved.
           </p>
         </div>

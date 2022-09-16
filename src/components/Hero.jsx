@@ -80,7 +80,7 @@ export default function Hero() {
                     {formToggle ? (
                       <div className="sm:mx-auto sm:w-full sm:max-w-md">
                         <h2 className="mt-6 text-center text-3xl font-bold tracking-tight text-zinc-900">
-                          Sign in to your account
+                          Sign in
                         </h2>
                         <p className="mt-2 text-center text-sm text-zinc-600">
                           Or{" "}

@@ -11,21 +11,21 @@ export default function LogoCloud() {
             tempus tellus etiam sed. Quam a scelerisque amet ullamcorper eu enim
             et fermentum, augue.
           </p>
-          <div className="mt-8 sm:flex">
-            <div className="mt-3 sm:mt-0 sm:ml-3">
+          <div className="mt-8 flex">
+            <div className="mt-3 sm:mt-0 ml-3">
               <a
                 href="https://github.com/NathanielHotchkiss/Fishing-frontend"
                 className="flex items-center justify-center rounded-md border border-transparent bg-zinc-600 px-5 py-3 text-base font-medium text-white hover:bg-zinc-700"
               >
-                Frontend Repository
+                Frontend source code
               </a>
             </div>
-            <div className="mt-3 sm:mt-0 sm:ml-3">
+            <div className="mt-3 sm:mt-0 ml-3">
               <a
                 href="https://github.com/NathanielHotchkiss/Fishing-server"
                 className="flex items-center justify-center rounded-md border border-transparent bg-zinc-600 px-5 py-3 text-base font-medium text-white hover:bg-zinc-700"
               >
-                Backend Repository
+                Backend source code
               </a>
             </div>
           </div>
