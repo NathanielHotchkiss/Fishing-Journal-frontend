@@ -11,7 +11,16 @@ import {
   XMarkIcon,
   PlusCircleIcon,
   Cog8ToothIcon,
+  ArrowRightOnRectangleIcon,
 } from "@heroicons/react/24/outline";
+
+const userNavigation = [
+  {
+    name: "Settings",
+    href: "/settings",
+    icon: Cog8ToothIcon,
+  },
+];
 
 const navigation = [
   { name: "Dashboard", href: "/dashboard", icon: HomeIcon },
@@ -25,33 +34,27 @@ const navigation = [
     href: "/stats",
     icon: ChartBarIcon,
   },
-  {
-    name: "Settings",
-    href: "/settings",
-    icon: Cog8ToothIcon,
-  },
 ];
 
 function classNames(...classes) {
   return classes.filter(Boolean).join(" ");
 }
 
-const Layout = ({ children }) => {
+const Layout = ({ children, title }) => {
   const context = useContext(UserContext);
   const navigate = useNavigate();
 
   const [sidebarOpen, setSidebarOpen] = useState(false);
 
-  const { first_name } = context.userInfo;
-  const { last_name } = context.userInfo;
+  const { first_name, last_name, email } = context.userInfo;
 
   const user = `${first_name} ${last_name}`;
 
-  function handleSignOut(event) {
-    event.preventDefault();
-
-    TokenService.clearEverything();
-    navigate("/");
+  function handleSignOut() {
+    if (window.confirm("Are you sure you want to sign out?")) {
+      TokenService.clearEverything();
+      navigate("/");
+    }
   }
 
   return (
@@ -109,7 +112,7 @@ const Layout = ({ children }) => {
                       </button>
                     </div>
                   </Transition.Child>
-                  <div className="flex-1 h-0 pt-5 pb-4 overflow-y-auto">
+                  <div className="flex-1 h-0 pt-5 overflow-y-auto">
                     <div className="flex-shrink-0 flex items-center px-4">
                       <h1 className="text-white text-3xl font-bold">
                         Fishing Log
@@ -139,18 +142,9 @@ const Layout = ({ children }) => {
                           {item.name}
                         </Link>
                       ))}
-                      <div>
-                        <button
-                          type="submit"
-                          className="w-full flex justify-center py-2 px-4 border border-transparent rounded-md shadow-sm text-sm font-medium text-white bg-zinc-700 hover:bg-zinc-600 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-zinc-500"
-                          onClick={handleSignOut}
-                        >
-                          Sign out
-                        </button>
-                      </div>
                     </nav>
                   </div>
-                  <div className="flex-shrink-0 flex bg-zinc-700 p-4">
+                  <div className="flex-shrink-0 flex border-t border-gray-700 p-4">
                     <div className="flex items-center">
                       <div>
                         <img
@@ -161,9 +155,47 @@ const Layout = ({ children }) => {
                       </div>
                       <div className="ml-3">
                         <p className="text-sm font-medium text-white">{user}</p>
+                        <div className="text-sm font-medium text-gray-400">
+                          {email}
+                        </div>
                       </div>
                     </div>
                   </div>
+                  <nav className="mt-2 flex-1 px-2 space-y-1">
+                    {userNavigation.map((item) => (
+                      <Link
+                        key={item.name}
+                        to={item.href}
+                        className={classNames(
+                          item.current
+                            ? "bg-zinc-900 text-white"
+                            : "text-zinc-300 hover:bg-zinc-700 hover:text-white",
+                          "group flex items-center px-2 py-2 text-sm font-medium rounded-md"
+                        )}
+                      >
+                        <item.icon
+                          className={classNames(
+                            item.current
+                              ? "text-zinc-300"
+                              : "text-zinc-400 group-hover:text-zinc-300",
+                            "mr-3 flex-shrink-0 h-6 w-6"
+                          )}
+                          aria-hidden="true"
+                        />
+                        {item.name}
+                      </Link>
+                    ))}
+                    <div className="flex">
+                      <button
+                        type="submit"
+                        className="w-100 group flex items-center px-2 py-2 text-sm font-medium rounded-md text-zinc-300 hover:bg-zinc-700 hover:text-white active:bg-zinc-900 active:text-white"
+                        onClick={handleSignOut}
+                      >
+                        <ArrowRightOnRectangleIcon className="mr-3 flex-shrink-0 h-6 w-6 text-zinc-300" />
+                        Sign out
+                      </button>
+                    </div>
+                  </nav>
                 </Dialog.Panel>
               </Transition.Child>
               <div className="flex-shrink-0 w-14">
@@ -177,7 +209,7 @@ const Layout = ({ children }) => {
         <div className="hidden md:flex md:w-64 md:flex-col md:fixed md:inset-y-0">
           {/* Sidebar component, swap this element with another sidebar if you like */}
           <div className="flex-1 flex flex-col min-h-0 bg-zinc-800">
-            <div className="flex-1 flex flex-col pt-5 pb-4 overflow-y-auto">
+            <div className="flex-1 flex flex-col pt-5 overflow-y-auto">
               <div className="flex items-center flex-shrink-0 px-4">
                 <h1 className="text-white text-3xl font-bold">Fishing Log</h1>
               </div>
@@ -205,18 +237,9 @@ const Layout = ({ children }) => {
                     {item.name}
                   </Link>
                 ))}
-                <div>
-                  <button
-                    type="submit"
-                    className="w-full flex justify-center py-2 px-4 border border-transparent rounded-md shadow-sm text-sm font-medium text-white bg-zinc-700 hover:bg-zinc-600 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-zinc-500"
-                    onClick={handleSignOut}
-                  >
-                    Sign out
-                  </button>
-                </div>
               </nav>
             </div>
-            <div className="flex-shrink-0 flex bg-zinc-700 p-4">
+            <div className="flex-shrink-0 flex border-t border-gray-700 p-4">
               <div className="flex items-center">
                 <div>
                   <img
@@ -227,9 +250,48 @@ const Layout = ({ children }) => {
                 </div>
                 <div className="ml-3">
                   <p className="text-sm font-medium text-white">{user}</p>
+                  <div className="text-sm font-medium text-gray-400">
+                    {email}
+                  </div>
                 </div>
               </div>
             </div>
+
+            <nav className="mt-2 flex-1 px-2 space-y-1">
+              {userNavigation.map((item) => (
+                <Link
+                  key={item.name}
+                  to={item.href}
+                  className={classNames(
+                    item.current
+                      ? "bg-zinc-900 text-white"
+                      : "text-zinc-300 hover:bg-zinc-700 hover:text-white",
+                    "group flex items-center px-2 py-2 text-sm font-medium rounded-md"
+                  )}
+                >
+                  <item.icon
+                    className={classNames(
+                      item.current
+                        ? "text-zinc-300"
+                        : "text-zinc-400 group-hover:text-zinc-300",
+                      "mr-3 flex-shrink-0 h-6 w-6"
+                    )}
+                    aria-hidden="true"
+                  />
+                  {item.name}
+                </Link>
+              ))}
+              <div className="flex">
+                <button
+                  type="submit"
+                  className="w-100 group flex items-center px-2 py-2 text-sm font-medium rounded-md text-zinc-300 hover:bg-zinc-700 hover:text-white active:bg-zinc-900 active:text-white"
+                  onClick={handleSignOut}
+                >
+                  <ArrowRightOnRectangleIcon className="mr-3 flex-shrink-0 h-6 w-6 text-zinc-300" />
+                  Sign out
+                </button>
+              </div>
+            </nav>
           </div>
         </div>
         <div className="md:pl-64 flex flex-col flex-1">
@@ -244,10 +306,17 @@ const Layout = ({ children }) => {
             </button>
           </div>
 
-          <main className="flex-1">
+          <header className="bg-white shadow-sm">
+            <div className="mx-auto max-w-7xl py-6 px-4 sm:px-6 lg:px-8">
+              <h1 className="text-2xl font-bold tracking-tight text-gray-800">
+                {title}
+              </h1>
+            </div>
+          </header>
+          <main className="flex-1 bg-gradient-to-t from-gray-100 to-transparent">
             <div className="py-4">
               <div className="max-w-7xl mx-auto px-4 sm:px-6 md:px-8">
-                <main>{children}</main>
+                <main className="min-h-screen">{children}</main>
               </div>
             </div>
           </main>
