@@ -10,11 +10,8 @@ export default function Stats() {
   ];
 
   return (
-    <Layout>
+    <Layout title="Stats">
     <div className="m-5">
-      <h3 className="text-lg font-medium leading-6 text-gray-900">
-        Lifetime stats
-      </h3>
       <dl className="mt-5 grid grid-cols-1 gap-5 sm:grid-cols-3">
         {stats.map((item) => (
           <div

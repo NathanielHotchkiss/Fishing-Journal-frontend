@@ -16,6 +16,7 @@ export default function NewLog({ edit }) {
 
   const [apiError, setApiError] = useState(null);
   const [formError, setFormError] = useState([]);
+  const [title, setTitle] = useState("Create new log");
   const [formData, setFormData] = useState({
     user_id: user_id,
     species: "",
@@ -43,6 +44,7 @@ export default function NewLog({ edit }) {
   useEffect(() => {
     if (edit) {
       if (!fish_id) return null;
+      setTitle("Edit log");
 
       return fetch(`${config.API_ENDPOINT}/fishing_logs/${fish_id}`, {
         method: "GET",
@@ -93,7 +95,7 @@ export default function NewLog({ edit }) {
   };
 
   return (
-    <Layout>
+    <Layout title={title}>
       <>
         <div className="my-12 mx-24 w-full sm:w-144 mx-auto">
           {errorsJSX()}
@@ -104,11 +106,7 @@ export default function NewLog({ edit }) {
           onSubmit={handleSubmit}
         >
           <div className="space-y-6 sm:space-y-5 mx-8">
-            <h3 className="text-lg leading-6 font-medium text-gray-900">
-              Log a new catch
-            </h3>
-
-            <div className="grid sm:grid-cols-2 gap-4 items-start border-t border-gray-200 pt-3 sm:pt-5">
+            <div className="grid sm:grid-cols-2 gap-2 items-start border-gray-200 pt-3 sm:pt-5">
               <label className="block text-sm font-medium text-gray-700 sm:mt-px sm:pt-2">
                 Species
               </label>
@@ -136,7 +134,7 @@ export default function NewLog({ edit }) {
               </select>
             </div>
 
-            <div className="grid sm:grid-cols-2 gap-4 items-start border-t border-gray-200 pt-3 sm:pt-5">
+            <div className="grid sm:grid-cols-2 gap-2 items-start border-t border-gray-200 pt-3 sm:pt-5">
               <label className="block text-sm font-medium text-gray-700 sm:mt-px sm:pt-2">
                 Length
               </label>
@@ -152,7 +150,7 @@ export default function NewLog({ edit }) {
               />
             </div>
 
-            <div className="grid sm:grid-cols-2 gap-4 items-start border-t border-gray-200 pt-3 sm:pt-5">
+            <div className="grid sm:grid-cols-2 gap-2 items-start border-t border-gray-200 pt-3 sm:pt-5">
               <label className="block text-sm font-medium text-gray-700 sm:mt-px sm:pt-2">
                 Weight
               </label>
@@ -179,7 +177,7 @@ export default function NewLog({ edit }) {
               </div>
             </div>
 
-            <div className="grid sm:grid-cols-2 gap-4 items-start border-t border-gray-200 pt-3 sm:pt-5">
+            <div className="grid sm:grid-cols-2 gap-2 items-start border-t border-gray-200 pt-3 sm:pt-5">
               <label className="block text-sm font-medium text-gray-700 sm:mt-px sm:pt-2">
                 Bait used
               </label>
@@ -204,7 +202,7 @@ export default function NewLog({ edit }) {
               </select>
             </div>
 
-            <div className="grid sm:grid-cols-2 gap-4 items-start border-t border-gray-200 pt-3 sm:pt-5">
+            <div className="grid sm:grid-cols-2 gap-2 items-start border-t border-gray-200 pt-3 sm:pt-5">
               <label className="block text-sm font-medium text-gray-700 sm:mt-px sm:pt-2">
                 Fishing Method
               </label>

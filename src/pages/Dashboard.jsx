@@ -29,7 +29,7 @@ export default function Dashboard() {
 
   if (userLogs.length === 0) {
     return (
-      <Layout>
+      <Layout title="Dashboard">
         <div className="flex flex-col items-center justify-center h-screen">
           <div className="text-center">
             <h1 className="text-3xl font-bold">No logs yet!</h1>
@@ -40,7 +40,7 @@ export default function Dashboard() {
     );
   } else {
     return (
-      <Layout>
+      <Layout title="Dashboard">
         <div className="grid grid-col-1 lg:grid-cols-2 my-6">
           <>
             {userLogs.map((info, id) => {

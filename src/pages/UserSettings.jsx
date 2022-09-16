@@ -4,30 +4,43 @@ import AuthApiService from "../services/auth-api-service";
 import Layout from "../layout/Layout";
 import { UserContext } from "../routes/AppRoutes";
 import ErrorAlert from "../components/ErrorAlert";
+import TokenService from "../services/token-service";
 
 export default function UserSettings() {
   const navigate = useNavigate();
   const context = useContext(UserContext);
   const user = context.userInfo;
 
+  const user_id = TokenService.getUserId();
+
   const [apiError, setApiError] = useState(null);
   const [formData, setFormData] = useState({
+    user_id: user_id,
     email: "",
     first_name: "",
     last_name: "",
     created: "",
   });
 
-  const handleLog = (event) => {
+  async function handleDelete(user_id) {
+    if (
+      window.confirm(
+        "Are you sure you want to delete your account? This cannot be undone"
+      )
+    ) {
+      AuthApiService.deleteUser(user_id).then(context.handleApiCalls());
+    }
+  }
+
+  async function handleSubmit(event) {
     event.preventDefault();
 
-    AuthApiService.updateUser(formData)
-      .then(navigate("/dashboard"))
-      .catch(setApiError);
-  };
+    AuthApiService.updateUser(formData);
+  }
 
   useEffect(() => {
     setFormData({
+      user_id: user.user_id,
       email: user.email,
       first_name: user.first_name,
       last_name: user.last_name,
@@ -46,143 +59,128 @@ export default function UserSettings() {
   }
 
   return (
-    <Layout>
-      <div className="flex-1 xl:overflow-y-auto m-2">
-        <div className="my-12 mx-24 w-full sm:w-144 mx-auto">
-          <ErrorAlert error={apiError} />
-        </div>
-        <div className="mx-auto max-w-3xl py-10 px-4 sm:px-6 lg:py-12 lg:px-8">
-          <h1 className="text-3xl font-bold tracking-tight text-blue-gray-900">
-            Account
-          </h1>
-
-          <form
-            className="divide-y-blue-gray-200 mt-6 space-y-8 divide-y"
-            onSubmit={handleLog}
-          >
-            <div className="grid grid-cols-1 gap-y-6 sm:grid-cols-6 sm:gap-x-6">
-              <div className="sm:col-span-6">
-                <h2 className="text-xl font-medium text-blue-gray-900">
-                  Profile
-                </h2>
-              </div>
-
-              <div className="sm:col-span-6">
-                <label
-                  htmlFor="photo"
-                  className="block text-sm font-medium text-blue-gray-900"
-                >
-                  Photo
-                </label>
-                <div className="mt-1 flex items-center">
-                  <img
-                    className="inline-block h-12 w-12 rounded-full"
-                    src="https://images.unsplash.com/photo-1550525811-e5869dd03032?ixlib=rb-1.2.1&auto=format&fit=facearea&facepad=2.5&w=256&h=256&q=80"
-                    alt=""
+    <Layout title="Account settings">
+      <div className="my-12 mx-24 w-full sm:w-144 mx-auto">
+        <ErrorAlert error={apiError} />
+      </div>
+      <form
+        className="space-y-8 divide-y divide-gray-200 my-12 mx-24 w-full sm:w-144 mx-auto"
+        onSubmit={handleSubmit}
+      >
+        <div className="space-y-6 sm:space-y-5 mx-8">
+          <div className="sm:col-span-6">
+            <label
+              htmlFor="photo"
+              className="block text-sm font-medium text-blue-gray-900"
+            >
+              Photo
+            </label>
+            <div className="mt-1 flex items-center">
+              <img
+                className="inline-block h-12 w-12 rounded-full"
+                src="https://images.unsplash.com/photo-1550525811-e5869dd03032?ixlib=rb-1.2.1&auto=format&fit=facearea&facepad=2.5&w=256&h=256&q=80"
+                alt=""
+              />
+              <div className="ml-4 flex">
+                <div className="relative flex cursor-pointer items-center rounded-md border border-blue-gray-300 bg-white py-2 px-3 shadow-sm focus-within:outline-none focus-within:ring-2 focus-within:ring-blue-500 focus-within:ring-offset-2 focus-within:ring-offset-blue-gray-50 hover:bg-blue-gray-50">
+                  <label
+                    htmlFor="user-photo"
+                    className="pointer-events-none relative text-sm font-medium text-blue-gray-900"
+                  >
+                    <span>Change</span>
+                    <span className="sr-only"> user photo</span>
+                  </label>
+                  <input
+                    id="user-photo"
+                    name="user-photo"
+                    type="file"
+                    className="absolute inset-0 h-full w-full cursor-pointer rounded-md border-gray-300 opacity-0"
                   />
-                  <div className="ml-4 flex">
-                    <div className="relative flex cursor-pointer items-center rounded-md border border-blue-gray-300 bg-white py-2 px-3 shadow-sm focus-within:outline-none focus-within:ring-2 focus-within:ring-blue-500 focus-within:ring-offset-2 focus-within:ring-offset-blue-gray-50 hover:bg-blue-gray-50">
-                      <label
-                        htmlFor="user-photo"
-                        className="pointer-events-none relative text-sm font-medium text-blue-gray-900"
-                      >
-                        <span>Change</span>
-                        <span className="sr-only"> user photo</span>
-                      </label>
-                      <input
-                        id="user-photo"
-                        name="user-photo"
-                        type="file"
-                        className="absolute inset-0 h-full w-full cursor-pointer rounded-md border-gray-300 opacity-0"
-                      />
-                    </div>
-                    <button
-                      type="button"
-                      className="ml-3 rounded-md border border-transparent bg-transparent py-2 px-3 text-sm font-medium text-blue-gray-900 hover:text-blue-gray-700 focus:border-blue-gray-300 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2 focus:ring-offset-blue-gray-50"
-                    >
-                      Remove
-                    </button>
-                  </div>
                 </div>
-              </div>
-              <div className="sm:col-span-3">
-                <label
-                  htmlFor="first-name"
-                  className="block text-sm font-medium text-blue-gray-900"
+                <button
+                  type="button"
+                  className="ml-3 rounded-md border border-transparent bg-transparent py-2 px-3 text-sm font-medium text-blue-gray-900 hover:text-blue-gray-700 focus:border-blue-gray-300 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2 focus:ring-offset-blue-gray-50"
                 >
-                  First name
-                </label>
-                <input
-                  type="text"
-                  name="first-name"
-                  id="first-name"
-                  autoComplete="given-name"
-                  className="appearance-none block w-full px-3 py-2 border border-zinc-300 rounded-md shadow-sm placeholder-zinc-400 focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
-                  onChange={handleChange}
-                  value={formData.first_name}
-                />
+                  Remove
+                </button>
               </div>
-
-              <div className="sm:col-span-3">
-                <label
-                  htmlFor="last-name"
-                  className="block text-sm font-medium text-blue-gray-900"
-                >
-                  Last name
-                </label>
-                <input
-                  type="text"
-                  name="last-name"
-                  id="last-name"
-                  autoComplete="family-name"
-                  className="appearance-none block w-full px-3 py-2 border border-zinc-300 rounded-md shadow-sm placeholder-zinc-400 focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
-                  onChange={handleChange}
-                  value={formData.last_name}
-                />
-              </div>
-
-              <div className="sm:col-span-3">
-                <label
-                  htmlFor="email-address"
-                  className="block text-sm font-medium text-blue-gray-900"
-                >
-                  Email address
-                </label>
-                <input
-                  type="text"
-                  name="email-address"
-                  id="email-address"
-                  autoComplete="email"
-                  className="appearance-none block w-full px-3 py-2 border border-zinc-300 rounded-md shadow-sm placeholder-zinc-400 focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
-                  onChange={handleChange}
-                  value={formData.email}
-                />
-              </div>
-
-              <p className="text-sm text-blue-gray-500 sm:col-span-6">
-                This account was created on{" "}
-                {/* {getFormattedDate(formData.created)} */}.
-              </p>
             </div>
+          </div>
 
-            <div className="flex justify-end pt-8">
+          <div className="grid sm:grid-cols-2 gap-2 items-start border-t border-gray-200 pt-3 sm:pt-5">
+            <label className="block text-sm font-medium text-gray-700 sm:mt-px sm:pt-2">
+              First name
+            </label>
+            <input
+              className="border border-slate-200 rounded h-8 focus:ring-blue-500 focus:border-blue-500"
+              name="first_name"
+              id="first_name"
+              type="text"
+              onChange={handleChange}
+              value={formData.first_name}
+              required
+            />
+          </div>
+
+          <div className="grid sm:grid-cols-2 gap-2 items-start border-t border-gray-200 pt-3 sm:pt-5">
+            <label className="block text-sm font-medium text-gray-700 sm:mt-px sm:pt-2">
+              Last name
+            </label>
+            <input
+              className="border border-slate-200 rounded h-8 focus:ring-blue-500 focus:border-blue-500"
+              name="last_name"
+              id="last_name"
+              type="text"
+              onChange={handleChange}
+              value={formData.last_name}
+              required
+            />
+          </div>
+
+          <div className="grid sm:grid-cols-2 gap-2 items-start border-t border-gray-200 pt-3 sm:pt-5">
+            <label className="block text-sm font-medium text-gray-700 sm:mt-px sm:pt-2">
+              Email
+            </label>
+            <input
+              className="border border-slate-200 rounded h-8 focus:ring-blue-500 focus:border-blue-500"
+              name="email"
+              id="email"
+              type="text"
+              onChange={handleChange}
+              value={formData.email}
+              required
+            />
+          </div>
+
+          <div className="flex pt-5">
+            <div className="flex justify-start">
               <button
+                type="submit"
+                className="inline-flex justify-center rounded-md border border-transparent bg-zinc-600 py-2 px-4 text-sm font-medium text-white shadow-sm hover:bg-zinc-700 focus:outline-none focus:ring-2 focus:ring-zinc-500 focus:ring-offset-2"
+              onClick={(handleDelete)}
+              >
+                Delete Account
+              </button>
+            </div>
+            <div className="flex justify-end">
+              <button
+                className="ml-3 bg-white py-2 px-4 border border-gray-300 rounded-md shadow-sm text-sm font-medium text-gray-700 hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-zinc-500 mr-2"
                 type="button"
-                className="rounded-md border border-gray-300 bg-white py-2 px-4 text-sm font-medium text-blue-gray-900 shadow-sm hover:bg-blue-gray-50 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2"
                 onClick={() => navigate(-1)}
               >
                 Cancel
               </button>
+
               <button
+                className="ml-3 inline-flex justify-center py-2 px-4 border border-transparent shadow-sm text-sm font-medium rounded-md text-white bg-zinc-600 hover:bg-zinc-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-zinc-500"
                 type="submit"
-                className="ml-3 inline-flex justify-center rounded-md border border-transparent bg-zinc-600 py-2 px-4 text-sm font-medium text-white shadow-sm hover:bg-zinc-700 focus:outline-none focus:ring-2 focus:ring-zinc-500 focus:ring-offset-2"
               >
-                Save
+                Submit
               </button>
             </div>
-          </form>
+          </div>
         </div>
-      </div>
+      </form>
     </Layout>
   );
 }
