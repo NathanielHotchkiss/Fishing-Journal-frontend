@@ -48,7 +48,7 @@ const tabs = [
     name: "Database",
     features: [
       {
-        name: "PostreSQL v8.7.x",
+        name: "PostreSQL v14",
         description:
           "The Organize base set includes the pen, phone, small, and large trays to help you group all your essential items. Expand your set with the drink coaster and headphone stand add-ons.",
         imageSrc:
