@@ -51,7 +51,6 @@ const AuthApiService = {
     return fetch(`${config.API_ENDPOINT}/app_users/${user_id}`, {
       method: "DELETE",
       headers: {
-        user_id,
         Authorization: `bearer ${TokenService.getAuthToken()}`,
         "Content-Type": "application/json",
       },
