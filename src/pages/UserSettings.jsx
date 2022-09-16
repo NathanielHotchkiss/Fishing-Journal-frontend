@@ -22,13 +22,15 @@ export default function UserSettings() {
     created: "",
   });
 
-  async function handleDelete(user_id) {
+  async function handleDelete() {
     if (
       window.confirm(
         "Are you sure you want to delete your account? This cannot be undone"
       )
     ) {
-      AuthApiService.deleteUser(user_id).then(context.handleApiCalls());
+      AuthApiService.deleteUser(user_id);
+      TokenService.clearEverything();
+      navigate("/");
     }
   }
 
@@ -157,7 +159,7 @@ export default function UserSettings() {
               <button
                 type="submit"
                 className="inline-flex justify-center rounded-md border border-transparent bg-zinc-600 py-2 px-4 text-sm font-medium text-white shadow-sm hover:bg-zinc-700 focus:outline-none focus:ring-2 focus:ring-zinc-500 focus:ring-offset-2"
-              onClick={(handleDelete)}
+                onClick={handleDelete}
               >
                 Delete Account
               </button>
