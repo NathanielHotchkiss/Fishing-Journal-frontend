@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import AuthApiService from "../services/auth-api-service";
 import { useNavigate } from "react-router-dom";
 import ErrorAlert from "../components/ErrorAlert";
+import TokenService from "../services/token-service";
 
 export default function Register() {
   const navigate = useNavigate();
@@ -21,13 +22,23 @@ export default function Register() {
     };
 
     AuthApiService.postUser(newUser)
-      .then((res) => {
-        if (!res) throw new Error(res);
-        else {
-          navigate("/dashboard");
-        }
+      .then(async () => {
+        await AuthApiService.postLogin({
+          email: newUser.email,
+          password: newUser.password,
+        })
+          .then((res) => {
+            if (!res) throw new Error(res);
+            else {
+              TokenService.saveAuthToken(res.authToken);
+              TokenService.saveUserId(res.user_id);
+              navigate("/dashboard");
+            }
+          })
+          .catch((res) => {
+            setErrorMessages(res.error);
+          });
       })
-
       .catch((res) => {
         setErrorMessages(res.error);
       });
