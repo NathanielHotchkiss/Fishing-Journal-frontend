@@ -2,7 +2,11 @@ import React, { Fragment, useContext, useEffect } from "react";
 import { Link } from "react-router-dom";
 
 import { Menu, Transition } from "@headlessui/react";
-import { TrashIcon, PencilSquareIcon } from "@heroicons/react/24/outline";
+import {
+  TrashIcon,
+  PencilSquareIcon,
+  PlusIcon,
+} from "@heroicons/react/24/outline";
 import { EllipsisVerticalIcon } from "@heroicons/react/24/solid";
 
 import Layout from "../layout/Layout";
@@ -18,7 +22,7 @@ export default function Dashboard() {
   }
 
   useEffect(() => {
-   context.handleApiCalls();
+    context.handleApiCalls();
   }, []);
 
   async function handleDelete(fish_id) {
@@ -30,10 +34,37 @@ export default function Dashboard() {
   if (userLogs.length === 0) {
     return (
       <Layout title="Dashboard">
-        <div className="flex flex-col items-center justify-center h-screen">
-          <div className="text-center">
-            <h1 className="text-3xl font-bold">No logs yet!</h1>
-            <p className="text-lg">You haven't logged any fishing yet.</p>
+        <div className="text-center">
+          <svg
+            className="mx-auto h-12 w-12 text-gray-400"
+            fill="none"
+            viewBox="0 0 24 24"
+            stroke="currentColor"
+            aria-hidden="true"
+          >
+            <path
+              vectorEffect="non-scaling-stroke"
+              strokeLinecap="round"
+              strokeLinejoin="round"
+              strokeWidth={2}
+              d="M9 13h6m-3-3v6m-9 1V7a2 2 0 012-2h6l2 2h6a2 2 0 012 2v8a2 2 0 01-2 2H5a2 2 0 01-2-2z"
+            />
+          </svg>
+          <h3 className="mt-2 text-sm font-medium text-gray-900">
+            No logs yet
+          </h3>
+          <p className="mt-1 text-sm text-gray-500">
+            Get started by logging a catch.
+          </p>
+          <div className="mt-6">
+            <button
+              href="/new"
+              type="button"
+              className="inline-flex items-center rounded-md border border-transparent bg-zinc-600 px-4 py-2 text-sm font-medium text-white shadow-sm hover:bg-zinc-700 focus:outline-none focus:ring-2 focus:ring-zinc-500 focus:ring-offset-2"
+            >
+              <PlusIcon className="-ml-1 mr-2 h-5 w-5" aria-hidden="true" />
+              New log
+            </button>
           </div>
         </div>
       </Layout>
@@ -56,7 +87,7 @@ export default function Dashboard() {
 
               return (
                 <div key={id} className="block">
-                  <div className="relative h-72 w-96 bg-zinc-300 shadow-md mx-auto "></div>
+                  <div className="relative h-72 w-96 shadow-md mx-auto bg-zinc-300 "></div>
 
                   <div className="relative p-2 h-40 w-72 shadow-md -top-12 mx-auto bg-white rounded-lg">
                     <div className="flex justify-between">
