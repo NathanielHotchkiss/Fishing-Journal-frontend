@@ -21,7 +21,7 @@ export default function Hero() {
   };
 
   return (
-    <div className="min-h-screen">
+    <div className="bg-zinc-800">
       <div
         className="hidden sm:absolute sm:inset-0 sm:block"
         aria-hidden="true"
@@ -64,7 +64,7 @@ export default function Hero() {
                   <p className="mt-3 text-base text-zinc-300 sm:mt-5 sm:text-xl lg:text-lg xl:text-xl">
                     Or at least capture valuable fishing data on the ones you
                     actually caught. Log new catches and show off your best,
-                    right on your phone.
+                    right from your phone.
                   </p>
                   <p className="mt-3 text-base text-zinc-300 sm:mt-5 sm:text-xl lg:text-lg xl:text-xl">
                     Example data object:
