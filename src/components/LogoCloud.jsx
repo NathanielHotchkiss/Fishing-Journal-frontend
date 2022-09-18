@@ -38,22 +38,22 @@ export default function LogoCloud() {
           </div>
           <div className="mt-8 grid grid-cols-2 gap-0.5 md:grid-cols-3 lg:mt-0 lg:grid-cols-2">
             <div className="col-span-1 flex justify-center bg-zinc-300 py-8 px-8">
-              <i className="devicon-javascript-plain text-4xl text-zinc-900"></i>
+              <i className="devicon-javascript-plain text-3xl sm:text-4xl text-zinc-900"></i>
             </div>
             <div className="col-span-1 flex justify-center bg-zinc-300 py-8 px-8">
-              <i className="devicon-react-original text-4xl text-zinc-800"></i>
+              <i className="devicon-react-original text-3xl sm:text-4xl text-zinc-800"></i>
             </div>
             <div className="col-span-1 flex justify-center bg-zinc-300 py-8 px-8">
-              <i className="devicon-tailwindcss-plain text-4xl text-zinc-900"></i>
+              <i className="devicon-tailwindcss-plain text-3xl sm:text-4xl text-zinc-900"></i>
             </div>
             <div className="col-span-1 flex justify-center bg-zinc-300 py-8 px-8">
-              <i className="devicon-express-original text-4xl text-zinc-900"></i>
+              <i className="devicon-express-original text-3xl sm:text-4xl text-zinc-900"></i>
             </div>
             <div className="col-span-1 flex justify-center bg-zinc-300 py-8 px-8">
-              <i className="devicon-postgresql-plain-wordmark text-4xl text-zinc-900"></i>
+              <i className="devicon-postgresql-plain-wordmark text-3xl sm:text-4xl text-zinc-900"></i>
             </div>
             <div className="col-span-1 flex justify-center bg-zinc-300 py-8 px-8">
-              <i className="bi bi-cup-hot-fill text-4xl text-zinc-900"></i>
+              <i className="bi bi-cup-hot-fill text-3xl sm:text-4xl text-zinc-900"></i>
             </div>
           </div>
         </div>
