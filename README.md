@@ -1,6 +1,17 @@
-# Fishing Log Frontend
+# Fishing Journal Frontend
 
-This app is a work in progress.
+This app is a work in progress.  
+
+Built to capture valuable fishing data.  
+
+## Current Features
+
+Register a new account.  
+Secure Sign in/Sign out.  
+View fishing logs from user dashboard.
+Create, edit or delete a fishing log.  
+Create, edit or delete your user account.
+Built mobile-first.
 
 ## Installation
 
