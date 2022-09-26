@@ -210,7 +210,7 @@ const Layout = ({ children, title }) => {
         <div className="flex-1 flex flex-col min-h-0 bg-zinc-800">
           <div className="flex-1 flex flex-col pt-5 overflow-y-auto">
             <div className="flex items-center flex-shrink-0 px-4">
-              <h1 className="text-white text-3xl font-bold">Fishing Log</h1>
+              <h1 className="text-white text-2xl font-bold">Fishing Journal</h1>
             </div>
             <nav className="mt-4 flex-1 px-2 space-y-1">
               {navigation.map((item) => (
