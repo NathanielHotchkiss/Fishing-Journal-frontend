@@ -8,10 +8,10 @@ Built to capture valuable fishing data.
 
 Register a new account.  
 Secure Sign in/Sign out.  
-View fishing logs from user dashboard.
+View fishing logs from user dashboard.  
 Create, edit or delete a fishing log.  
-Create, edit or delete your user account.
-Built mobile-first.
+Create, edit or delete your user account.  
+Built mobile-first.  
 
 ## Installation
 
