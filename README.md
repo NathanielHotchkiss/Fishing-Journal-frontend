@@ -10,7 +10,7 @@ Register a new account.
 Secure Sign in/Sign out.  
 View fishing logs from user dashboard.  
 Create, edit or delete a fishing log.  
-Create, edit or delete your user account.  
+Edit or delete your user account.  
 Built mobile-first.  
 
 ## Installation
