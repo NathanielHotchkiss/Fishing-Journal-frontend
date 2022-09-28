@@ -25,7 +25,7 @@ describe("US-01 - Create a new user - E2E", () => {
     page.on("console", onPageConsole);
     await page.setViewport({ width: 1920, height: 1080 });
     await page.goto(`${baseURL}/`, { waitUntil: "load" });
-    await expect(page).toClick("button", { text: "register a new account." });
+    await page.click("button", { text: "register" });
   });
 
   afterAll(async () => {
