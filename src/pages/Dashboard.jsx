@@ -1,19 +1,33 @@
 import React, { useContext, useEffect } from "react";
 import Layout from "../layout/Layout";
 import Sort from "../components/Sort";
-import { UserContext } from "../routes/AppRoutes";
+import { UserContext } from "../App";
 import { PlusIcon } from "@heroicons/react/24/outline";
 import Card from "../components/Card";
 
 export default function Dashboard() {
   const context = useContext(UserContext);
   const userLogs = context.fishingLogsData;
+  const { isLoading } = context;
 
   useEffect(() => {
     context.handleApiCalls();
-  }, []);
+  }, []); // eslint-disable-line no-use-before-define
 
-  if (userLogs.length === 0) {
+  if (isLoading === true) {
+    return (
+      <Layout title="Dashboard">
+        <div className="flex justify-center items-center h-full">
+          <div
+            className="spinner-border animate-spin inline-block w-8 h-8 border-4 rounded-full"
+            role="status"
+          >
+            <span className="visually-hidden">Loading...</span>
+          </div>
+        </div>
+      </Layout>
+    );
+  } else if (!userLogs) {
     return (
       <Layout title="Dashboard">
         <div className="text-center">
