@@ -2,7 +2,7 @@ import React, { useContext, useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import AuthApiService from "../services/auth-api-service";
 import Layout from "../layout/Layout";
-import { UserContext } from "../routes/AppRoutes";
+import { UserContext } from "../App";
 import TokenService from "../services/token-service";
 
 export default function UserSettings() {
