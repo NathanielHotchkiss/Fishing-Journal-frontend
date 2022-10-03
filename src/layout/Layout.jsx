@@ -12,6 +12,7 @@ import {
   PlusCircleIcon,
   Cog8ToothIcon,
   ArrowRightOnRectangleIcon,
+  ShoppingBagIcon
 } from "@heroicons/react/24/outline";
 
 const userNavigation = [
@@ -28,6 +29,11 @@ const navigation = [
     name: "New Log",
     href: "/new",
     icon: PlusCircleIcon,
+  },
+  {
+    name: "Tackle",
+    href: "/tackle",
+    icon: ShoppingBagIcon,
   },
   {
     name: "Stats",

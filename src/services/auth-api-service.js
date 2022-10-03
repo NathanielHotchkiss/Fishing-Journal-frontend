@@ -101,6 +101,31 @@ const AuthApiService = {
       return res;
     });
   },
+  postNewTackle(tackle) {
+    return fetch(`${config.API_ENDPOINT}/tackle`, {
+      method: "POST",
+      headers: {
+        Authorization: `bearer ${TokenService.getAuthToken()}`,
+        "content-type": "application/json",
+      },
+      body: JSON.stringify(tackle),
+    }).then((res) =>
+      !res.ok ? res.json().then((e) => Promise.reject(e)) : res.json()
+    );
+  },
+  updateTackle(tackle) {
+    const { tackle_id } = tackle;
+    return fetch(`${config.API_ENDPOINT}/tackle/${tackle_id}`, {
+      method: "PUT",
+      headers: {
+        Authorization: `bearer ${TokenService.getAuthToken()}`,
+        "content-type": "application/json",
+      },
+      body: JSON.stringify(tackle),
+    }).then((res) =>
+      !res.ok ? res.json().then((e) => Promise.reject(e)) : res.json()
+    );
+  },
 };
 
 export default AuthApiService;

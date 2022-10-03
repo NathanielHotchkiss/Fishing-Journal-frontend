@@ -4,11 +4,13 @@ import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
 import Dashboard from "../pages/Dashboard";
 import Home from "../pages/Home";
 import NewLog from "../pages/NewLog";
+import NewTackle from "../pages/NewTackle";
 import NotFound from "../components/NotFound";
 import Protected from "../components/Protected";
 import Register from "../components/Register";
 import SignIn from "../components/SignIn";
 import Stats from "../pages/Stats";
+import Tackle from "../pages/Tackle";
 import UserSettings from "../pages/UserSettings";
 
 export default function AppRoutes() {
@@ -37,6 +39,30 @@ export default function AppRoutes() {
           element={
             <Protected>
               <NewLog edit={true} />
+            </Protected>
+          }
+        />
+        <Route
+          path="/tackle"
+          element={
+            <Protected>
+              <Tackle />
+            </Protected>
+          }
+        />
+        <Route
+          path="/tackle/new"
+          element={
+            <Protected>
+              <NewTackle />
+            </Protected>
+          }
+        />
+        <Route
+          path="/tackle/:tackle_id/edit"
+          element={
+            <Protected>
+              <NewTackle edit={true} />
             </Protected>
           }
         />
