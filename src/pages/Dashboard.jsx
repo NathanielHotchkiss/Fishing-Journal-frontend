@@ -12,7 +12,7 @@ export default function Dashboard() {
 
   useEffect(() => {
     context.handleApiCalls();
-  }, []); // eslint-disable-line no-use-before-define
+  }, []); // eslint-disable-line
 
   if (isLoading === true) {
     return (
