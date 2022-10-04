@@ -11,8 +11,8 @@ export default function NewLog({ edit }) {
   const navigate = useNavigate();
   const { fish_id } = useParams() || null;
 
-  const context = useContext(UserContext);
-  const { user_id } = context.userInfo;
+  const { speciesData, tackleData, userInfo } = useContext(UserContext);
+  const { user_id } = userInfo;
 
   const [apiError, setApiError] = useState(null);
   const [formError, setFormError] = useState([]);
@@ -109,6 +109,7 @@ export default function NewLog({ edit }) {
             <label className="block text-sm font-medium text-gray-700 sm:mt-px sm:pt-2">
               Species
             </label>
+
             <select
               className="mt-1 block w-full pl-3 pr-10 py-2 text-base border-gray-300 focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm rounded-md"
               name="species"
@@ -118,18 +119,12 @@ export default function NewLog({ edit }) {
               value={formData.species}
               required
             >
-              <option>Select a species</option>
-              <option value="Largemouth Bass">Largemouth Bass</option>
-              <option value="Smallmouth Bass">Smallmouth Bass</option>
-              <option value="Carp">Carp</option>
-              <option value="Blue Catfish">Blue Catfish</option>
-              <option value="Channel Catfish">Channel Catfish</option>
-              <option value="Flathead Catfish">Flathead Catfish</option>
-              <option value="Longnose Gar">Longnose Gar</option>
-              <option value="Black Crappie">Black Crappie</option>
-              <option value="Bluegill">Bluegill</option>
-              <option value="Pumpkinseed Panfish">Pumpkinseed Panfish</option>
-              <option value="Yellow Perch">Yellow Perch</option>
+              <option>Select species</option>
+              {speciesData.map((species) => (
+                <option key={species.species_id} value={species.title}>
+                  {species.title}
+                </option>
+              ))}
             </select>
           </div>
 
@@ -178,7 +173,7 @@ export default function NewLog({ edit }) {
 
           <div className="grid sm:grid-cols-2 gap-2 items-start border-t border-gray-200 pt-3 sm:pt-5">
             <label className="block text-sm font-medium text-gray-700 sm:mt-px sm:pt-2">
-              Bait used
+              Tackle used
             </label>
             <select
               className="mt-1 block w-full pl-3 pr-10 py-2 text-base border-gray-300 focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm rounded-md"
@@ -188,16 +183,12 @@ export default function NewLog({ edit }) {
               value={formData.bait}
               onChange={handleChange}
             >
-              <option>Select a bait</option>
-              <option value="Crank Bait">Crank Bait</option>
-              <option value="Flies">Flies</option>
-              <option value="Jigs">Jigs</option>
-              <option value="Plugs">Plugs</option>
-              <option value="Poppers">Poppers</option>
-              <option value="Spinners">Spinners</option>
-              <option value="Spoons">Spoons</option>
-              <option value="Real">Real</option>
-              <option value="Live">Live</option>
+              <option>Select tackle</option>
+              {tackleData.map((tackle) => (
+                <option key={tackle.tackle_id} value={tackle.title}>
+                  {tackle.title}
+                </option>
+              ))}
             </select>
           </div>
 
@@ -214,10 +205,10 @@ export default function NewLog({ edit }) {
               onChange={handleChange}
             >
               <option>Select a method</option>
-              <option value="Boat">Boat</option>
-              <option value="Casting">Casting</option>
-              <option value="Fly">Fly</option>
-              <option value="Shore">Shore</option>
+              <option value="Bait fishing">Bait fishing</option>
+              <option value="Fly fishing">Fly fishing</option>
+              <option value="Bait casting">Bait casting</option>
+              <option value="Spinning">Bait spinning</option>
               <option value="Trolling">Trolling</option>
             </select>
           </div>
