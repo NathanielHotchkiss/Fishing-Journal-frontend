@@ -7,16 +7,16 @@ import Layout from "../layout/Layout";
 import TokenService from "../services/token-service";
 import { UserContext } from "../App";
 
-export default function NewLog({ edit }) {
+export default function NewSpecies({ edit }) {
   const navigate = useNavigate();
-  const { tackle_id } = useParams() || null;
+  const { species_id } = useParams() || null;
 
-  const context = useContext(UserContext);
-  const { user_id } = context.userInfo;
+  const userInfo = useContext(UserContext);
+  const { user_id } = userInfo;
 
   const [apiError, setApiError] = useState(null);
   const [formError, setFormError] = useState([]);
-  const [title, setTitle] = useState("Add new tackle");
+  const [title, setTitle] = useState("Add a new species");
   const [formData, setFormData] = useState({
     user_id: user_id,
     title: "",
@@ -28,22 +28,22 @@ export default function NewLog({ edit }) {
     event.preventDefault();
 
     if (edit) {
-      AuthApiService.updateTackle(formData)
-        .then(navigate("/tackle"))
+      AuthApiService.updateSpecies(formData)
+        .then(navigate("/species"))
         .catch(setApiError);
     } else {
-      AuthApiService.postNewTackle(formData)
-        .then(navigate("/tackle"))
+      AuthApiService.postNewSpecies(formData)
+        .then(navigate("/species"))
         .catch(setApiError);
     }
   }
 
   useEffect(() => {
     if (edit) {
-      if (!tackle_id) return null;
-      setTitle("Edit tackle");
+      if (!species_id) return null;
+      setTitle("Edit species");
 
-      return fetch(`${config.API_ENDPOINT}/tackle/${tackle_id}`, {
+      return fetch(`${config.API_ENDPOINT}/species/${species_id}`, {
         method: "GET",
         headers: {
           Authorization: `bearer ${TokenService.getAuthToken()}`,
@@ -63,14 +63,14 @@ export default function NewLog({ edit }) {
         return null;
       }
       setFormData({
-        tackle_id: tackle_id,
+        species_id: species_id,
         user_id: user_id,
         title: res.title,
         description: res.description,
         type: res.type,
       });
     }
-  }, [tackle_id, user_id, edit]);
+  }, [species_id, user_id, edit]);
 
   function handleChange(event) {
     const { name, value } = event.target;
@@ -149,7 +149,7 @@ export default function NewLog({ edit }) {
               <button
                 className="bg-white py-2 px-4 border border-gray-300 rounded-md shadow-sm text-sm font-medium text-gray-700 hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-zinc-500 mr-2"
                 type="button"
-                onClick={() => navigate("/tackle")}
+                onClick={() => navigate("/species")}
               >
                 Cancel
               </button>

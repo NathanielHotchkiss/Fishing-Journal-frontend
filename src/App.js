@@ -11,6 +11,7 @@ export default function App() {
   const [userInfo, setUserInfo] = useState([]);
   const [isLoading, setIsLoading] = useState(false);
   const [tackleData, setTackleData] = useState([]);
+  const [speciesData, setSpeciesData] = useState([]);
 
   async function handleApiCalls() {
     setIsLoading(true);
@@ -20,6 +21,12 @@ export default function App() {
 
       await Promise.all([
         fetch(`${config.API_ENDPOINT}/fishing_logs/user/${user_id}`, {
+          headers: {
+            Authorization: `bearer ${TokenService.getAuthToken()}`,
+          },
+        }),
+
+        fetch(`${config.API_ENDPOINT}/species/user/${user_id}`, {
           headers: {
             Authorization: `bearer ${TokenService.getAuthToken()}`,
           },
@@ -38,13 +45,17 @@ export default function App() {
         }),
       ])
 
-        .then(([userLogsRes, userTackleRes, userInfoRes]) => {
-          if (!userLogsRes.ok) {
-            return userLogsRes.json().then((e) => Promise.reject(e));
+        .then(([logsRes, speciesRes, tackleRes, userInfoRes]) => {
+          if (!logsRes.ok) {
+            return logsRes.json().then((e) => Promise.reject(e));
           }
 
-          if (!userTackleRes.ok) {
-            return userTackleRes.json().then((e) => Promise.reject(e));
+          if (!speciesRes.ok) {
+            return speciesRes.json().then((e) => Promise.reject(e));
+          }
+
+          if (!tackleRes.ok) {
+            return tackleRes.json().then((e) => Promise.reject(e));
           }
 
           if (!userInfoRes.ok) {
@@ -52,14 +63,16 @@ export default function App() {
           }
 
           return Promise.all([
-            userLogsRes.json(),
-            userTackleRes.json(),
+            logsRes.json(),
+            speciesRes.json(),
+            tackleRes.json(),
             userInfoRes.json(),
           ]);
         })
 
-        .then(([logs, tackle, user]) => {
+        .then(([logs, species, tackle, user]) => {
           setFishingLogsData(logs);
+          setSpeciesData(species);
           setTackleData(tackle);
           setUserInfo(user);
           setIsLoading(false);
@@ -76,6 +89,7 @@ export default function App() {
     handleApiCalls: handleApiCalls,
     userInfo: userInfo,
     tackleData: tackleData,
+    speciesData: speciesData,
     isLoading: isLoading,
   };
 

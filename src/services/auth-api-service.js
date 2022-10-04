@@ -1,6 +1,8 @@
 import config from "../config";
 import TokenService from "./token-service";
 
+// overhauling soon
+
 const AuthApiService = {
   postLogin({ email, password }) {
     return fetch(`${config.API_ENDPOINT}/auth/token`, {
@@ -122,6 +124,31 @@ const AuthApiService = {
         "content-type": "application/json",
       },
       body: JSON.stringify(tackle),
+    }).then((res) =>
+      !res.ok ? res.json().then((e) => Promise.reject(e)) : res.json()
+    );
+  },
+  postNewSpecies(species) {
+    return fetch(`${config.API_ENDPOINT}/species`, {
+      method: "POST",
+      headers: {
+        Authorization: `bearer ${TokenService.getAuthToken()}`,
+        "content-type": "application/json",
+      },
+      body: JSON.stringify(species),
+    }).then((res) =>
+      !res.ok ? res.json().then((e) => Promise.reject(e)) : res.json()
+    );
+  },
+  updateSpecies(species) {
+    const { species_id } = species;
+    return fetch(`${config.API_ENDPOINT}/species/${species_id}`, {
+      method: "PUT",
+      headers: {
+        Authorization: `bearer ${TokenService.getAuthToken()}`,
+        "content-type": "application/json",
+      },
+      body: JSON.stringify(species),
     }).then((res) =>
       !res.ok ? res.json().then((e) => Promise.reject(e)) : res.json()
     );

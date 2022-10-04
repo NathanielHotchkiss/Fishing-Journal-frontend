@@ -8,6 +8,8 @@ import NewTackle from "../pages/NewTackle";
 import NotFound from "../components/NotFound";
 import Protected from "../components/Protected";
 import Register from "../components/Register";
+import Species from "../pages/Species";
+import NewSpecies from "../pages/NewSpecies";
 import SignIn from "../components/SignIn";
 import Stats from "../pages/Stats";
 import Tackle from "../pages/Tackle";
@@ -39,6 +41,30 @@ export default function AppRoutes() {
           element={
             <Protected>
               <NewLog edit={true} />
+            </Protected>
+          }
+        />
+        <Route
+          path="/species"
+          element={
+            <Protected>
+              <Species />
+            </Protected>
+          }
+        />
+        <Route
+          path="/species/new"
+          element={
+            <Protected>
+              <NewSpecies />
+            </Protected>
+          }
+        />
+        <Route
+          path="/species/:species_id/edit"
+          element={
+            <Protected>
+              <NewSpecies edit={true} />
             </Protected>
           }
         />
