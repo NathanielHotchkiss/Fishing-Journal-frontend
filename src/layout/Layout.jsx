@@ -5,16 +5,15 @@ import { UserContext } from "../App";
 
 import { Dialog, Transition } from "@headlessui/react";
 import {
+  ArrowRightOnRectangleIcon,
   Bars3Icon,
   ChartBarIcon,
-  HomeIcon,
-  XMarkIcon,
-  PlusCircleIcon,
   Cog8ToothIcon,
-  ArrowRightOnRectangleIcon,
+  HomeIcon,
+  IdentificationIcon,
   ShoppingBagIcon,
   SquaresPlusIcon,
-  IdentificationIcon
+  XMarkIcon,
 } from "@heroicons/react/24/outline";
 
 const userNavigation = [
@@ -35,7 +34,7 @@ const navigation = [
   {
     name: "Species",
     href: "/species",
-    icon:  IdentificationIcon,
+    icon: IdentificationIcon,
   },
   {
     name: "Tackle",
@@ -54,12 +53,11 @@ function classNames(...classes) {
 }
 
 const Layout = ({ children, title }) => {
-  const context = useContext(UserContext);
   const navigate = useNavigate();
+  const { userInfo } = useContext(UserContext);
+  const { first_name, last_name, email } = userInfo;
 
   const [sidebarOpen, setSidebarOpen] = useState(false);
-
-  const { first_name, last_name, email } = context.userInfo;
 
   const user = `${first_name} ${last_name}`;
 
