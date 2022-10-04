@@ -12,7 +12,9 @@ import {
   PlusCircleIcon,
   Cog8ToothIcon,
   ArrowRightOnRectangleIcon,
-  ShoppingBagIcon
+  ShoppingBagIcon,
+  SquaresPlusIcon,
+  IdentificationIcon
 } from "@heroicons/react/24/outline";
 
 const userNavigation = [
@@ -28,7 +30,12 @@ const navigation = [
   {
     name: "New Log",
     href: "/new",
-    icon: PlusCircleIcon,
+    icon: SquaresPlusIcon,
+  },
+  {
+    name: "Species",
+    href: "/species",
+    icon:  IdentificationIcon,
   },
   {
     name: "Tackle",
@@ -212,7 +219,6 @@ const Layout = ({ children, title }) => {
 
       {/* Static sidebar for desktop */}
       <div className="hidden md:flex md:w-64 md:flex-col md:fixed md:inset-y-0">
-        {/* Sidebar component, swap this element with another sidebar if you like */}
         <div className="flex-1 flex flex-col min-h-0 bg-zinc-800">
           <div className="flex-1 flex flex-col pt-5 overflow-y-auto">
             <div className="flex items-center flex-shrink-0 px-4">
