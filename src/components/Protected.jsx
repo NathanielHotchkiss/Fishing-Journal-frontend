@@ -1,9 +1,9 @@
 import React from "react";
-import { Navigate } from "react-router-dom";
+import { Navigate, Outlet } from "react-router-dom";
 
 import TokenService from "../services/token-service";
 
-const Protected = ({ children }) => {
+const Protected = () => {
   function hasJWT() {
     if (TokenService.hasAuthToken()) {
       return true;
@@ -11,10 +11,11 @@ const Protected = ({ children }) => {
       return false;
     }
   }
+
   if (!hasJWT()) {
-    return <Navigate to="/" replace />;
+    return <Navigate to="/" />;
   }
-  return children;
+  return <Outlet />;
 };
 
 export default Protected;
