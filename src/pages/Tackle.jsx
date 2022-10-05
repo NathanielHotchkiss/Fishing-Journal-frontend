@@ -5,8 +5,8 @@ import { UserContext } from "../App";
 import { PlusIcon } from "@heroicons/react/24/outline";
 
 export default function Dashboard() {
-  const { handleApiCalls, isLoading, tackleData } = useContext(UserContext);
   const navigate = useNavigate();
+  const { handleApiCalls, isLoading, tackleData } = useContext(UserContext);
 
   useEffect(() => {
     handleApiCalls();
@@ -52,7 +52,7 @@ export default function Dashboard() {
           </p>
           <div className="mt-6">
             <button
-              href="/new"
+              href="new"
               type="button"
               className="inline-flex items-center rounded-md border border-transparent bg-zinc-600 px-4 py-2 text-sm font-medium text-white shadow-sm hover:bg-zinc-700 focus:outline-none focus:ring-2 focus:ring-zinc-500 focus:ring-offset-2"
             >
@@ -96,7 +96,7 @@ export default function Dashboard() {
                   </th>
                   <th
                     scope="col"
-                    className="hidden px-3 py-3.5 text-left text-sm font-semibold text-gray-900 lg:table-cell"
+                    className="hidden px-3 py-3.5 text-left text-sm font-semibold text-gray-900 sm:table-cell"
                   >
                     Description
                   </th>
@@ -130,10 +130,7 @@ export default function Dashboard() {
                       {tackle.type}
                     </td>
                     <td className="py-4 pl-3 pr-4 text-right text-sm font-medium sm:pr-6">
-                      <Link
-                        to={`/tackle/${tackle.tackle_id}/edit`}
-                        className=""
-                      >
+                      <Link to={`${tackle.tackle_id}`} className="">
                         Edit
                       </Link>
                     </td>

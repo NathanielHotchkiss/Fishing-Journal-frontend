@@ -52,7 +52,7 @@ export default function Dashboard() {
           </p>
           <div className="mt-6">
             <button
-              href="/new"
+              href="new"
               type="button"
               className="inline-flex items-center rounded-md border border-transparent bg-zinc-600 px-4 py-2 text-sm font-medium text-white shadow-sm hover:bg-zinc-700 focus:outline-none focus:ring-2 focus:ring-zinc-500 focus:ring-offset-2"
             >
@@ -77,7 +77,7 @@ export default function Dashboard() {
             <div className="mt-4 sm:mt-0 sm:ml-16 sm:flex-none">
               <button
                 type="button"
-                onClick={() => navigate("/species/new")}
+                onClick={() => navigate("new")}
                 className="sm:ml-3 inline-flex justify-center py-2 px-4 border border-transparent shadow-sm text-sm font-medium rounded-md text-white bg-zinc-600 hover:bg-zinc-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-zinc-500"
               >
                 Add species
@@ -96,7 +96,7 @@ export default function Dashboard() {
                   </th>
                   <th
                     scope="col"
-                    className="hidden px-3 py-3.5 text-left text-sm font-semibold text-gray-900 lg:table-cell"
+                    className="hidden px-3 py-3.5 text-left text-sm font-semibold text-gray-900 sm:table-cell"
                   >
                     Description
                   </th>
@@ -130,10 +130,7 @@ export default function Dashboard() {
                       {species.type}
                     </td>
                     <td className="py-4 pl-3 pr-4 text-right text-sm font-medium sm:pr-6">
-                      <Link
-                        to={`/species/${species.species_id}/edit`}
-                        className=""
-                      >
+                      <Link to={`${species.species_id}`} className="">
                         Edit
                       </Link>
                     </td>
