@@ -28,18 +28,20 @@ export default function AppRoutes() {
               path="/fishing_logs/:fish_id/edit"
               element={<NewLog edit={true} />}
             />
-            <Route path="/species" element={<Species />} />
-            <Route path="/species/new" element={<NewSpecies />} />
-            <Route
-              path="/species/:species_id/edit"
-              element={<NewSpecies edit={true} />}
-            />
-            <Route path="/tackle" element={<Tackle />} />
-            <Route path="/tackle/new" element={<NewTackle />} />
-            <Route
-              path="/tackle/:tackle_id/edit"
-              element={<NewTackle edit={true} />}
-            />
+            <Route path="species" element={<Species />}>
+              <Route path="new" element={<NewSpecies />} />
+              <Route
+                path=":species_id/edit"
+                element={<NewSpecies edit={true} />}
+              />
+            </Route>
+            <Route path="tackle" element={<Tackle />}>
+              <Route path="new" element={<NewTackle />} />
+              <Route
+                path=":tackle_id/edit"
+                element={<NewTackle edit={true} />}
+              />
+            </Route>
             <Route path="/settings" element={<UserSettings />} />
             <Route path="/stats" element={<Stats />} />
           </Route>
