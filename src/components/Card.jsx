@@ -68,13 +68,13 @@ export default function Card() {
                           to={`/fishing_logs/${fish_id}/edit`}
                           className={classNames(
                             active
-                              ? "bg-gray-100 text-gray-900"
-                              : "text-gray-700",
+                              ? "bg-zinc-100 text-zinc-900"
+                              : "text-zinc-700",
                             "group flex items-center px-4 py-2 text-sm"
                           )}
                         >
                           <PencilSquareIcon
-                            className="mr-3 h-5 w-5 text-gray-400 group-hover:text-gray-500"
+                            className="mr-3 h-5 w-5 text-zinc-400 group-hover:text-zinc-500"
                             aria-hidden="true"
                           />
                           Edit
@@ -88,13 +88,13 @@ export default function Card() {
                           onClick={() => handleDelete(fish_id)}
                           className={classNames(
                             active
-                              ? "w-full bg-gray-100 text-gray-900"
-                              : "text-gray-700",
+                              ? "w-full bg-zinc-100 text-zinc-900"
+                              : "text-zinc-700",
                             "group flex items-center px-4 py-2 text-sm"
                           )}
                         >
                           <TrashIcon
-                            className="mr-3 h-5 w-5 text-gray-400 group-hover:text-gray-500"
+                            className="mr-3 h-5 w-5 text-zinc-400 group-hover:text-zinc-500"
                             aria-hidden="true"
                           />
                           Delete
