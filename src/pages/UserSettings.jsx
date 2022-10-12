@@ -100,7 +100,7 @@ export default function UserSettings() {
             </div>
           </div>
 
-          <div className="grid sm:grid-cols-2 gap-2 items-start border-t border-gray-200 pt-3 sm:pt-5">
+          <div className="grid sm:grid-cols-2 gap-2 items-start pt-3 sm:pt-5">
             <label className="block text-sm font-medium text-gray-700 sm:mt-px sm:pt-2">
               First name
             </label>
@@ -153,7 +153,7 @@ export default function UserSettings() {
             <button
               className="bg-red-100 py-2 px-4 border border-transparent rounded-md shadow-sm text-sm font-medium text-red-700 hover:bg-red-200 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-zinc-500"
               type="button"
-              onClick={() =>handleDelete()}
+              onClick={() => handleDelete()}
             >
               Delete
             </button>
@@ -172,7 +172,7 @@ export default function UserSettings() {
               className="ml-3 inline-flex justify-center py-2 px-4 border border-transparent shadow-sm text-sm font-medium rounded-md text-white bg-zinc-600 hover:bg-zinc-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-zinc-500"
               type="submit"
             >
-              Submit
+              Save changes
             </button>
           </div>
         </div>
