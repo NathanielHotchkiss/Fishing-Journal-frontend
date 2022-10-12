@@ -128,6 +128,20 @@ const AuthApiService = {
       !res.ok ? res.json().then((e) => Promise.reject(e)) : res.json()
     );
   },
+  deleteTackle(tackle_id) {
+    return fetch(`${config.API_ENDPOINT}/tackle/${tackle_id}`, {
+      method: "DELETE",
+      headers: {
+        Authorization: `bearer ${TokenService.getAuthToken()}`,
+        "Content-Type": "application/json",
+      },
+    }).then((res) => {
+      if (!res.ok) {
+        return res.json().then((e) => Promise.reject(e));
+      }
+      return res;
+    });
+  },
   postNewSpecies(species) {
     return fetch(`${config.API_ENDPOINT}/species`, {
       method: "POST",
@@ -152,6 +166,20 @@ const AuthApiService = {
     }).then((res) =>
       !res.ok ? res.json().then((e) => Promise.reject(e)) : res.json()
     );
+  },
+  deleteSpecies(species_id) {
+    return fetch(`${config.API_ENDPOINT}/spcecies/${species_id}`, {
+      method: "DELETE",
+      headers: {
+        Authorization: `bearer ${TokenService.getAuthToken()}`,
+        "Content-Type": "application/json",
+      },
+    }).then((res) => {
+      if (!res.ok) {
+        return res.json().then((e) => Promise.reject(e));
+      }
+      return res;
+    });
   },
 };
 
