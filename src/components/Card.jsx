@@ -15,9 +15,15 @@ export default function Card() {
   }
 
   async function handleDelete(fish_id) {
-    return await AuthApiService.deleteLog(fish_id).then(
-      window.location.reload()
-    );
+    if (
+      window.confirm(
+        "Are you sure you want to delete this log? This cannot be undone."
+      )
+    ) {
+      return await AuthApiService.deleteLog(fish_id).then(
+        window.location.reload()
+      );
+    }
   }
 
   return userLogs.map((info, id) => {
