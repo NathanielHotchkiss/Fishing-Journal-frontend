@@ -168,7 +168,7 @@ const AuthApiService = {
     );
   },
   deleteSpecies(species_id) {
-    return fetch(`${config.API_ENDPOINT}/spcecies/${species_id}`, {
+    return fetch(`${config.API_ENDPOINT}/species/${species_id}`, {
       method: "DELETE",
       headers: {
         Authorization: `bearer ${TokenService.getAuthToken()}`,
