@@ -41,11 +41,6 @@ const navigation = [
     href: "/tackle",
     icon: ShoppingBagIcon,
   },
-  {
-    name: "Stats",
-    href: "/stats",
-    icon: ChartBarIcon,
-  },
 ];
 
 function classNames(...classes) {

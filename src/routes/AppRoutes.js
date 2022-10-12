@@ -10,7 +10,6 @@ import NewSpecies from "../pages/NewSpecies";
 import NotFound from "../components/NotFound";
 import Protected from "../components/Protected";
 import Species from "../pages/Species";
-import Stats from "../pages/Stats";
 import Tackle from "../pages/Tackle";
 import UserSettings from "../pages/UserSettings";
 
@@ -37,7 +36,6 @@ export default function AppRoutes() {
               <Route path=":tackle_id" element={<NewTackle edit={true} />} />
             </Route>
             <Route path="settings" element={<UserSettings />} />
-            <Route path="stats" element={<Stats />} />
           </Route>
         </Route>
         <Route path="/" element={<Home />} />
