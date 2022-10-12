@@ -4,7 +4,7 @@ import Layout from "../layout/Layout";
 import { UserContext } from "../App";
 import { PlusIcon } from "@heroicons/react/24/outline";
 
-export default function Dashboard() {
+export default function Tackle() {
   const navigate = useNavigate();
   const { handleApiCalls, isLoading, tackleData } = useContext(UserContext);
 
@@ -25,7 +25,7 @@ export default function Dashboard() {
         </div>
       </Layout>
     );
-  } else if (!tackleData) {
+  } else if (tackleData.length === 0) {
     return (
       <Layout title="Tackle">
         <div className="text-center">
@@ -52,7 +52,7 @@ export default function Dashboard() {
           </p>
           <div className="mt-6">
             <button
-              href="new"
+                onClick={() => navigate("/tackle/new")}
               type="button"
               className="inline-flex items-center rounded-md border border-transparent bg-zinc-600 px-4 py-2 text-sm font-medium text-white shadow-sm hover:bg-zinc-700 focus:outline-none focus:ring-2 focus:ring-zinc-500 focus:ring-offset-2"
             >
@@ -96,15 +96,21 @@ export default function Dashboard() {
                   </th>
                   <th
                     scope="col"
-                    className="hidden px-3 py-3.5 text-left text-sm font-semibold text-gray-900 sm:table-cell"
+                    className="px-3 py-3.5 text-left text-sm font-semibold text-gray-900"
                   >
-                    Description
+                    Brand
                   </th>
                   <th
                     scope="col"
                     className="px-3 py-3.5 text-left text-sm font-semibold text-gray-900"
                   >
-                    Type
+                    Color
+                  </th>
+                  <th
+                    scope="col"
+                    className="hidden px-3 py-3.5 text-left text-sm font-semibold text-gray-900 sm:table-cell"
+                  >
+                    Description
                   </th>
                   <th scope="col" className="relative py-3.5 pl-3 pr-4 sm:pr-6">
                     <span className="sr-only">Edit</span>
@@ -123,11 +129,14 @@ export default function Dashboard() {
                         </dd>
                       </dl>
                     </td>
+                    <td className="px-3 py-4 text-sm text-gray-500 sm:table-cell">
+                      {tackle.brand}
+                    </td>
+                    <td className="px-3 py-4 text-sm text-gray-500 sm:table-cell">
+                      {tackle.color}
+                    </td>
                     <td className="hidden px-3 py-4 text-sm text-gray-500 sm:table-cell">
                       {tackle.description}
-                    </td>
-                    <td className="px-3 py-4 text-sm text-gray-500">
-                      {tackle.type}
                     </td>
                     <td className="py-4 pl-3 pr-4 text-right text-sm font-medium sm:pr-6">
                       <Link to={`${tackle.tackle_id}`} className="">

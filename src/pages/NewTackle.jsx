@@ -7,7 +7,7 @@ import Layout from "../layout/Layout";
 import TokenService from "../services/token-service";
 import { UserContext } from "../App";
 
-export default function NewLog({ edit }) {
+export default function NewTackle({ edit }) {
   const navigate = useNavigate();
   const { tackle_id } = useParams() || null;
 
@@ -20,23 +20,10 @@ export default function NewLog({ edit }) {
   const [formData, setFormData] = useState({
     user_id: user_id,
     title: "",
+    brand: "",
+    color: "",
     description: "",
-    type: "",
   });
-
-  async function handleSubmit(event) {
-    event.preventDefault();
-
-    if (edit) {
-      AuthApiService.updateTackle(formData)
-        .then(navigate("/tackle"))
-        .catch(setApiError);
-    } else {
-      AuthApiService.postNewTackle(formData)
-        .then(navigate("/tackle"))
-        .catch(setApiError);
-    }
-  }
 
   useEffect(() => {
     if (edit) {
@@ -66,11 +53,33 @@ export default function NewLog({ edit }) {
         tackle_id: tackle_id,
         user_id: user_id,
         title: res.title,
+        brand: res.brand,
+        color: res.color,
         description: res.description,
-        type: res.type,
       });
     }
   }, [tackle_id, user_id, edit]);
+
+  async function handleSubmit(event) {
+    event.preventDefault();
+
+    if (edit) {
+      AuthApiService.updateTackle(formData)
+        .then(navigate("/tackle"))
+        .catch(setApiError);
+    } else {
+      AuthApiService.postNewTackle(formData)
+        .then(navigate("/tackle"))
+        .catch(setApiError);
+    }
+  }
+
+  async function handleDelete() {
+    if (window.confirm("Delete tackle? This cannot be undone.")) {
+      AuthApiService.deleteTackle(tackle_id);
+      navigate("/tackle");
+    }
+  }
 
   function handleChange(event) {
     const { name, value } = event.target;
@@ -87,6 +96,27 @@ export default function NewLog({ edit }) {
       <ErrorAlert key={idx} error={error} />
     ));
   };
+
+  let button;
+  if (edit) {
+    button = (
+      <div className="grid sm:grid-cols-2 gap-2 items-start border-t border-gray-200 pt-3 sm:pt-5">
+        <span className="block text-sm font-medium text-gray-700 sm:mt-px sm:pt-2">
+          Delete tackle
+        </span>
+
+        <button
+          className="bg-red-100 py-2 px-4 border border-transparent rounded-md shadow-sm text-sm font-medium text-red-700 hover:bg-red-200 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-zinc-500"
+          type="button"
+          onClick={() => handleDelete()}
+        >
+          Delete
+        </button>
+      </div>
+    );
+  } else {
+    button = null;
+  }
 
   return (
     <Layout title={title}>
@@ -116,6 +146,36 @@ export default function NewLog({ edit }) {
 
           <div className="grid sm:grid-cols-2 gap-2 items-start border-t border-gray-200 pt-3 sm:pt-5">
             <label className="block text-sm font-medium text-gray-700 sm:mt-px sm:pt-2">
+              Brand
+            </label>
+            <input
+              className="border border-slate-200 rounded h-8 focus:ring-blue-500 focus:border-blue-500"
+              name="brand"
+              id="brand"
+              type="text"
+              onChange={handleChange}
+              value={formData.brand}
+              required
+            />
+          </div>
+
+          <div className="grid sm:grid-cols-2 gap-2 items-start border-t border-gray-200 pt-3 sm:pt-5">
+            <label className="block text-sm font-medium text-gray-700 sm:mt-px sm:pt-2">
+              Color
+            </label>
+            <input
+              className="border border-slate-200 rounded h-8 focus:ring-blue-500 focus:border-blue-500"
+              name="color"
+              id="color"
+              type="text"
+              onChange={handleChange}
+              value={formData.color}
+              required
+            />
+          </div>
+
+          <div className="grid sm:grid-cols-2 gap-2 items-start border-t border-gray-200 pt-3 sm:pt-5">
+            <label className="block text-sm font-medium text-gray-700 sm:mt-px sm:pt-2">
               Description
             </label>
             <textarea
@@ -129,20 +189,7 @@ export default function NewLog({ edit }) {
             />
           </div>
 
-          <div className="grid sm:grid-cols-2 gap-2 items-start border-t border-gray-200 pt-3 sm:pt-5">
-            <label className="block text-sm font-medium text-gray-700 sm:mt-px sm:pt-2">
-              Type
-            </label>
-            <input
-              className="border border-slate-200 rounded h-8 focus:ring-blue-500 focus:border-blue-500"
-              name="type"
-              id="type"
-              type="text"
-              onChange={handleChange}
-              value={formData.type}
-              required
-            />
-          </div>
+          {button}
 
           <div className="pt-5">
             <div className="flex justify-end">
