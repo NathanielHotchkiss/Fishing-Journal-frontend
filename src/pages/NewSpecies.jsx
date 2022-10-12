@@ -11,7 +11,7 @@ export default function NewSpecies({ edit }) {
   const navigate = useNavigate();
   const { species_id } = useParams() || null;
 
-  const userInfo = useContext(UserContext);
+  const { userInfo } = useContext(UserContext);
   const { user_id } = userInfo;
 
   const [apiError, setApiError] = useState(null);
@@ -23,20 +23,6 @@ export default function NewSpecies({ edit }) {
     description: "",
     type: "",
   });
-
-  async function handleSubmit(event) {
-    event.preventDefault();
-
-    if (edit) {
-      AuthApiService.updateSpecies(formData)
-        .then(navigate("/species"))
-        .catch(setApiError);
-    } else {
-      AuthApiService.postNewSpecies(formData)
-        .then(navigate("/species"))
-        .catch(setApiError);
-    }
-  }
 
   useEffect(() => {
     if (edit) {
@@ -72,6 +58,27 @@ export default function NewSpecies({ edit }) {
     }
   }, [species_id, user_id, edit]);
 
+  async function handleSubmit(event) {
+    event.preventDefault();
+
+    if (edit) {
+      AuthApiService.updateSpecies(formData)
+        .then(navigate("/species"))
+        .catch(setApiError);
+    } else {
+      AuthApiService.postNewSpecies(formData)
+        .then(navigate("/species"))
+        .catch(setApiError);
+    }
+  }
+
+  async function handleDelete() {
+    if (window.confirm("Delete species? This cannot be undone.")) {
+      AuthApiService.deleteSpecies(species_id);
+      navigate("/species");
+    }
+  }
+
   function handleChange(event) {
     const { name, value } = event.target;
     setFormData((prevState) => {
@@ -87,6 +94,27 @@ export default function NewSpecies({ edit }) {
       <ErrorAlert key={idx} error={error} />
     ));
   };
+
+  let button;
+  if (edit) {
+    button = (
+      <div className="grid sm:grid-cols-2 gap-2 items-start border-t border-gray-200 pt-3 sm:pt-5">
+        <span className="block text-sm font-medium text-gray-700 sm:mt-px sm:pt-2">
+          Delete tackle
+        </span>
+
+        <button
+          className="bg-red-100 py-2 px-4 border border-transparent rounded-md shadow-sm text-sm font-medium text-red-700 hover:bg-red-200 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-zinc-500"
+          type="button"
+          onClick={() => handleDelete()}
+        >
+          Delete
+        </button>
+      </div>
+    );
+  } else {
+    button = null;
+  }
 
   return (
     <Layout title={title}>
@@ -125,7 +153,6 @@ export default function NewSpecies({ edit }) {
               type="text"
               onChange={handleChange}
               value={formData.description}
-              required
             />
           </div>
 
@@ -133,16 +160,22 @@ export default function NewSpecies({ edit }) {
             <label className="block text-sm font-medium text-gray-700 sm:mt-px sm:pt-2">
               Type
             </label>
-            <input
-              className="border border-slate-200 rounded h-8 focus:ring-blue-500 focus:border-blue-500"
+            <select
+              className="mt-1 block w-full pl-3 pr-10 py-2 text-base border-gray-300 focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm rounded-md"
               name="type"
               id="type"
-              type="text"
-              onChange={handleChange}
+              autoComplete="off"
               value={formData.type}
+              onChange={handleChange}
               required
-            />
+            >
+              <option>Select a type</option>
+              <option value="Freshwater">Freshwater</option>
+              <option value="Saltwater">Saltwater</option>
+            </select>
           </div>
+
+          {button}
 
           <div className="pt-5">
             <div className="flex justify-end">

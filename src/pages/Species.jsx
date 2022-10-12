@@ -4,7 +4,7 @@ import Layout from "../layout/Layout";
 import { UserContext } from "../App";
 import { PlusIcon } from "@heroicons/react/24/outline";
 
-export default function Dashboard() {
+export default function Species() {
   const { handleApiCalls, isLoading, speciesData } = useContext(UserContext);
   const navigate = useNavigate();
 
@@ -25,7 +25,7 @@ export default function Dashboard() {
         </div>
       </Layout>
     );
-  } else if (!speciesData) {
+  } else if (speciesData.length === 0) {
     return (
       <Layout title="Species">
         <div className="text-center">
