@@ -23,15 +23,15 @@ const features = [
   },
   {
     name: "Mobile first",
-    description: "A responsive design no matter where you visit.",
+    description: "A responsive design no matter where you visit from.",
   },
   {
     name: "Fishing stats",
     description: "(coming soon)",
   },
   {
-    name: "Customize input options",
-    description: "(coming soon",
+    name: "Customize inputs",
+    description: "Create, edit, and delete certain inputs.",
   },
 ];
 
