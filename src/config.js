@@ -1,5 +1,5 @@
 const API_ENDPOINT =
-  process.env.NODE_ENV === "PRODUCTION"
+  process.env.NODE_ENV === "production"
     ? "https://fishing-journal-server.herokuapp.com"
     : "http://localhost:5050";
 
