@@ -13,6 +13,8 @@ export default function App() {
   const [tackleData, setTackleData] = useState([]);
   const [speciesData, setSpeciesData] = useState([]);
 
+  console.log(config);
+
   async function handleApiCalls() {
     setIsLoading(true);
 

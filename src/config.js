@@ -3,4 +3,6 @@ const API_ENDPOINT =
     ? "https://fishing-journal-server.herokuapp.com"
     : "http://localhost:5050";
 
-export default { API_ENDPOINT, TOKEN_KEY: "fishing-client-auth-token" };
+const TOKEN_KEY = "fishing-client-auth-token";
+
+export { API_ENDPOINT, TOKEN_KEY };
