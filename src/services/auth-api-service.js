@@ -1,8 +1,6 @@
 import config from "../config";
 import TokenService from "./token-service";
 
-// overhauling soon
-
 const AuthApiService = {
   postLogin({ email, password }) {
     return fetch(`${config.API_ENDPOINT}/auth/token`, {
@@ -26,7 +24,6 @@ const AuthApiService = {
     );
   },
   postUser(user) {
-    console.log(config)
     return fetch(`${config.API_ENDPOINT}/app_users`, {
       method: "POST",
       headers: {

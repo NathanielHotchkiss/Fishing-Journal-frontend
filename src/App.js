@@ -13,12 +13,8 @@ export default function App() {
   const [tackleData, setTackleData] = useState([]);
   const [speciesData, setSpeciesData] = useState([]);
 
-
-
   async function handleApiCalls() {
     setIsLoading(true);
-
-    console.log(config);
 
     if (TokenService.hasAuthToken()) {
       const user_id = TokenService.getUserId();
