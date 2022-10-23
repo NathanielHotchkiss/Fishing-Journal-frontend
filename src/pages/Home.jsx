@@ -129,7 +129,7 @@ export default function Home() {
           <div className="lg:grid lg:grid-cols-2 lg:items-center lg:gap-8">
             <div>
               <h2 className="text-3xl font-bold tracking-tight text-gray-100 sm:text-4xl">
-                Technologies
+                Technologies used
               </h2>
 
               <div className="mt-8 flex">
@@ -138,7 +138,7 @@ export default function Home() {
                     type="button"
                     className="inline-flex items-center rounded-md border border-transparent bg-zinc-600 px-4 py-2 text-base font-medium text-white shadow-sm hover:bg-zinc-700 focus:outline-none focus:ring-2 focus:ring-zinc-500 focus:ring-offset-2"
                   >
-                    Frontend source code
+                    Frontend
                     <i
                       className="bi bi-github ml-3 -mr-1 h-5 w-5"
                       aria-hidden="true"
@@ -151,7 +151,7 @@ export default function Home() {
                     type="button"
                     className="inline-flex items-center rounded-md border border-transparent bg-zinc-600 ml-3 px-4 py-2 text-base font-medium text-white shadow-sm hover:bg-zinc-700 focus:outline-none focus:ring-2 focus:ring-zinc-500 focus:ring-offset-2"
                   >
-                    Backend source code
+                    Backend
                     <i
                       className="bi bi-github ml-3 -mr-1 h-5 w-5"
                       aria-hidden="true"
