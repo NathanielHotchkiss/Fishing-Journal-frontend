@@ -5,4 +5,6 @@ const API_ENDPOINT =
 
 const TOKEN_KEY = "fishing-client-auth-token";
 
-export { API_ENDPOINT, TOKEN_KEY };
+const config = { API_ENDPOINT, TOKEN_KEY };
+
+export default config;

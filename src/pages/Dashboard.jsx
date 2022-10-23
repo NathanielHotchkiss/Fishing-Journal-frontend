@@ -27,7 +27,7 @@ export default function Dashboard() {
         </div>
       </Layout>
     );
-  } else if (!userLogs) {
+  } else if ((userLogs.length === 0)) {
     return (
       <Layout title="Dashboard">
         <div className="text-center">
