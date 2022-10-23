@@ -1,4 +1,5 @@
 import React, { useContext, useEffect } from "react";
+import { useNavigate } from "react-router-dom";
 import Layout from "../layout/Layout";
 import Sort from "../components/Sort";
 import { UserContext } from "../App";
@@ -6,6 +7,7 @@ import { PlusIcon } from "@heroicons/react/24/outline";
 import Card from "../components/Card";
 
 export default function Dashboard() {
+  const navigate = useNavigate();
   const context = useContext(UserContext);
   const userLogs = context.fishingLogsData;
   const { isLoading } = context;
@@ -27,7 +29,7 @@ export default function Dashboard() {
         </div>
       </Layout>
     );
-  } else if ((userLogs.length === 0)) {
+  } else if (userLogs.length === 0) {
     return (
       <Layout title="Dashboard">
         <div className="text-center">
@@ -54,7 +56,7 @@ export default function Dashboard() {
           </p>
           <div className="mt-6">
             <button
-              href="/new"
+              onClick={() => navigate("/tackle/new")}
               type="button"
               className="inline-flex items-center rounded-md border border-transparent bg-zinc-600 px-4 py-2 text-sm font-medium text-white shadow-sm hover:bg-zinc-700 focus:outline-none focus:ring-2 focus:ring-zinc-500 focus:ring-offset-2"
             >
