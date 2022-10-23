@@ -48,7 +48,7 @@ export default function Tackle() {
             Nothing to show yet
           </h3>
           <p className="mt-1 text-sm text-gray-500">
-            Get started by creating adding tackle.
+            Get started by adding tackle.
           </p>
           <div className="mt-6">
             <button
