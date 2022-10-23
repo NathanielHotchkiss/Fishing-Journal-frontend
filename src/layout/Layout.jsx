@@ -148,9 +148,9 @@ const Layout = ({ children, title }) => {
                     ))}
                   </nav>
                 </div>
-                <div className="flex-shrink-0 flex border-t border-gray-700 p-4">
+                <div className="flex-shrink-0 flex border-t border-gray-700 p-3">
                   <div className="flex items-center">
-                    <div className="ml-3">
+                    <div>
                       <p className="text-sm font-medium text-white">{user}</p>
                       <div className="text-sm font-medium text-gray-400">
                         {email}
@@ -235,9 +235,9 @@ const Layout = ({ children, title }) => {
               ))}
             </nav>
           </div>
-          <div className="flex-shrink-0 flex border-t border-gray-700 p-4">
+          <div className="flex-shrink-0 flex border-t border-gray-700 p-3">
             <div className="flex items-center">
-              <div className="ml-3">
+              <div>
                 <p className="text-sm font-medium text-white">{user}</p>
                 <div className="text-sm font-medium text-gray-400">{email}</div>
               </div>
