@@ -21,8 +21,10 @@ export default function Register() {
       password: password.value,
     };
 
+    
     AuthApiService.postUser(newUser)
       .then(async () => {
+        console.log(newUser)
         await AuthApiService.postLogin({
           email: newUser.email,
           password: newUser.password,
