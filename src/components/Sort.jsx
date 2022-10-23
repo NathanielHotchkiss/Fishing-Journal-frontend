@@ -1,20 +1,47 @@
-import { Fragment } from "react";
+import { Fragment, useContext, useState } from "react";
 import { Menu, Transition } from "@headlessui/react";
 import { ChevronDownIcon } from "@heroicons/react/20/solid";
+import { UserContext } from "../App";
+import { MenuItem } from "@mui/material";
 
 export default function Sort() {
+  const { fishingLogsData, setFishingLogsData } = useContext(UserContext);
+
+  const [filter, setFilter] = useState(null);
+
   function classNames(...classes) {
     return classes.filter(Boolean).join(" ");
   }
 
-  const sortOptions = [
-    { name: "Newest", href: "#", current: false },
-    { name: "Species", href: "#", current: false },
-    { name: "Weight", href: "#", current: false },
-  ];
+  // need to account for ounces
+  const weight = [...fishingLogsData].sort(
+    (a, b) =>
+      parseFloat(b.pounds * 16 + b.ounces) -
+      parseFloat(a.pounds * 16 + a.ounces)
+  );
+  // console.log("weight: ", weight);
+
+  const species = [...fishingLogsData].sort((a, b) => a.species - b.pounds);
+  console.log("species: ", species);
+
+  const latest = [...fishingLogsData].sort((a, b) => a.created - b.created);
+  console.log("latest: ", latest);
+
+  function handleClick(event) {
+    event.preventDefault();
+    console.log(event.target.value);
+
+    if (event.target.name === "Latest") {
+      setFishingLogsData(latest);
+    } else if (event.target.name === "Species") {
+      setFishingLogsData(species);
+    } else if (event.target.name === "Weight") {
+      setFishingLogsData(weight);
+    }
+  }
 
   return (
-    <div className="col-start-1 row-start-1 py-4">
+    <div className="col-start-1 row-start-1 py-2">
       <div className="mx-auto flex max-w-7xl justify-end px-4 sm:px-6 lg:px-8">
         <Menu as="div" className="relative inline-block">
           <div className="flex">
@@ -36,26 +63,56 @@ export default function Sort() {
             leaveFrom="transform opacity-100 scale-100"
             leaveTo="transform opacity-0 scale-95"
           >
-            <Menu.Items className="absolute right-0 z-10 mt-2 w-40 origin-top-right rounded-md bg-white shadow-2xl ring-1 ring-black ring-opacity-5 focus:outline-none">
+            <Menu.Items
+              className="absolute right-0 z-10 mt-2 w-40 origin-top-right rounded-md bg-white shadow-2xl ring-1 ring-black ring-opacity-5 focus:outline-none"
+              onClick={(e) => handleClick(e)}
+            >
               <div className="py-1">
-                {sortOptions.map((option) => (
-                  <Menu.Item key={option.name}>
-                    {({ active }) => (
-                      <a
-                        href={option.href}
-                        className={classNames(
-                          option.current
-                            ? "font-medium text-gray-900"
-                            : "text-gray-500",
-                          active ? "bg-gray-100" : "",
-                          "block px-4 py-2 text-sm"
-                        )}
-                      >
-                        {option.name}
-                      </a>
-                    )}
-                  </Menu.Item>
-                ))}
+                <Menu.Item>
+                  {({ active }) => (
+                    <li
+                      name="latest"
+                      value="latest"
+                      //     onClick={(e) => handleClick(e)}
+                      className={classNames(
+                        active ? "bg-gray-100" : "",
+                        "block px-4 py-2 text-sm"
+                      )}
+                    >
+                      Latest
+                    </li>
+                  )}
+                </Menu.Item>
+                <Menu.Item>
+                  {({ active }) => (
+                    <li
+                      name="species"
+                      value="species"
+                      //      onClick={(e) => handleClick(e)}
+                      className={classNames(
+                        active ? "bg-gray-100" : "",
+                        "block px-4 py-2 text-sm"
+                      )}
+                    >
+                      Species
+                    </li>
+                  )}
+                </Menu.Item>
+                <Menu.Item>
+                  {({ active }) => (
+                    <li
+                      name="weight"
+                      value="weight"
+                      //     onClick={(e) => handleClick(e)}
+                      className={classNames(
+                        active ? "bg-gray-100" : "",
+                        "block px-4 py-2 text-sm"
+                      )}
+                    >
+                      Weight
+                    </li>
+                  )}
+                </Menu.Item>
               </div>
             </Menu.Items>
           </Transition>

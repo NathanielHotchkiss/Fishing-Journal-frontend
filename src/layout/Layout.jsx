@@ -7,7 +7,6 @@ import { Dialog, Transition } from "@headlessui/react";
 import {
   ArrowRightOnRectangleIcon,
   Bars3Icon,
-  ChartBarIcon,
   Cog8ToothIcon,
   HomeIcon,
   IdentificationIcon,

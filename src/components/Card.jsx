@@ -40,9 +40,9 @@ export default function Card() {
     return (
       <div key={id} className="block">
         <div className="relative h-72 w-96 shadow-md mx-auto bg-zinc-300"></div>
-        <div className="relative px-4 py-2 h-44 w-72 shadow-md -top-12 mx-auto bg-white rounded-lg">
+        <div className="relative px-4 py-2 h-36 w-72 shadow-md -top-12 mx-auto bg-white rounded-lg">
           <div className="flex justify-between">
-            <p className="block text-lg capitalize font-semibold text-zinc-600 truncate mt-2 ">
+            <p className="block text-lg capitalize font-semibold text-zinc-600 truncate mt-1">
               {species}
             </p>
 
@@ -112,8 +112,8 @@ export default function Card() {
               </Transition>
             </Menu>
           </div>
-          <ul className="block text-base font-medium text-zinc-700">
-            <li>id: {fish_id}</li>
+
+          <ul className="block text-base font-medium text-zinc-800">
             <li>
               Length: {fish_length}
               <span className="text-xs">in</span>
@@ -126,8 +126,8 @@ export default function Card() {
                 <span className="text-xs">oz</span>
               </span>
             </li>
-            <li>Bait used: {bait}</li>
-            <li>Method used: {fishing_method}</li>
+            <li>Bait: {bait}</li>
+            <li>Method: {fishing_method}</li>
           </ul>
         </div>
       </div>

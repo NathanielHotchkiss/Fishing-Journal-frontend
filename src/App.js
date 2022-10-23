@@ -84,6 +84,7 @@ export default function App() {
 
   const context = {
     fishingLogsData: fishingLogsData,
+    setFishingLogsData: setFishingLogsData,
     setApiError: setApiError,
     apiError: apiError,
     handleApiCalls: handleApiCalls,
