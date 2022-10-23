@@ -56,7 +56,7 @@ export default function Dashboard() {
           </p>
           <div className="mt-6">
             <button
-              onClick={() => navigate("/tackle/new")}
+              onClick={() => navigate("/new")}
               type="button"
               className="inline-flex items-center rounded-md border border-transparent bg-zinc-600 px-4 py-2 text-sm font-medium text-white shadow-sm hover:bg-zinc-700 focus:outline-none focus:ring-2 focus:ring-zinc-500 focus:ring-offset-2"
             >
