@@ -39,7 +39,7 @@ export default function Card() {
 
     return (
       <div key={id} className="block">
-        <div className="relative h-72 w-96 shadow-md mx-auto bg-zinc-300"></div>
+        <div className="relative h-72 w-full sm:w-80 md:w-96 shadow-md mx-auto bg-zinc-300"></div>
         <div className="relative px-4 py-2 h-36 w-72 shadow-md -top-12 mx-auto bg-white rounded-lg">
           <div className="flex justify-between">
             <p className="block text-lg capitalize font-semibold text-zinc-600 truncate mt-1">

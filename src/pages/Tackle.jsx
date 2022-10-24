@@ -66,7 +66,7 @@ export default function Tackle() {
   } else {
     return (
       <Layout title="Tackle">
-        <div className="px-4 sm:px-6 lg:px-8 sm:mx-12 lg:mx-16">
+        <div className="md:px-6 lg:px-8 sm:mx-12 lg:mx-16">
           <div className="sm:flex sm:items-center">
             <div className="sm:flex-auto mt-6">
               <p className="mt-2 text-sm text-gray-700">
@@ -84,7 +84,7 @@ export default function Tackle() {
               </button>
             </div>
           </div>
-          <div className="-mx-4 mt-8 overflow-hidden shadow ring-1 ring-black ring-opacity-5 sm:-mx-6 md:mx-0 md:rounded-lg">
+          <div className="mt-8 overflow-hidden shadow ring-1 ring-black ring-opacity-5 sm:-mx-6 md:mx-0 md:rounded-lg">
             <table className="min-w-full divide-y divide-gray-300">
               <thead className="bg-gray-50">
                 <tr>
