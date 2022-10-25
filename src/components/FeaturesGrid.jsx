@@ -2,6 +2,10 @@ import { CheckIcon } from "@heroicons/react/24/outline";
 
 const features = [
   {
+    name: "Mobile first",
+    description: "A responsive design no matter where you visit from.",
+  },
+  {
     name: "Accounts",
     description: "Create, edit, and delete a user account.",
   },
@@ -14,24 +18,20 @@ const features = [
     description: "Create, edit, and delete fishing data.",
   },
   {
-    name: "JWT Web Token",
-    description: "For user security.",
+    name: "Tackle Box",
+    description: "Add lures, baits, hooks, or other equipment that you use.",
   },
   {
-    name: "Protected routes",
-    description: "To protect user information.",
+    name: "Species",
+    description: "Add or delete different fish species.",
   },
   {
-    name: "Mobile first",
-    description: "A responsive design no matter where you visit from.",
-  },
-  {
-    name: "Fishing stats",
+    name: "Image upload",
     description: "(coming soon)",
   },
   {
-    name: "Customize inputs",
-    description: "Create, edit, and delete certain inputs.",
+    name: "Searching and filtering",
+    description: "(coming soon)",
   },
 ];
 

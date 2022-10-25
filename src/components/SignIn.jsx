@@ -77,11 +77,7 @@ export default function LoginForm() {
         </div>
       </div>
 
-      <div className="flex items-center justify-between">
-        <div className="text-sm">Forgot your password?</div>
-      </div>
-
-      <div>
+      <div className="pt-10">
         <button
           type="submit"
           className="w-full flex justify-center py-2 px-4 border border-transparent rounded-md shadow-sm text-sm font-medium text-white bg-zinc-700 hover:bg-zinc-600 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-zinc-500"
