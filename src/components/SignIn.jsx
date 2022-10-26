@@ -10,12 +10,14 @@ export default function LoginForm() {
   const navigate = useNavigate();
 
   const context = useContext(UserContext);
-  const { isLoading } = context;
+  const { isLoading, setIsLoading } = context;
 
   const [errorMessages, setErrorMessages] = useState(null);
 
   function handleSubmitJWTAuth(event) {
     event.preventDefault();
+
+    setIsLoading(true);
 
     const email = event.target.email.value;
     const password = event.target.password.value;
@@ -30,6 +32,7 @@ export default function LoginForm() {
         else {
           TokenService.saveAuthToken(res.authToken);
           TokenService.saveUserId(res.user_id);
+          setIsLoading(false);
           navigate("/dashboard");
         }
       })

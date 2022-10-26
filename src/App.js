@@ -91,6 +91,7 @@ export default function App() {
     userInfo: userInfo,
     tackleData: tackleData,
     speciesData: speciesData,
+    setIsLoading: setIsLoading,
     isLoading: isLoading,
   };
 

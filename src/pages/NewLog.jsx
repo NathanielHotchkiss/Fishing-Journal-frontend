@@ -196,7 +196,7 @@ export default function NewLog({ edit }) {
               placeholder="in"
               name="fish_length"
               id="fish_length"
-              type="number"
+              type="text"
               onChange={handleChange}
               value={formData.fish_length}
               required
@@ -213,7 +213,7 @@ export default function NewLog({ edit }) {
                 placeholder="lbs"
                 name="pounds"
                 id="pounds"
-                type="number"
+                type="text"
                 onChange={handleChange}
                 value={formData.pounds}
               />
@@ -223,7 +223,7 @@ export default function NewLog({ edit }) {
                 placeholder="oz"
                 name="ounces"
                 id="ounces"
-                type="number"
+                type="text"
                 onChange={handleChange}
                 value={formData.ounces}
               />
