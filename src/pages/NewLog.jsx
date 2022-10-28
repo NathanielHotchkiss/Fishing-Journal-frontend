@@ -34,11 +34,11 @@ export default function NewLog({ edit }) {
 
     if (validateFields(foundErrors)) {
       if (edit) {
-        AuthApiService.updateLog(formData)
+        AuthApiService.updateItem(formData, fish_id, "fishing_logs")
           .then(navigate("/dashboard"))
           .catch(setApiError);
       } else {
-        AuthApiService.postNewLog(formData)
+        AuthApiService.postItem(formData, "fishing_logs")
           .then(navigate("/dashboard"))
           .catch(setApiError);
       }
@@ -125,40 +125,50 @@ export default function NewLog({ edit }) {
         onSubmit={handleSubmit}
       >
         <div className="space-y-6 sm:space-y-5 mx-8">
-          <label
-            htmlFor="photo"
-            className="block text-sm font-medium text-blue-gray-900"
-          >
-            Photo
-          </label>
-          <div className="mt-1 flex items-center">
-            {/* <img
-              className="inline-block h-12 w-12 rounded-full"
-              src="https://images.unsplash.com/photo-1550525811-e5869dd03032?ixlib=rb-1.2.1&auto=format&fit=facearea&facepad=2.5&w=256&h=256&q=80"
-              alt=""
-            /> */}
-            <div className="ml-4 flex">
-              <div className="relative flex cursor-pointer items-center rounded-md border border-blue-gray-300 bg-white py-2 px-3 shadow-sm focus-within:outline-none focus-within:ring-2 focus-within:ring-blue-500 focus-within:ring-offset-2 focus-within:ring-offset-blue-gray-50 hover:bg-blue-gray-50">
-                <label
-                  htmlFor="user-photo"
-                  className="pointer-events-none relative text-sm font-medium text-blue-gray-900"
-                >
-                  <span>Change</span>
-                  <span className="sr-only"> user photo</span>
-                </label>
-                <input
-                  id="uploaded_file"
-                  // name="uploaded_file" // required by multer
-                  type="file"
-                  className="absolute inset-0 h-full w-full cursor-pointer rounded-md border-gray-300 opacity-0"
-                />
+          <div className="sm:grid sm:grid-cols-3 sm:items-start sm:gap-4 sm:border-t sm:border-gray-200 sm:pt-5">
+            <label
+              htmlFor="cover-photo"
+              className="block text-sm font-medium text-gray-700 sm:mt-px sm:pt-2"
+            >
+              Photo
+            </label>
+            <div className="mt-1 sm:col-span-2 sm:mt-0">
+              <div className="flex max-w-lg justify-center rounded-md border-2 border-dashed border-gray-300 px-6 pt-5 pb-6">
+                <div className="space-y-1 text-center">
+                  <svg
+                    className="mx-auto h-12 w-12 text-gray-400"
+                    stroke="currentColor"
+                    fill="none"
+                    viewBox="0 0 48 48"
+                    aria-hidden="true"
+                  >
+                    <path
+                      d="M28 8H12a4 4 0 00-4 4v20m32-12v8m0 0v8a4 4 0 01-4 4H12a4 4 0 01-4-4v-4m32-4l-3.172-3.172a4 4 0 00-5.656 0L28 28M8 32l9.172-9.172a4 4 0 015.656 0L28 28m0 0l4 4m4-24h8m-4-4v8m-12 4h.02"
+                      strokeWidth={2}
+                      strokeLinecap="round"
+                      strokeLinejoin="round"
+                    />
+                  </svg>
+                  <div className="flex text-sm text-gray-600">
+                    <label
+                      htmlFor="file-upload"
+                      className="relative cursor-pointer rounded-md bg-white font-medium text-indigo-600 focus-within:outline-none focus-within:ring-2 focus-within:ring-indigo-500 focus-within:ring-offset-2 hover:text-indigo-500"
+                    >
+                      <span>Upload a file</span>
+                      <input
+                        id="uploaded_file"
+                        name="uploaded_file" // required by multer
+                        type="file"
+                        className="sr-only"
+                      />
+                    </label>
+                    <p className="pl-1">or drag and drop</p>
+                  </div>
+                  <p className="text-xs text-gray-500">
+                    PNG, JPG, GIF up to 10MB
+                  </p>
+                </div>
               </div>
-              <button
-                type="button"
-                className="ml-3 rounded-md border border-transparent bg-transparent py-2 px-3 text-sm font-medium text-blue-gray-900 hover:text-blue-gray-700 focus:border-blue-gray-300 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2 focus:ring-offset-blue-gray-50"
-              >
-                Remove
-              </button>
             </div>
           </div>
         </div>

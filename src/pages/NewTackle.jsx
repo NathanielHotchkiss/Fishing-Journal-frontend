@@ -64,11 +64,11 @@ export default function NewTackle({ edit }) {
     event.preventDefault();
 
     if (edit) {
-      AuthApiService.updateTackle(formData)
+      AuthApiService.updateItem(formData, tackle_id, "tackle")
         .then(navigate("/tackle"))
         .catch(setApiError);
     } else {
-      AuthApiService.postNewTackle(formData)
+      AuthApiService.postItem(formData, "tackle")
         .then(navigate("/tackle"))
         .catch(setApiError);
     }
@@ -76,7 +76,7 @@ export default function NewTackle({ edit }) {
 
   async function handleDelete() {
     if (window.confirm("Delete tackle? This cannot be undone.")) {
-      AuthApiService.deleteTackle(tackle_id);
+      AuthApiService.deleteItem(tackle_id, "tackle");
       navigate("/tackle");
     }
   }

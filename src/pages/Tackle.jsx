@@ -1,15 +1,27 @@
-import React, { useContext, useEffect } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
+import AuthApiService from "../services/auth-api-service";
+import TokenService from "../services/token-service";
+
+import ErrorAlert from "../components/ErrorAlert";
 import Layout from "../layout/Layout";
 import { UserContext } from "../App";
+
 import { PlusIcon } from "@heroicons/react/24/outline";
 
 export default function Tackle() {
   const navigate = useNavigate();
-  const { handleApiCalls, isLoading, tackleData } = useContext(UserContext);
+
+  const [apiError, setApiError] = useState(null);
+
+  const { isLoading, tackleData, setTackleData } = useContext(UserContext);
+
+  const user_id = TokenService.getUserId();
 
   useEffect(() => {
-    handleApiCalls();
+    AuthApiService.listItems("tackle", user_id)
+      .then((res) => setTackleData(res))
+      .catch(setApiError);
   }, []); // eslint-disable-line
 
   if (isLoading === true) {
@@ -66,6 +78,7 @@ export default function Tackle() {
   } else {
     return (
       <Layout title="Tackle">
+        <ErrorAlert error={apiError} />
         <div className="md:px-6 lg:px-8 sm:mx-12 lg:mx-16">
           <div className="sm:flex sm:items-center">
             <div className="sm:flex-auto mt-6">

@@ -1,6 +1,5 @@
 import { useState } from "react";
 import FeaturesGrid from "../components/FeaturesGrid";
-import Footer from "../components/Footer";
 import Register from "../components/Register";
 import SignIn from "../components/SignIn";
 
@@ -49,7 +48,7 @@ export default function Home() {
         <main className="relative pt-24 pb-16 sm:pb-24">
           <div className="mx-auto max-w-7xl">
             <div className="grid lg:grid-cols-12 lg:gap-8">
-              <div className="px-4 sm:px-6 sm:text-center md:mx-auto md:max-w-2xl lg:col-span-6 lg:flex lg:text-left">
+              <div className="px-4 sm:px-6 pb-12 sm:text-center md:mx-auto md:max-w-2xl lg:col-span-6 lg:flex lg:text-left">
                 <div>
                   <h1 className="sm:mt-10 text-4xl font-bold tracking-tight text-white sm:text-5xl md:text-6xl">
                     Capture the one that got away.
@@ -173,8 +172,18 @@ export default function Home() {
           </div>
         </div>
       </div>
-
-      <Footer />
+      <footer className="bg-white" aria-labelledby="footer-heading">
+        <h2 id="footer-heading" className="sr-only">
+          Footer
+        </h2>
+        <div className="mx-auto max-w-7xl py-6 px-4 sm:px-6 lg:py-8 lg:px-8">
+          <div className="mt-12 border-t border-gray-200 pt-8">
+            <p className="text-base text-gray-400 text-center">
+              &copy; 2022 Fishing Journal. All rights reserved.
+            </p>
+          </div>
+        </div>
+      </footer>
     </>
   );
 }

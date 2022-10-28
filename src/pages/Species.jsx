@@ -1,15 +1,27 @@
-import React, { useContext, useEffect } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
+import AuthApiService from "../services/auth-api-service";
+import TokenService from "../services/token-service";
+
+import ErrorAlert from "../components/ErrorAlert";
 import Layout from "../layout/Layout";
 import { UserContext } from "../App";
+
 import { PlusIcon } from "@heroicons/react/24/outline";
 
 export default function Species() {
-  const { handleApiCalls, isLoading, speciesData } = useContext(UserContext);
   const navigate = useNavigate();
+  
+  const [apiError, setApiError] = useState(null);
+
+  const { isLoading, speciesData, setSpeciesData } = useContext(UserContext);
+
+  const user_id = TokenService.getUserId();
 
   useEffect(() => {
-    handleApiCalls();
+    AuthApiService.listItems("species", user_id)
+      .then((res) => setSpeciesData(res))
+      .catch(setApiError);
   }, []); // eslint-disable-line
 
   if (isLoading === true) {
@@ -52,7 +64,7 @@ export default function Species() {
           </p>
           <div className="mt-6">
             <button
-                onClick={() => navigate("/species/new")}
+              onClick={() => navigate("/species/new")}
               type="button"
               className="inline-flex items-center rounded-md border border-transparent bg-zinc-600 px-4 py-2 text-sm font-medium text-white shadow-sm hover:bg-zinc-700 focus:outline-none focus:ring-2 focus:ring-zinc-500 focus:ring-offset-2"
             >
@@ -66,6 +78,7 @@ export default function Species() {
   } else {
     return (
       <Layout title="Species">
+        <ErrorAlert error={apiError} />
         <div className="md:px-6 lg:px-8 sm:mx-12 lg:mx-16">
           <div className="sm:flex sm:items-center">
             <div className="sm:flex-auto mt-6">

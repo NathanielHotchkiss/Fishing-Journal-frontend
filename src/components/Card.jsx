@@ -20,7 +20,7 @@ export default function Card() {
         "Are you sure you want to delete this log? This cannot be undone."
       )
     ) {
-      return await AuthApiService.deleteLog(fish_id).then(
+      return await AuthApiService.deleteItem(fish_id, "fishing_logs").then(
         window.location.reload()
       );
     }

@@ -1,7 +1,6 @@
 import React, { useContext, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import Layout from "../layout/Layout";
-import Sort from "../components/Sort";
 import { UserContext } from "../App";
 import { PlusIcon } from "@heroicons/react/24/outline";
 import Card from "../components/Card";
@@ -70,7 +69,6 @@ export default function Dashboard() {
   } else {
     return (
       <Layout title="Dashboard">
-        <Sort />
         <div className="grid grid-col-1 lg:grid-cols-2 my-6">
           <Card />
         </div>

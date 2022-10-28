@@ -1,9 +1,8 @@
 import React, { useState, useContext } from "react";
 import { useNavigate } from "react-router-dom";
-
+import ErrorAlert from "../components/ErrorAlert";
 import AuthApiService from "../services/auth-api-service";
 import TokenService from "../services/token-service";
-import ErrorAlert from "../components/ErrorAlert";
 import { UserContext } from "../App";
 
 export default function LoginForm() {
@@ -38,6 +37,7 @@ export default function LoginForm() {
       })
 
       .catch((res) => {
+        setIsLoading(false);
         setErrorMessages(res.error);
       });
   }

@@ -62,11 +62,11 @@ export default function NewSpecies({ edit }) {
     event.preventDefault();
 
     if (edit) {
-      AuthApiService.updateSpecies(formData)
+      AuthApiService.updateItem(formData, species_id, "species")
         .then(navigate("/species"))
         .catch(setApiError);
     } else {
-      AuthApiService.postNewSpecies(formData)
+      AuthApiService.postItem(formData, "species")
         .then(navigate("/species"))
         .catch(setApiError);
     }
@@ -74,7 +74,7 @@ export default function NewSpecies({ edit }) {
 
   async function handleDelete() {
     if (window.confirm("Delete species? This cannot be undone.")) {
-      AuthApiService.deleteSpecies(species_id);
+      AuthApiService.deleteItem(species_id, "species");
       navigate("/species");
     }
   }

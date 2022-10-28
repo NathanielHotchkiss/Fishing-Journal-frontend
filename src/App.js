@@ -90,7 +90,9 @@ export default function App() {
     handleApiCalls: handleApiCalls,
     userInfo: userInfo,
     tackleData: tackleData,
+    setTackleData: setTackleData,
     speciesData: speciesData,
+    setSpeciesData: setSpeciesData,
     setIsLoading: setIsLoading,
     isLoading: isLoading,
   };
