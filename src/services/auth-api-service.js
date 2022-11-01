@@ -78,6 +78,23 @@ const AuthApiService = {
       return res;
     });
   },
+
+  postImage(image, fish_id) {
+    const formData = new FormData();
+    formData.append("image", image);
+    formData.append("fish_id", fish_id);
+
+    return fetch(`${config.API_ENDPOINT}/fish_images`, {
+      method: "POST",
+      headers: {
+        Authorization: `bearer ${TokenService.getAuthToken()}`,
+      },
+
+      body: formData,
+    }).then((res) =>
+      !res.ok ? res.json().then((e) => Promise.reject(e)) : res.json()
+    );
+  },
 };
 
 export default AuthApiService;
