@@ -5,12 +5,14 @@ import Layout from "../layout/Layout";
 import config from "../config";
 import ErrorAlert from "../components/ErrorAlert";
 import TokenService from "../services/token-service";
+import Alert from "../components/Alert";
 
 export default function UserSettings() {
   const navigate = useNavigate();
   const user_id = TokenService.getUserId();
 
   const [apiError, setApiError] = useState(null);
+  const [success, setSuccess] = useState(false);
   const [formError, setFormError] = useState([]);
   const [formData, setFormData] = useState({
     user_id: user_id,
@@ -26,9 +28,9 @@ export default function UserSettings() {
     const foundErrors = [];
 
     if (validateFields(foundErrors)) {
-      AuthApiService.updateItem(formData, user_id, "app_users").catch(
-        setApiError
-      );
+      AuthApiService.updateItem(formData, user_id, "app_users")
+        .then(setSuccess(true))
+        .catch(setApiError);
     }
     setFormError(foundErrors);
   }
@@ -102,6 +104,7 @@ export default function UserSettings() {
       <div className="my-12 mx-24 w-full sm:w-144 mx-auto">
         {errorsJSX()}
         <ErrorAlert error={apiError} />
+        {success === true ? <Alert /> : null}
       </div>
       <form
         className="space-y-8 divide-y divide-gray-200 my-12 mx-24 w-full sm:w-144 mx-auto"
