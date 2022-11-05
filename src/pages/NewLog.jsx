@@ -7,6 +7,8 @@ import Layout from "../layout/Layout";
 import TokenService from "../services/token-service";
 import { UserContext } from "../App";
 
+import { CheckCircleIcon } from "@heroicons/react/20/solid";
+
 export default function NewLog({ edit }) {
   const navigate = useNavigate();
   let { fish_id } = useParams() || null;
@@ -98,8 +100,8 @@ export default function NewLog({ edit }) {
         fishing_method: res.fishing_method,
         filename: res.filename,
         filepath: res.filepath,
-      })
-      setFile(res.filename)
+      });
+      setFile(res.filename);
     }
   }, [fish_id, user_id, edit]);
 
@@ -135,13 +137,13 @@ export default function NewLog({ edit }) {
         encType="multipart/form-data"
       >
         <div className="space-y-6 sm:space-y-5 mx-8">
-          <div className="sm:grid sm:grid-cols-3 sm:items-start sm:gap-4 sm:pt-5">
+          <div className="sm:grid sm:grid-cols-2 items-start sm:gap-4 sm:pt-5">
             <label className="block text-sm font-medium text-gray-700">
               Photo
             </label>
 
-            <div className="space-y-1 text-center">
-              <div className="flex justify-end text-sm text-zinc-600">
+            <div className="space-y-1">
+              <div className="flex text-sm text-zinc-600">
                 <label
                   htmlFor="file-upload"
                   className="relative cursor-pointer rounded-md bg-white font-medium text-indigo-600 focus-within:outline-none focus-within:ring-2 focus-within:ring-indigo-500 focus-within:ring-offset-2 hover:text-indigo-500"

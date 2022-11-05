@@ -16,7 +16,6 @@ export default function UserSettings() {
   const [formError, setFormError] = useState([]);
   const [formData, setFormData] = useState({
     user_id: user_id,
-    email: "",
     first_name: "",
     last_name: "",
     created: "",
