@@ -29,8 +29,6 @@ export default function NewLog({ edit }) {
     ounces: "",
     bait: "",
     fishing_method: "",
-    filename: "",
-    filepath: "",
   });
 
   async function handleSubmit(event) {
