@@ -11,21 +11,26 @@ export default function NewLog({ edit }) {
   const navigate = useNavigate();
   let { fish_id } = useParams() || null;
 
-  const { speciesData, tackleData, userInfo } = useContext(UserContext);
-  const { user_id } = userInfo;
+  const {
+    speciesData,
+    tackleData,
+    userInfo: { user_id },
+  } = useContext(UserContext);
 
   const [apiError, setApiError] = useState(null);
   const [formError, setFormError] = useState([]);
   const [title, setTitle] = useState("Create new log");
   const [file, setFile] = useState(null);
   const [formData, setFormData] = useState({
-    user_id: user_id,
+    user_id,
     species: "",
     fish_length: "",
     pounds: "",
     ounces: "",
     bait: "",
     fishing_method: "",
+    filename: "",
+    filepath: "",
   });
 
   async function handleSubmit(event) {
@@ -39,8 +44,7 @@ export default function NewLog({ edit }) {
           .then(navigate("/dashboard"))
           .catch(setApiError);
       } else {
-        AuthApiService.postItem(formData, "fishing_logs")
-          .then((res) => AuthApiService.postImage(file, res.fish_id))
+        AuthApiService.postLog(file, formData)
           .then(navigate("/dashboard"))
           .catch(setApiError);
       }
@@ -87,15 +91,17 @@ export default function NewLog({ edit }) {
         return null;
       }
       setFormData({
-        fish_id: fish_id,
-        user_id: user_id,
+        fish_id,
         species: res.species,
         fish_length: res.fish_length,
         pounds: res.pounds,
         ounces: res.ounces,
         bait: res.bait,
         fishing_method: res.fishing_method,
-      });
+        filename: res.filename,
+        filepath: res.filepath,
+      })
+      setFile(res.filename)
     }
   }, [fish_id, user_id, edit]);
 
@@ -110,7 +116,6 @@ export default function NewLog({ edit }) {
   }
   const fileSelected = (event) => {
     const file = event.target.files[0];
-    console.log(file);
     setFile(file);
   };
 
@@ -129,20 +134,22 @@ export default function NewLog({ edit }) {
       <form
         className="space-y-8 divide-y divide-gray-200 my-12 mx-24 w-full sm:w-144 mx-auto"
         onSubmit={handleSubmit}
+        encType="multipart/form-data"
       >
         <div className="space-y-6 sm:space-y-5 mx-8">
-          <div className="sm:grid sm:grid-cols-3 sm:items-start sm:gap-4 sm:border-t sm:border-gray-200 sm:pt-5">
+          <div className="sm:grid sm:grid-cols-3 sm:items-start sm:gap-4 sm:pt-5">
             <label className="block text-sm font-medium text-gray-700">
-              Cover photo
+              Photo
             </label>
 
             <div className="space-y-1 text-center">
-              <div className="flex text-sm text-gray-600">
+              <div className="flex justify-end text-sm text-zinc-600">
                 <label
                   htmlFor="file-upload"
                   className="relative cursor-pointer rounded-md bg-white font-medium text-indigo-600 focus-within:outline-none focus-within:ring-2 focus-within:ring-indigo-500 focus-within:ring-offset-2 hover:text-indigo-500"
                 >
-                  <span>Upload a file</span>
+                  <span className="block">Upload a file </span>
+                  <br />
                   <input
                     onChange={fileSelected}
                     id="file-upload"
@@ -150,6 +157,9 @@ export default function NewLog({ edit }) {
                     type="file"
                     className="sr-only"
                   />
+                  <span className="block text-zinc-600">
+                    {file === null ? null : file.name}
+                  </span>
                 </label>
               </div>
             </div>

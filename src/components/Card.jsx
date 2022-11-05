@@ -26,6 +26,25 @@ export default function Card() {
     }
   }
 
+  function fishImage(filename) {
+    const image = `https://fishing-journal.s3.amazonaws.com/${filename}`;
+    if (filename === null) {
+      return (
+        <div className="relative h-72 w-full sm:w-80 md:w-96 shadow-md mx-auto bg-zinc-300"></div>
+      );
+    } else {
+      return (
+        <div className="relative h-72 w-full sm:w-80 md:w-96 mx-auto bg-zinc-300">
+        <img
+          src={image}
+          alt=""
+          className="relative w-full sm:w-80 md:w-96 mx-auto"
+        ></img>
+        </div>
+      );
+    }
+  }
+
   return userLogs.map((info, id) => {
     const {
       fish_id,
@@ -35,11 +54,13 @@ export default function Card() {
       ounces,
       bait,
       fishing_method,
+      filename,
     } = info;
 
     return (
       <div key={id} className="block">
-        <div className="relative h-72 w-full sm:w-80 md:w-96 shadow-md mx-auto bg-zinc-300"></div>
+        {fishImage(filename)}
+
         <div className="relative px-4 py-2 h-36 w-72 shadow-md -top-12 mx-auto bg-white rounded-lg">
           <div className="flex justify-between">
             <p className="block text-lg capitalize font-semibold text-zinc-600 truncate mt-1">

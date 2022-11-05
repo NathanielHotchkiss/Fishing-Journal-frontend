@@ -155,7 +155,6 @@ export default function NewTackle({ edit }) {
               type="text"
               onChange={handleChange}
               value={formData.brand}
-              required
             />
           </div>
 
@@ -170,7 +169,6 @@ export default function NewTackle({ edit }) {
               type="text"
               onChange={handleChange}
               value={formData.color}
-              required
             />
           </div>
 
@@ -185,7 +183,6 @@ export default function NewTackle({ edit }) {
               type="text"
               onChange={handleChange}
               value={formData.description}
-              required
             />
           </div>
 

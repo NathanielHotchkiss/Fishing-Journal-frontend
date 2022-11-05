@@ -145,15 +145,9 @@ export default function UserSettings() {
             <label className="block text-sm font-medium text-gray-700 sm:mt-px sm:pt-2">
               Email
             </label>
-            <input
-              className="border border-slate-200 rounded h-8 focus:ring-blue-500 focus:border-blue-500"
-              name="email"
-              id="email"
-              type="text"
-              onChange={handleChange}
-              value={formData.email}
-              required
-            />
+            <span className="text-sm font-medium text-gray-700 pt-2 sm:pt-3">
+              {formData.email}
+            </span>
           </div>
 
           <div className="flex justify-end pt-3">

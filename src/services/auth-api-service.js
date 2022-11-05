@@ -79,12 +79,14 @@ const AuthApiService = {
     });
   },
 
-  postImage(image, fish_id) {
+  postLog(image, body) {
     const formData = new FormData();
     formData.append("image", image);
-    formData.append("fish_id", fish_id);
+    for (let key in body) {
+      formData.append(key, body[key]);
+    }
 
-    return fetch(`${config.API_ENDPOINT}/fish_images`, {
+    return fetch(`${config.API_ENDPOINT}/fishing_logs`, {
       method: "POST",
       headers: {
         Authorization: `bearer ${TokenService.getAuthToken()}`,
