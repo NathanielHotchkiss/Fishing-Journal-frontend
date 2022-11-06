@@ -97,6 +97,25 @@ const AuthApiService = {
       !res.ok ? res.json().then((e) => Promise.reject(e)) : res.json()
     );
   },
+
+  updateLog(image, body, id) {
+    const formData = new FormData();
+    formData.append("image", image);
+    for (let key in body) {
+      formData.append(key, body[key]);
+    }
+
+    return fetch(`${config.API_ENDPOINT}/fishing_logs/${id}`, {
+      method: "PUT",
+      headers: {
+        Authorization: `bearer ${TokenService.getAuthToken()}`,
+      },
+
+      body: formData,
+    }).then((res) =>
+      !res.ok ? res.json().then((e) => Promise.reject(e)) : res.json()
+    );
+  },
 };
 
 export default AuthApiService;

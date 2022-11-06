@@ -1,7 +1,8 @@
-import { Fragment, useState, useContext } from "react";
+import { Fragment, useState, useContext, useEffect } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import TokenService from "../services/token-service";
 import { UserContext } from "../App";
+import AuthApiService from "../services/auth-api-service";
 
 import { Dialog, Transition } from "@headlessui/react";
 import {
@@ -47,11 +48,20 @@ function classNames(...classes) {
 }
 
 const Layout = ({ children, title }) => {
+  const context = useContext(UserContext);
   const navigate = useNavigate();
+  const user_id = TokenService.getUserId();
+
+  const [sidebarOpen, setSidebarOpen] = useState(false);
+
   const { userInfo } = useContext(UserContext);
   const { first_name, last_name, email } = userInfo;
 
-  const [sidebarOpen, setSidebarOpen] = useState(false);
+  useEffect(() => {
+    return AuthApiService.getItem("app_users", user_id).then((res) =>
+      context.setUserInfo(res)
+    );
+  }, []); // eslint-disable-line
 
   const user = `${first_name} ${last_name}`;
 

@@ -28,6 +28,11 @@ export default function UserSettings() {
 
     if (validateFields(foundErrors)) {
       AuthApiService.updateItem(formData, user_id, "app_users")
+        .then((res) => {
+          TokenService.saveFirstName(res.first_name);
+          TokenService.saveLastName(res.last_name);
+        })
+
         .then(setSuccess(true))
         .catch(setApiError);
     }

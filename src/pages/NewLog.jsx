@@ -1,23 +1,27 @@
 import React, { useEffect, useContext, useState } from "react";
 import { useNavigate, useParams } from "react-router-dom";
 import AuthApiService from "../services/auth-api-service";
-import config from "../config";
 import ErrorAlert from "../components/ErrorAlert";
 import Layout from "../layout/Layout";
-import TokenService from "../services/token-service";
 import { UserContext } from "../App";
-
-import { CheckCircleIcon } from "@heroicons/react/20/solid";
+import TokenService from "../services/token-service";
 
 export default function NewLog({ edit }) {
   const navigate = useNavigate();
   let { fish_id } = useParams() || null;
+  let user_id = TokenService.getUserId();
 
-  const {
-    speciesData,
-    tackleData,
-    userInfo: { user_id },
-  } = useContext(UserContext);
+  const { setSpeciesData, setTackleData, speciesData, tackleData } =
+    useContext(UserContext);
+
+  useEffect(() => {
+    AuthApiService.listItems("species", user_id).then((res) =>
+      setSpeciesData(res)
+    );
+    AuthApiService.listItems("tackle", user_id).then((res) =>
+      setTackleData(res)
+    );
+  }, []); // eslint-disable-line
 
   const [apiError, setApiError] = useState(null);
   const [formError, setFormError] = useState([]);
@@ -40,7 +44,7 @@ export default function NewLog({ edit }) {
 
     if (validateFields(foundErrors)) {
       if (edit) {
-        AuthApiService.updateItem(formData, fish_id, "fishing_logs")
+        AuthApiService.updateLog(file, formData, fish_id)
           .then(navigate("/dashboard"))
           .catch(setApiError);
       } else {
@@ -71,16 +75,7 @@ export default function NewLog({ edit }) {
       if (!fish_id) return null;
       setTitle("Edit log");
 
-      return fetch(`${config.API_ENDPOINT}/fishing_logs/${fish_id}`, {
-        method: "GET",
-        headers: {
-          Authorization: `bearer ${TokenService.getAuthToken()}`,
-        },
-      })
-        .then((res) =>
-          !res.ok ? res.json().then((e) => Promise.reject(e)) : res.json()
-        )
-
+      AuthApiService.getItem("fishing_logs", fish_id)
         .then(fillFields)
 
         .catch(setFormError);
@@ -100,6 +95,8 @@ export default function NewLog({ edit }) {
         fishing_method: res.fishing_method,
         filename: res.filename,
         filepath: res.filepath,
+        mimetype: res.mimetype,
+        size: res.size,
       });
       setFile(res.filename);
     }

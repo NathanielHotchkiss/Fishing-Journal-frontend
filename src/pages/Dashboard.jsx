@@ -3,6 +3,8 @@ import { useNavigate } from "react-router-dom";
 import Layout from "../layout/Layout";
 import { UserContext } from "../App";
 import { PlusIcon } from "@heroicons/react/24/outline";
+import TokenService from "../services/token-service";
+import AuthApiService from "../services/auth-api-service";
 import Card from "../components/Card";
 
 export default function Dashboard() {
@@ -11,8 +13,12 @@ export default function Dashboard() {
   const userLogs = context.fishingLogsData;
   const { isLoading } = context;
 
+  const user_id = TokenService.getUserId();
+
   useEffect(() => {
-    context.handleApiCalls();
+    AuthApiService.listItems("fishing_logs", user_id).then((res) =>
+      context.setFishingLogsData(res)
+    );
   }, []); // eslint-disable-line
 
   if (isLoading === true) {

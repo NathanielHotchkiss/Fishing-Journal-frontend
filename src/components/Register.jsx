@@ -39,15 +39,23 @@ export default function Register() {
             else {
               TokenService.saveAuthToken(res.authToken);
               TokenService.saveUserId(res.user_id);
-              setIsLoading(false);
-              navigate("/dashboard");
+              AuthApiService.getItem("app_users", res.user_id)
+                .then(
+                  (res) => TokenService.saveEmail(res.email),
+                  TokenService.saveFirstName(res.first_name),
+                  TokenService.saveLastName(res.last_name)
+                )
+                .then(setIsLoading(false))
+                .then(navigate("/dashboard"));
             }
           })
+
           .catch((res) => {
             setIsLoading(false);
             setErrorMessages(res.error);
           });
       })
+      
       .catch((res) => {
         setIsLoading(false);
         setErrorMessages(res.error);
