@@ -97,23 +97,24 @@ export default function NewTackle({ edit }) {
     ));
   };
 
-  let button;
-  if (edit) {
-    button = (
-      <div className="grid sm:grid-cols-2 gap-2 items-start pt-3 sm:pt-5">
-        <span className="block sm:mt-px sm:pt-2"></span>
-        <button
-          className="bg-red-100 py-2 px-4 border border-transparent rounded-md shadow-sm text-sm font-medium text-red-700 hover:bg-red-200 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-zinc-500"
-          type="button"
-          onClick={() => handleDelete()}
-        >
-          Delete
-        </button>
-      </div>
-    );
-  } else {
-    button = null;
-  }
+  const deleteButton = () => {
+    if (edit) {
+      return (
+        <div className="grid sm:grid-cols-2 gap-2 items-start pt-3 sm:pt-5">
+          <span className="block sm:mt-px sm:pt-2"></span>
+          <button
+            className="bg-red-100 py-2 px-4 border border-transparent rounded-md shadow-sm text-sm font-medium text-red-700 hover:bg-red-200 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-zinc-500"
+            type="button"
+            onClick={() => handleDelete()}
+          >
+            Delete
+          </button>
+        </div>
+      );
+    } else {
+      return null;
+    }
+  };
 
   return (
     <Layout title={title}>
@@ -183,7 +184,7 @@ export default function NewTackle({ edit }) {
             />
           </div>
 
-          {button}
+          {deleteButton()}
 
           <div className="pt-5">
             <div className="flex justify-end">

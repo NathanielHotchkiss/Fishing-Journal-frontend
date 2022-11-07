@@ -19,7 +19,7 @@ export default function Dashboard() {
     AuthApiService.listItems("fishing_logs", user_id).then((res) =>
       context.setFishingLogsData(res)
     );
-  }, []); // eslint-disable-line
+  }, [userLogs.length]); // eslint-disable-line
 
   if (isLoading === true) {
     return (

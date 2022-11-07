@@ -3,8 +3,12 @@ import { Link } from "react-router-dom";
 import { Menu, Transition } from "@headlessui/react";
 import { UserContext } from "../App";
 import AuthApiService from "../services/auth-api-service";
-import { TrashIcon, PencilSquareIcon } from "@heroicons/react/24/outline";
 import { EllipsisVerticalIcon } from "@heroicons/react/24/solid";
+import {
+  PencilSquareIcon,
+  PhotoIcon,
+  TrashIcon,
+} from "@heroicons/react/24/outline";
 
 export default function Card() {
   const context = useContext(UserContext);
@@ -30,38 +34,29 @@ export default function Card() {
     const image = `https://fishing-journal.s3.amazonaws.com/${filename}`;
     if (filename === null) {
       return (
-        <div className="relative h-72 w-full sm:w-80 md:w-96 shadow-md mx-auto bg-zinc-300"></div>
+        <div className="relative h-72 max-h-72 w-full sm:w-80 md:w-96 shadow-md mx-auto bg-zinc-300"></div>
       );
     } else {
       return (
-        <div className="relative h-72 w-full sm:w-80 md:w-96 mx-auto bg-zinc-300">
-        <img
-          src={image}
-          alt=""
-          className="relative w-full sm:w-80 md:w-96 mx-auto"
-        ></img>
+        <div className="relative h-72 max-h-72 w-full sm:w-80 md:w-96 mx-auto">
+          <img
+            src={image}
+            alt=""
+            className="relative h-72 max-h-72 sm:w-80 md:w-96 mx-auto"
+          ></img>
         </div>
       );
     }
   }
 
   return userLogs.map((info, id) => {
-    const {
-      fish_id,
-      species,
-      fish_length,
-      pounds,
-      ounces,
-      bait,
-      fishing_method,
-      filename,
-    } = info;
+    const { fish_id, species, filename, date } = info;
 
     return (
-      <div key={id} className="block">
+      <div key={id} className="block mb-20">
         {fishImage(filename)}
 
-        <div className="relative px-4 py-2 h-36 w-72 shadow-md -top-12 mx-auto bg-white rounded-lg">
+        <div className="relative px-4 py-2 h-20 w-72 shadow-md -top-6 mx-auto bg-white rounded-lg">
           <div className="flex justify-between">
             <p className="block text-lg capitalize font-semibold text-zinc-600 truncate mt-1">
               {species}
@@ -69,10 +64,10 @@ export default function Card() {
 
             <Menu as="div" className="relative inline-block text-left mt-2">
               <div>
-                <Menu.Button className="bg-gray-100 rounded-full flex items-center text-gray-400 hover:text-gray-600 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-offset-gray-100 focus:ring-gray-500">
+                <Menu.Button className="flex items-center text-zinc-800 hover:text-zinc-600 outline-none">
                   <span className="sr-only">Open options</span>
                   <EllipsisVerticalIcon
-                    className="h-5 w-5"
+                    className="h-6 w-6"
                     aria-hidden="true"
                   />
                 </Menu.Button>
@@ -89,6 +84,25 @@ export default function Card() {
               >
                 <Menu.Items className="origin-top-right absolute right-0 mt-2 w-48 rounded-md shadow-lg bg-white ring-1 ring-black ring-opacity-5 focus:outline-none">
                   <div className="py-1">
+                    <Menu.Item>
+                      {({ active }) => (
+                        <Link
+                          to={`/fishing_logs/${fish_id}`}
+                          className={classNames(
+                            active
+                              ? "bg-zinc-100 text-zinc-900"
+                              : "text-zinc-700",
+                            "group flex items-center px-4 py-2 text-sm"
+                          )}
+                        >
+                          <PhotoIcon
+                            className="mr-3 h-5 w-5 text-zinc-400 group-hover:text-zinc-500"
+                            aria-hidden="true"
+                          />
+                          View
+                        </Link>
+                      )}
+                    </Menu.Item>
                     <Menu.Item>
                       {({ active }) => (
                         <Link
@@ -134,22 +148,15 @@ export default function Card() {
             </Menu>
           </div>
 
-          <ul className="block text-base font-medium text-zinc-800">
-            <li>
-              Length: {fish_length}
-              <span className="text-xs">in</span>
-            </li>
-            <li>
-              Weight: {pounds}
-              <span className="text-xs">lbs</span>
-              <span className="ml-2">
-                {ounces}
-                <span className="text-xs">oz</span>
-              </span>
-            </li>
-            <li>Bait: {bait}</li>
-            <li>Method: {fishing_method}</li>
-          </ul>
+          <div className="block text-base font-medium text-zinc-800">
+            <div>
+              {new Date(date).toLocaleDateString("en-us", {
+                month: "short",
+                day: "numeric",
+                year: "numeric",
+              })}
+            </div>
+          </div>
         </div>
       </div>
     );

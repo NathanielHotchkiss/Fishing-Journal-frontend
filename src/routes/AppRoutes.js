@@ -12,6 +12,7 @@ import Protected from "../components/Protected";
 import Species from "../pages/Species";
 import Tackle from "../pages/Tackle";
 import UserSettings from "../pages/UserSettings";
+import ViewLog from "../pages/ViewLog";
 
 export default function AppRoutes() {
   return (
@@ -21,6 +22,7 @@ export default function AppRoutes() {
           <Route element={<InnerContent />}>
             <Route path="dashboard" element={<Dashboard />} />
             <Route path="new" element={<NewLog />} />
+            <Route path="fishing_logs/:fish_id" element={<ViewLog />} />
             <Route
               path="fishing_logs/:fish_id/edit"
               element={<NewLog edit={true} />}

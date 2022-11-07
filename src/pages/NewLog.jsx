@@ -35,6 +35,10 @@ export default function NewLog({ edit }) {
     ounces: "",
     bait: "",
     fishing_method: "",
+    clarity: "",
+    description: "",
+    date: "",
+    time: "",
   });
 
   async function handleSubmit(event) {
@@ -93,6 +97,10 @@ export default function NewLog({ edit }) {
         ounces: res.ounces,
         bait: res.bait,
         fishing_method: res.fishing_method,
+        clarity: res.clarity,
+        description: res.description,
+        date: res.date,
+        time: res.time,
         filename: res.filename,
         filepath: res.filepath,
         mimetype: res.mimetype,
@@ -192,7 +200,7 @@ export default function NewLog({ edit }) {
               Length
             </label>
             <input
-              className="border border-slate-200 rounded h-8 focus:ring-blue-500 focus:border-blue-500"
+              className="border border-slate-200 rounded h-8 focus:ring-blue-500 focus:border-blue-500 w-2/5"
               placeholder="in"
               name="fish_length"
               id="fish_length"
@@ -270,6 +278,72 @@ export default function NewLog({ edit }) {
               <option value="Spinning">Bait spinning</option>
               <option value="Trolling">Trolling</option>
             </select>
+          </div>
+
+          <div className="grid sm:grid-cols-2 gap-2 items-start border-t border-gray-200 pt-3 sm:pt-5">
+            <label className="block text-sm font-medium text-gray-700 sm:mt-px sm:pt-2">
+              Water Clarity
+            </label>
+            <select
+              className="mt-1 block w-full pl-3 pr-10 py-2 text-base border-gray-300 focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm rounded-md"
+              name="clarity"
+              id="clarity"
+              autoComplete="off"
+              value={formData.clarity}
+              onChange={handleChange}
+            >
+              <option>Select water clarity</option>
+              <option value="Clear">Clear</option>
+              <option value="Cloudy">Cloudy</option>
+              <option value="Murky">Murky</option>
+              <option value="Muddy">Muddy</option>
+            </select>
+          </div>
+
+          <div className="grid sm:grid-cols-2 gap-2 items-start border-t border-gray-200 pt-3 sm:pt-5">
+            <label className="block text-sm font-medium text-gray-700 sm:mt-px sm:pt-2">
+              Date of catch:
+            </label>
+            <input
+              className="border border-slate-200 rounded h-8 focus:ring-blue-500 focus:border-blue-500"
+              name="date"
+              id="date"
+              type="date"
+              onChange={handleChange}
+              value={formData.date}
+            />
+          </div>
+
+          <div className="grid sm:grid-cols-2 gap-2 items-start border-t border-gray-200 pt-3 sm:pt-5">
+            <label className="block text-sm font-medium text-gray-700 sm:mt-px sm:pt-2">
+              Time of catch:
+            </label>
+            <input
+              className="border border-slate-200 rounded h-8 focus:ring-blue-500 focus:border-blue-500"
+              name="time"
+              id="time"
+              type="time"
+              onChange={handleChange}
+              value={formData.time}
+            />
+          </div>
+
+          <div className="grid sm:grid-cols-2 gap-2 items-start border-t border-gray-200 pt-3 sm:pt-5">
+            <label
+              htmlFor="description"
+              className="block text-sm font-medium text-gray-700 sm:mt-px sm:pt-2"
+            >
+              Description
+            </label>
+
+            <textarea
+              id="description"
+              name="description"
+              rows={3}
+              className="block w-full max-w-lg rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm"
+              onChange={handleChange}
+              value={formData.description}
+            />
           </div>
 
           <div className="pt-5">
