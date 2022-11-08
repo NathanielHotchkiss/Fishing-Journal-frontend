@@ -18,10 +18,10 @@ export default function ViewLog() {
     fishing_method: "",
     clarity: "",
     description: "",
-    filename: "",
     date: "",
     time: "",
     created: "",
+    filename: null,
   });
   const [title, setTitle] = useState("Create new log");
 
@@ -67,7 +67,7 @@ export default function ViewLog() {
 
   function fishImage(filename) {
     const image = `https://fishing-journal.s3.amazonaws.com/${filename}`;
-    if (filename === null) {
+    if (filename === null || "") {
       return (
         <div className="relative w-full xl:w-144 shadow-md mx-auto bg-zinc-300"></div>
       );
