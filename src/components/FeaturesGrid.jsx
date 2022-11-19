@@ -27,7 +27,7 @@ const features = [
   },
   {
     name: "Image upload",
-    description: "(coming soon)",
+    description: "Using AWS S3 buckets.",
   },
   {
     name: "Searching and filtering",
@@ -35,7 +35,7 @@ const features = [
   },
 ];
 
-export default function Example() {
+export default function FeaturesGrid() {
   return (
     <div className="bg-white">
       <div className="mx-auto max-w-7xl py-16 px-4 sm:px-6 lg:py-24 lg:px-8">

@@ -2,6 +2,7 @@ import { useState } from "react";
 import FeaturesGrid from "../components/FeaturesGrid";
 import Register from "../components/Register";
 import SignIn from "../components/SignIn";
+import Banner from "../components/Banner";
 
 export default function Home() {
   const [formToggle, setFormToggle] = useState(true);
@@ -14,6 +15,7 @@ export default function Home() {
     <>
       {/* Hero Section */}
       <div className="bg-zinc-800">
+        <Banner />
         <div
           className="hidden sm:absolute sm:inset-0 sm:block"
           aria-hidden="true"
@@ -62,8 +64,8 @@ export default function Home() {
                     Record things like the length and weight of the fish, the
                     method used to catch it, and upload images. Build out your
                     virtual tackle box by adding your lures, baits, hooks, or
-                    whatever you use to catch fish. Input species into your
-                    Journal that are relevant to your expeditions.
+                    whatever you use to catch fish. List all the fish species
+                    that are most relevant to you.
                   </p>
                 </div>
               </div>
@@ -114,7 +116,7 @@ export default function Home() {
 
       {/* Logo Cloud Section */}
       <div className="bg-zinc-800">
-        <div className="mx-auto max-w-7xl py-12 px-4 sm:px-6 lg:py-16 lg:px-8">
+        <div className="mx-auto max-w-7xl py-12 px-4 sm:px-12 lg:py-16 lg:px-20">
           <div className="lg:grid lg:grid-cols-2 lg:items-center lg:gap-8">
             <div>
               <h2 className="text-3xl font-bold tracking-tight text-gray-100 sm:text-4xl">
@@ -127,11 +129,11 @@ export default function Home() {
                     type="button"
                     className="inline-flex items-center rounded-md border border-transparent bg-zinc-600 px-4 py-2 text-base font-medium text-white shadow-sm hover:bg-zinc-700 focus:outline-none focus:ring-2 focus:ring-zinc-500 focus:ring-offset-2"
                   >
-                    Frontend
                     <i
-                      className="bi bi-github ml-3 -mr-1 h-5 w-5"
+                      className="bi bi-github mr-3 -ml-1 h-5 w-5"
                       aria-hidden="true"
                     ></i>
+                    Frontend
                   </button>
                 </a>
 
@@ -140,11 +142,11 @@ export default function Home() {
                     type="button"
                     className="inline-flex items-center rounded-md border border-transparent bg-zinc-600 ml-3 px-4 py-2 text-base font-medium text-white shadow-sm hover:bg-zinc-700 focus:outline-none focus:ring-2 focus:ring-zinc-500 focus:ring-offset-2"
                   >
-                    Backend
                     <i
-                      className="bi bi-github ml-3 -mr-1 h-5 w-5"
+                      className="bi bi-github mr-3 -ml-1 h-5 w-5"
                       aria-hidden="true"
                     ></i>
+                    Backend
                   </button>
                 </a>
               </div>
@@ -166,7 +168,7 @@ export default function Home() {
                 <i className="devicon-postgresql-plain-wordmark text-3xl sm:text-4xl text-zinc-900"></i>
               </div>
               <div className="col-span-1 flex justify-center bg-zinc-300 py-8 px-8">
-                <i className="bi bi-cup-hot-fill text-3xl sm:text-4xl text-zinc-900"></i>
+                <i className="devicon-amazonwebservices-original text-3xl sm:text-4xl text-zinc-900"></i>
               </div>
             </div>
           </div>

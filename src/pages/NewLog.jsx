@@ -11,22 +11,15 @@ export default function NewLog({ edit }) {
   let { fish_id } = useParams() || null;
   let user_id = TokenService.getUserId();
 
-  const { setSpeciesData, setTackleData, speciesData, tackleData } =
-    useContext(UserContext);
-
-  useEffect(() => {
-    AuthApiService.listItems("species", user_id).then((res) =>
-      setSpeciesData(res)
-    );
-    AuthApiService.listItems("tackle", user_id).then((res) =>
-      setTackleData(res)
-    );
-  }, []); // eslint-disable-line
-
   const [apiError, setApiError] = useState(null);
   const [formError, setFormError] = useState([]);
   const [title, setTitle] = useState("Create new log");
-  const [file, setFile] = useState(null);
+  const [file, setFile] = useState({
+    filename: "",
+    filepath: "",
+    mimetype: "",
+    size: "",
+  });
   const [formData, setFormData] = useState({
     user_id,
     species: "",
@@ -40,6 +33,18 @@ export default function NewLog({ edit }) {
     date: "",
     time: "",
   });
+
+  const { setSpeciesData, setTackleData, speciesData, tackleData } =
+    useContext(UserContext);
+
+  useEffect(() => {
+    AuthApiService.listItems("species", user_id).then((res) =>
+      setSpeciesData(res)
+    );
+    AuthApiService.listItems("tackle", user_id).then((res) =>
+      setTackleData(res)
+    );
+  }, []); // eslint-disable-line
 
   async function handleSubmit(event) {
     event.preventDefault();
@@ -89,6 +94,7 @@ export default function NewLog({ edit }) {
       if (!res) {
         return null;
       }
+      console.log(res);
       setFormData({
         fish_id,
         species: res.species,
@@ -106,7 +112,12 @@ export default function NewLog({ edit }) {
         mimetype: res.mimetype,
         size: res.size,
       });
-      setFile(res.filename);
+      setFile({
+        filename: res.filename,
+        filepath: res.filepath,
+        mimetype: res.mimetype,
+        size: res.size,
+      });
     }
   }, [fish_id, user_id, edit]);
 
@@ -119,9 +130,10 @@ export default function NewLog({ edit }) {
       };
     });
   }
+
   const fileSelected = (event) => {
-    const file = event.target.files[0];
-    setFile(file);
+    let newFile = event.target.files[0];
+    setFile(newFile);
   };
 
   const errorsJSX = () => {
