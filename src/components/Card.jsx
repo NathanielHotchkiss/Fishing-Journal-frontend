@@ -34,15 +34,15 @@ export default function Card() {
     const image = `https://fishing-journal.s3.amazonaws.com/${filename}`;
     if (filename === null) {
       return (
-        <div className="relative h-72 max-h-72 w-full sm:w-80 md:w-96 shadow-md mx-auto bg-zinc-300"></div>
+        <div className="relative h-80 max-h-80 w-full shadow-md mx-auto bg-zinc-300"></div>
       );
     } else {
       return (
-        <div className="relative h-72 max-h-72 w-full sm:w-80 md:w-96 mx-auto">
+        <div className="relative h-80 max-h-80 w-full mx-auto">
           <img
             src={image}
             alt=""
-            className="relative h-72 max-h-72 sm:w-80 md:w-96 mx-auto"
+            className="relative h-80 max-h-80 mx-auto"
           ></img>
         </div>
       );

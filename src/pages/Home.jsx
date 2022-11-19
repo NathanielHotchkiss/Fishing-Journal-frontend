@@ -1,8 +1,8 @@
 import { useState } from "react";
+import Banner from "../components/Banner";
 import FeaturesGrid from "../components/FeaturesGrid";
 import Register from "../components/Register";
 import SignIn from "../components/SignIn";
-import Banner from "../components/Banner";
 
 export default function Home() {
   const [formToggle, setFormToggle] = useState(true);
